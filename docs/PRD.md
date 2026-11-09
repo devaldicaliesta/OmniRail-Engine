@@ -1,4 +1,4 @@
-# OmniRail Engine — PRD MVP v1.3
+# OmniRail Engine — PRD MVP v1.5
 
 | | |
 | --- | --- |
@@ -33,6 +33,7 @@ Blueprint sudah kuat dari sisi posisi produk, batas klaim, dan konteks regulasi.
 | 13 | **Target awal ditulis sebagai hipotesis** yang direvisi setelah baseline | Blueprint menolak menulis target. Tanpa angka, kriteria selesai tiap tahap tidak bisa diperiksa. Angka di bagian 9 sengaja ditandai sementara |
 | 14 | **Dataset uji `uji_pii_id.csv` dijadikan deliverable P0** | Dataset ini dirujuk di blueprint, tetapi belum ada di repo |
 | 15 | **Entitas ditambah:** `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` (P0), `vehicle_plate`, `ip_address` (P1), serta kunci Midtrans, Xendit, dan token bot Telegram | Blueprint hanya memuat enam entitas berformat tetap. Dokumen identitas Indonesia lain (NIP, KK, paspor, BPJS) sama murahnya untuk dideteksi dan memperkuat pembeda "konteks Indonesia". Kunci payment gateway lokal relevan untuk fintech, dan credentials adalah kekhawatiran utama di wawancara pertama |
+| 16 | **Tampilan uji (playground) dirinci menjadi requirement** (bagian 7.13): endpoint `inspect` dan CLI `omnirail inspect` (P0, Tahap 3), tab Coba mode periksa saja (P0, Tahap 5), kirim ke provider dan tab Evaluasi (P1) | Blueprint bagian 11 sudah menggambarkan tampilan uji, tetapi PRD v1.0 hanya punya satu baris P1. Padahal "cara mencoba tanpa risiko" adalah syarat pemakaian dari wawancara pertama, dan penanggung jawab kepatuhan tidak menulis kode |
 
 ---
 
@@ -101,6 +102,13 @@ Persona diurutkan menurut prioritas. Pembangun sendiri adalah pengguna pertama u
 
 13. Sebagai auditor, saya ingin melihat untuk setiap request: kebijakan yang berlaku (versi dan hash), keputusan, provider, dan jenis entitas yang terdeteksi tanpa nilai mentahnya, agar saya bisa menelusuri kejadian tanpa melihat data pribadi.
 
+**P2b. Penanggung jawab kepatuhan di tampilan uji**
+
+15. Sebagai penanggung jawab kepatuhan, saya ingin menempelkan contoh teks di halaman web lalu melihat bagian yang terdeteksi, jenisnya, dan aturan yang memicunya, agar saya bisa menilai sebuah pack tanpa menulis kode dan tanpa mengirim data ke provider.
+16. Sebagai penanggung jawab kepatuhan, saya ingin membandingkan hasil `enforce` dan `shadow` untuk teks yang sama, agar saya tahu dampak penegakan sebelum mengaktifkannya.
+17. Sebagai engineer aplikasi, saya ingin melihat teks bertoken yang akan dikirim ke provider dan jawaban setelah token dipulihkan, agar saya bisa memastikan jawaban tidak rusak sebelum memasang OmniRail di produksi.
+18. Sebagai kontributor pack, saya ingin menjalankan evaluasi dan melihat kasus gagal (terlewat dan salah tandai) beserta selisih dengan baseline, agar saya tahu apakah perubahan aturan memperbaiki atau merusak.
+
 **P5. Kontributor policy pack**
 
 14. Sebagai kontributor pack, saya ingin menulis entitas dan aturan beserta contoh yang wajib terdeteksi dan wajib diabaikan, lalu menjalankan `omnirail test`, agar kualitas pack terbukti sebelum dibagikan.
@@ -143,6 +151,7 @@ Urutan ini mengikat. Setiap langkah yang menolak request menghentikan alur dan t
 | API-04 | P0 | `GET /healthz` (proses hidup) dan `GET /readyz` (konfigurasi termuat, upstream terkonfigurasi) |
 | API-05 | P1 | `GET /v1/models` mengembalikan daftar alias rute |
 | API-06 | P2 | Streaming dengan buffer token, format klien asli Anthropic dan Gemini |
+| API-07 | P0 | Field request yang didukung: `model`, `messages` (`role` dan `content` berupa string atau bagian `type: text`), `temperature`, `top_p`, `max_tokens` dan `max_completion_tokens`, `stop`, `n` (hanya 1), `response_format`, `seed`, dan `user`. Field lain dibuang dan dicatat (seperti UP-06). Field respons: `id`, `object`, `created`, `model` (alias rute), `choices[].message`, `choices[].finish_reason`, dan `usage` |
 
 Kriteria terima:
 
@@ -154,12 +163,12 @@ Kriteria terima:
 
 ### 7.3 Upstream dan rute
 
-**Rute** adalah satu entri di `model_map`. Nama alias dipakai aplikasi sebagai `model`. Rute bisa menimpa `fail_mode` dan schema JSON.
+**Rute** adalah satu entri di `routes` (menggantikan `model_map` di blueprint). Nama alias dipakai aplikasi sebagai `model`. Rute bisa menimpa `fail_mode` dan schema JSON.
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
 | UP-01 | P0 | Satu format internal dan adapter Ollama (Tahap 1), Anthropic Messages API, Gemini API, dan OpenAI passthrough (Tahap 2) |
-| UP-02 | P0 | Model yang tidak ada di `model_map` ditolak dengan 404 `model_not_found`, kecuali ada rute `default` |
+| UP-02 | P0 | Model yang tidak ada di `routes` ditolak dengan 404 `model_not_found`, kecuali ada rute `default` |
 | UP-03 | P0 | Provider di luar `allowed_providers` ditolak saat konfigurasi divalidasi (start gagal) dan saat request (403) |
 | UP-04 | P0 | Timeout upstream bisa diatur (default 60 detik). Tidak ada retry atau fallback antar-provider |
 | UP-05 | P0 | Pemetaan adapter: pesan `system` ke `system` (Anthropic) atau `systemInstruction` (Gemini); `assistant` ke `model` (Gemini); `max_tokens` diisi default rute bila klien tidak mengirim (Anthropic mewajibkannya); `finish_reason` dan `usage` dipetakan ke format OpenAI |
@@ -297,6 +306,7 @@ Kriteria terima:
 | CFG-07 | P0 | Kunci OmniRail dibandingkan secara *constant-time*. Kunci provider tidak pernah muncul di log, error, atau `/readyz` |
 | CFG-08 | P1 | Reload konfigurasi tanpa restart (SIGHUP). Konfigurasi baru yang tidak valid ditolak, dan konfigurasi lama tetap dipakai |
 | CFG-09 | P2 | Pack yang ditandatangani dan marketplace pack; kustomisasi tingkat 4 (WASM atau webhook) |
+| CFG-10 | P0 | `omnirail validate --config <file>` untuk CI di repo pengguna: memvalidasi konfigurasi, menjalankan tes semua pack yang dimuat, lalu mencetak `policy_version` dan `policy_hash`. Kode keluar bukan nol bila gagal. Disertai contoh `CODEOWNERS` dan workflow CI di dokumentasi, sehingga perubahan kebijakan hanya lewat pull request yang disetujui peran yang ditetapkan |
 
 ### 7.10 Spesifikasi entitas `id-general`
 
@@ -325,7 +335,7 @@ Kriteria terima:
 | EVAL-03 | P0 | `omnirail test --pack <dir>` gagal bila satu baris `should_detect` tidak terdeteksi, atau satu baris `should_ignore` terdeteksi |
 | EVAL-04 | P0 | CI menjalankan `omnirail test` untuk semua pack dan `omnirail eval` pada `dev`. CI gagal bila recall turun atau false positive naik melewati ambang yang ditetapkan dari baseline |
 | EVAL-05 | P0 | Benchmark latensi: mock upstream dengan waktu tetap, input 1 rb, 5 rb, dan 20 rb karakter, mengukur selisih p50 dan p99 dengan dan tanpa proxy |
-| EVAL-06 | P1 | Tampilan uji satu halaman (tab Coba dan tab Evaluasi), hanya dari localhost atau dengan kunci admin |
+| EVAL-06 | P0 | CLI `omnirail inspect "<teks>"` (atau `--file`) menampilkan keputusan, temuan, dan teks bertoken tanpa memanggil provider. Memakai fungsi yang sama dengan endpoint PG-01 |
 
 ### 7.12 Distribusi
 
@@ -335,6 +345,151 @@ Kriteria terima:
 | DIST-02 | P0 | Image container minimal (distroless atau scratch) |
 | DIST-03 | P0 | README dengan quickstart ≤ 5 langkah, batas klaim (bagian 10), dan hasil benchmark terbaru |
 | DIST-04 | P1 | Contoh pemasangan di depan LiteLLM |
+| DIST-05 | P0 | `SECURITY.md` (cara melaporkan kerentanan secara privat, versi yang didukung), `CONTRIBUTING.md`, dan `CODEOWNERS` untuk repo OmniRail sendiri, termasuk folder `policy-packs/` |
+
+### 7.13 Tampilan uji (playground)
+
+Satu halaman web yang disajikan langsung oleh binary OmniRail untuk mencoba kebijakan tanpa menulis kode. Halaman ini memakai fungsi inti yang sama dengan jalur proxy, sehingga hasilnya identik dengan perilaku produksi untuk konfigurasi yang sama. Tampilan uji **bukan** dasbor pemantauan dan **tidak bisa** mengubah konfigurasi.
+
+| ID | Prioritas | Requirement |
+| --- | --- | --- |
+| PG-01 | P0 | `POST /omnirail/v1/inspect` menerima `text` atau `messages`, serta `pack` dan `mode` opsional. Endpoint menjalankan alur request 7.1 langkah 5 s.d. 9 **tanpa** memanggil provider, lalu mengembalikan keputusan, daftar temuan, teks bertoken, waktu proses, `policy_version`, dan `policy_hash`. Temuan dikembalikan sebagai **posisi** (`start`, `end`), bukan nilai, karena klien sudah memegang teksnya |
+| PG-02 | P0 | `GET /omnirail/v1/packs` mengembalikan pack yang termuat (nama, versi, jumlah entitas dan aturan) |
+| PG-03 | P0 | Halaman `/playground` dengan **tab Coba** mode periksa saja (memakai PG-01): kotak teks, pilihan pack dan mode, hasil berwarna per entitas, tabel temuan, teks bertoken, keputusan, waktu proses, versi dan hash kebijakan |
+| PG-04 | P0 | Berkas halaman (HTML, CSS, JS) ditanam di binary, tanpa CDN atau skrip pihak ketiga, dan tetap berfungsi tanpa internet. Header `Content-Security-Policy: default-src 'self'`. Ukuran total ≤ 200 KB |
+| PG-05 | P0 | Tampilan uji **mati secara default** (`playground.enabled: false`). Saat aktif, hanya melayani dari loopback, kecuali `playground.admin_keys` diisi. Kunci admin terpisah dari kunci aplikasi, dan kunci aplikasi ditolak dengan 403 `omnirail_admin_required` |
+| PG-06 | P0 | Teks input tidak disimpan di server, log, atau `localStorage` browser. Audit log hanya mencatat `source: playground`, keputusan, dan jumlah temuan per entitas |
+| PG-07 | P0 | Nilai di tabel temuan disamarkan secara default (misalnya `3273••••••••0001`); tombol "Tampilkan" hanya membuka nilai di browser, tanpa permintaan ke server |
+| PG-08 | P1 | Tombol **Kirim ke provider** di tab Coba, lewat `POST /omnirail/v1/playground/send`: alur penuh dengan kunci provider di proxy. Menampilkan berdampingan teks bertoken yang dikirim, jawaban provider (bertoken), dan jawaban setelah dipulihkan. Rute dibatasi oleh `playground.allowed_routes` |
+| PG-09 | P1 | Bandingkan `enforce` dan `shadow` untuk teks yang sama dalam satu tampilan |
+| PG-10 | P1 | Matikan atau nyalakan entitas untuk satu kali percobaan. Override ini tidak disimpan, ditandai "tidak berlaku untuk trafik", dan menghasilkan hash kebijakan sementara yang berbeda |
+| PG-11 | P1 | **Tab Evaluasi** lewat `POST /omnirail/v1/eval`: pilih dataset dari daftar yang diizinkan (`playground.datasets`) dan pack, jalankan, lalu tampilkan metrik per entitas, selisih dengan baseline (naik atau turun), dan daftar kasus gagal yang bisa disaring (terlewat atau salah tandai). Hasil bisa diunduh sebagai JSON dan Markdown, dengan format sama seperti `omnirail eval` |
+| PG-12 | P1 | Dataset `holdout` terkunci di tab Evaluasi; membukanya butuh konfirmasi eksplisit dan tercatat di audit log |
+| PG-13 | P2 | Contoh teks siap pakai dari `should_detect` dan `should_ignore` pack yang termuat |
+
+**Wireframe tab Coba**
+
+```text
+┌ OmniRail · Tampilan uji ─────────────────────── kebijakan v1.1 · a3f9c2 · LOKAL ┐
+│ [ Coba ]  [ Evaluasi ]                                                          │
+├────────────────────────────────────┬────────────────────────────────────────────┤
+│ Pack  [ id-general ▾ ]             │ Keputusan:  ● DIBLOKIR  (credentials)       │
+│ Mode  (•) enforce  ( ) shadow      │ Waktu proses: 0,8 ms                        │
+│                                    │                                             │
+│ ┌────────────────────────────────┐ │ Teks asli                                   │
+│ │ Halo, NIK saya 3273...0001,    │ │ Halo, NIK saya [nik ███████] , HP           │
+│ │ HP 0812-3456-7801. Password    │ │ [phone_id ███████]. Password=[credential]   │
+│ │ DB=Rahasia#2026                │ │                                             │
+│ └────────────────────────────────┘ │ Dikirim ke provider                         │
+│ 0 / 20.000 karakter                │ (tidak dikirim: request diblokir)           │
+│                                    │                                             │
+│ [ Periksa ]  [ Kirim ke provider ] │ Temuan                                      │
+│              (P1, perlu rute)      │ Entitas   Nilai          Validator  Aksi    │
+│                                    │ nik       3273••••0001   struktur   tokenize│
+│ Override sementara (P1)            │ phone_id  0812••••7801   panjang    tokenize│
+│ [x] nik [x] phone_id [x] email ... │ password  ••••••••       pola       block   │
+│                                    │ [ Tampilkan nilai ]                         │
+└────────────────────────────────────┴────────────────────────────────────────────┘
+```
+
+**Wireframe tab Evaluasi (P1)**
+
+```text
+Dataset [ dev ▾ ]  Pack [ id-general ▾ ]  [ Jalankan ]    Baseline: run 2026-11-20 (v0.5)
+Entitas       Recall        Precision     False positive
+nik           0,97 (+0,02)  0,93 (−0,01)  0,01 (=)
+bank_account  0,84 (+0,05)  0,88 (+0,03)  0,03 (−0,01)
+...
+Kasus gagal: [ Semua ▾ ] [ Terlewat ] [ Salah tandai ]
+D025  phone_id  salah tandai  "Nomor pesanan 0857…"  catatan: negatif sulit
+[ Unduh JSON ]  [ Unduh Markdown ]
+```
+
+Kriteria terima:
+
+- [ ] Dengan konfigurasi default, `GET /playground` mengembalikan 404.
+- [ ] Dengan `playground.enabled: true` dan `listen` bukan loopback tanpa `admin_keys`, start gagal dengan pesan yang jelas.
+- [ ] Untuk teks dan konfigurasi yang sama, keputusan dan temuan di tab Coba identik dengan audit log dari jalur proxy.
+- [ ] Respons PG-01 tidak memuat nilai entitas mentah (diuji dengan `grep` nilai uji pada body respons).
+- [ ] Mode periksa saja tidak pernah memanggil upstream (diuji dengan mock yang gagal bila dipanggil).
+- [ ] Setelah halaman ditutup, tidak ada teks input di `localStorage`, `sessionStorage`, maupun log server.
+- [ ] Halaman bisa dipakai penuh dengan keyboard. Sorotan entitas tidak hanya dibedakan dengan warna, tetapi juga label jenis. Kontras teks memenuhi WCAG 2.1 AA.
+- [ ] Halaman berfungsi tanpa koneksi internet.
+
+### 7.14 Referensi konfigurasi
+
+Seluruh kunci `omnirail.yaml` untuk MVP di satu tempat. Nilai yang ditulis adalah default. Kunci bertanda `# P1` belum dibaca di MVP.
+
+```yaml
+version: "1.4"
+mode: enforce                    # enforce | shadow (7.6)
+policy_pack: id-general
+shadow:
+  apply_transforms: true         # penyamaran PII tetap jalan dalam shadow (7.6)
+
+server:
+  listen: "127.0.0.1:8080"       # CFG-06
+  api_keys: ["${OMNIRAIL_KEY}"]  # kunci aplikasi
+  max_body_bytes: 1048576        # POL-01
+
+upstream:
+  timeout_seconds: 60            # UP-04
+  providers:
+    anthropic: { api_key: "${ANTHROPIC_API_KEY}" }
+    gemini:    { api_key: "${GEMINI_API_KEY}" }
+    openai:    { api_key: "${OPENAI_API_KEY}" }
+    ollama:    { base_url: "http://localhost:11434" }
+
+routes:                          # rute = alias model (7.3)
+  default:
+    provider: anthropic
+    model: "claude-sonnet-5-5"
+    max_tokens: 1024             # dipakai bila klien tidak mengirim (UP-05)
+    json_schema_file: null       # JSON-01
+    mode: null                   # null = ikut global
+    fail_mode: null              # null = ikut global
+
+ingress:
+  pii:
+    action: tokenize             # tokenize | redact, bisa per entitas
+    restore_on_egress: true
+    entities: [email, phone_id, credit_card, nik, kk, nip, npwp, passport_id, bpjs, bank_account, birth_date]
+    # vehicle_plate dan ip_address (P1) mati secara default
+  credentials:
+    action: block                # block | redact
+    detectors: [api_key, jwt, private_key, connection_string, password_assignment]
+  policy:
+    max_input_chars: 20000
+    allowed_providers: [anthropic, gemini, openai, ollama]
+    deny_patterns: []            # diisi pack
+    blocked_keywords: []
+
+fail_mode:
+  ingress: closed
+  egress: open
+
+audit:
+  log_policy_version: true
+  sink: stdout                   # stdout | file (Q8)
+  file_path: null
+
+logging:
+  store_raw_prompts: false
+
+telemetry:
+  otlp_endpoint: null            # AUD-04; null = metrik mati
+
+playground:                      # 7.13
+  enabled: false
+  admin_keys: []                 # wajib bila listen bukan loopback
+  allowed_routes: []             # P1, PG-08
+  datasets: []                   # P1, PG-11
+```
+
+Kriteria terima:
+
+- [ ] Kunci yang tidak dikenal menghentikan start dengan pesan berisi nama kunci, sehingga salah ketik tidak diam-diam diabaikan.
+- [ ] Contoh di atas dimuat tanpa error oleh `omnirail validate` dan dipakai sebagai berkas contoh di repo.
 
 ## 8. Kontrak error
 
@@ -357,6 +512,7 @@ Semua error memakai bentuk OpenAI agar SDK menanganinya tanpa kode tambahan:
 | 400 | `omnirail_policy_violation` | Credentials, deny-list, atau kata kunci (mode enforce) |
 | 400 | `omnirail_unsupported_feature` | `stream`, tool call, konten non-teks |
 | 401 | `invalid_api_key` | Kunci OmniRail salah atau tidak ada |
+| 403 | `omnirail_admin_required` | Endpoint tampilan uji dipanggil dengan kunci aplikasi, atau dari luar loopback tanpa kunci admin |
 | 403 | `omnirail_provider_not_allowed` | Rute menunjuk provider di luar `allowed_providers` |
 | 404 | `model_not_found` | Alias tidak ada dan tidak ada rute `default` |
 | 413 | `omnirail_input_too_large` | Melewati `max_body_bytes` atau `max_input_chars` |
@@ -387,6 +543,7 @@ Angka di bawah adalah **target awal (hipotesis)**. Angka ini memberi kriteria lu
 | Overhead latensi, input 5 rb karakter | p50 ≤ 5 ms, p99 ≤ 15 ms | Benchmark EVAL-05 |
 | Output JSON valid setelah perbaikan tanpa retry | ≥ 0,95 dari output yang rusak sintaks | Set uji JSON |
 | Waktu dari unduh sampai request pertama berhasil | ≤ 10 menit | Diukur pada 3 orang yang belum pernah memakai |
+| Tugas "coba pack lalu jelaskan satu temuan" di tampilan uji tanpa bantuan | ≥ 3 dari 5 peserta wawancara, ≤ 5 menit | Sesi wawancara Tahap 5 |
 
 **Indikator lanjutan (1 sampai 3 bulan setelah rilis)**
 
@@ -410,6 +567,7 @@ Ringkasan threat model blueprint bagian 9, dengan tambahan dari PRD ini:
 | Penghindaran deny-list dengan Unicode | Sebagian | Normalisasi NFKC dan lebar-nol; parafrase tetap lolos |
 | Kebocoran lewat log atau error provider | Ya | Nilai PII tidak pernah ditulis; body error provider tidak diteruskan |
 | Proxy terbuka ke jaringan | Ya | Default `127.0.0.1`, kunci OmniRail wajib |
+| Tampilan uji menjadi celah (data input bocor, kunci provider dipakai pihak lain) | Ya | Mati secara default, loopback atau kunci admin terpisah, input tidak disimpan, nilai disamarkan, kirim ke provider dibatasi rute (PG-05 s.d. PG-08) |
 | Kebocoran kunci provider | Sebagian | Kunci hanya di proxy; rotasi dan rate limit per kunci ditunda |
 | Proxy gagal atau lambat | Ya | `fail_mode` per rute, health check, timeout |
 
@@ -424,13 +582,13 @@ Belum ada tanggal. Kecepatan kerja ditetapkan setelah Tahap 1. Satu-satunya tang
 | Tahap | Isi | Selesai bila |
 | --- | --- | --- |
 | **0. Validasi** (maks. 2 minggu) | Susun `uji_pii_id.csv` (dev + holdout). Jalankan terhadap LiteLLM + Presidio dengan recognizer Indonesia sederhana. Konfirmasi fitur pemulihan token LiteLLM | Catatan keputusan tertulis: **lanjut** (celah recall/precision atau ergonomi cukup besar), **pivot** ke plugin untuk LiteLLM atau Presidio (blueprint lapis 3), atau **berhenti** |
-| **1. Kerangka proxy** | API-01, API-04, UP-01 (Ollama), CFG-01/02/06/07, kontrak error | SDK OpenAI mendapat jawaban lewat proxy; konfigurasi salah menghentikan start dengan pesan yang jelas |
+| **1. Kerangka proxy** | API-01, API-04, API-07, UP-01 (Ollama), CFG-01/02/06/07, kontrak error | SDK OpenAI mendapat jawaban lewat proxy; konfigurasi salah menghentikan start dengan pesan yang jelas |
 | **2. Jalur provider** | Adapter Anthropic, lalu Gemini, lalu OpenAI; UP-02 s.d. UP-07 | Uji integrasi lulus terhadap tiap provider; uji mock menutup pemetaan |
-| **3. PII dan credentials** | PII-01 s.d. 07, CRED-01 s.d. 03, POL-01 s.d. 05, AUD-01 s.d. 04, EVAL-01 s.d. 04, pack `id-general` | Baseline per entitas tercatat; ambang CI ditetapkan; target bagian 9 direvisi tertulis |
+| **3. PII dan credentials** | API-03, PII-01 s.d. 07, CRED-01 s.d. 03, POL-01 s.d. 05, AUD-01 s.d. 04, EVAL-01 s.d. 04 dan EVAL-06, PG-01, PG-02, CFG-10, pack `id-general` | Baseline per entitas tercatat; ambang CI ditetapkan; target bagian 9 direvisi tertulis |
 | **4. Validasi JSON** | JSON-01 s.d. 04 | Pelanggaran schema dan perbaikan terhitung di metrik dan audit log |
-| **5. Rilis awal** | DIST-01 s.d. 03, EVAL-05, README dengan batas klaim, wawancara | Rilis bertag; benchmark terbit; ringkasan wawancara tertulis menentukan prioritas berikutnya |
+| **5. Rilis awal** | DIST-01 s.d. 03, DIST-05, EVAL-05, PG-03 s.d. PG-07 (tab Coba mode periksa saja), README dengan batas klaim, wawancara (memakai tampilan uji) | Rilis bertag; benchmark terbit; ringkasan wawancara tertulis menentukan prioritas berikutnya |
 
-Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-06), entitas kustom (PII-08), streaming, NER, laporan bukti pendukung, dan marketplace pack (blueprint bagian 13).
+Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: kirim ke provider dan tab Evaluasi di tampilan uji (PG-08 s.d. PG-12), entitas kustom (PII-08), streaming, NER, laporan bukti pendukung, dan marketplace pack (blueprint bagian 13).
 
 ## 12. Risiko
 
@@ -447,7 +605,7 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 
 | # | Pertanyaan | Penjawab | Menghalangi |
 | --- | --- | --- | --- |
-| Q1 | Siapa yang menyusun `uji_pii_id.csv`, dan berapa baris minimum per entitas untuk baseline yang bermakna (usulan: ≥ 50 positif dan ≥ 50 negatif per entitas)? | Pembangun | Tahap 0 |
+| Q1 | ~~Siapa yang menyusun dataset dan berapa baris minimum~~ **Terjawab:** dataset v0.5 (3.370 baris) punya ≥ 100 positif dan ≥ 100 negatif per entitas. Yang tersisa: tinjauan label oleh orang kedua (T-007) | Pembangun | Baseline Tahap 3 |
 | Q2 | Apa kriteria angka untuk keputusan "lanjut" di Tahap 0 (misalnya selisih recall ≥ 10 poin atau false positive setengahnya)? | Pembangun | Tahap 0 |
 | Q3 | Apakah default `shadow.apply_transforms: true` diterima calon pengguna, atau mereka ingin shadow murni mengamati? | Calon pengguna (wawancara) | Tidak |
 | Q4 | ~~Aturan NPWP 16 digit~~ **Terjawab sebagian** (Lampiran A): NIK untuk orang pribadi, `0` + 15 digit untuk badan. Yang tersisa: adakah checksum resmi NPWP? | Pembangun, dicek ke sumber DJP | Tidak |
@@ -469,6 +627,8 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 | 1.1 | 9 November 2026 | PII-07: kata konteks menentukan jenis bila dua validator lolos. EVAL-01: lokasi dataset. Rincian task di [TASKS.md](TASKS.md) |
 | 1.2 | 9 November 2026 | Entitas baru (perubahan 15), urutan prioritas PII-07 diperluas, detektor credentials Midtrans/Xendit/Telegram, Q10 s.d. Q13 |
 | 1.3 | 9 November 2026 | Keterbatasan verifikasi K1 s.d. K5 dicatat di Lampiran A. Format diverifikasi ke sumber publik (Lampiran A): NI PPPK, paspor 1–2 huruf + 6–7 digit, BPJS TK 16 digit, kode plat Perpol 7/2021, NPWP 16 digit, prefix Xendit/Midtrans/Telegram, `output_parse_pii` LiteLLM |
+| 1.4 | 9 November 2026 | Tampilan uji dirinci (bagian 7.13, PG-01 s.d. PG-13), EVAL-06 menjadi CLI `omnirail inspect` (P0), user stories 15 s.d. 18, kode error `omnirail_admin_required`, metrik dan ancaman terkait |
+| 1.5 | 9 November 2026 | Crosscheck kesiapan: API-07 (field yang didukung), CFG-10 (`omnirail validate` dan kontrol perubahan kebijakan), DIST-05 (`SECURITY.md`), referensi konfigurasi 7.14, Q1 terjawab |
 
 ## Lampiran A. Hasil verifikasi format (9 November 2026)
 
