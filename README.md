@@ -2,7 +2,7 @@
 
 Proxy open-source yang berdiri di depan LLM. OmniRail menyamarkan data pribadi, menegakkan kebijakan, dan memvalidasi output, dalam satu binary tanpa GPU.
 
-> **Status: tahap desain.** Belum ada kode. Repo ini baru berisi blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
+> **Status: tahap desain.** Belum ada kode. Repo ini berisi [PRD MVP](docs/PRD.md) dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
 
 ## Apa itu OmniRail
 
@@ -79,6 +79,7 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 
 ## Roadmap
 
+0. **Validasi.** Bandingkan dengan LiteLLM + Presidio pada set uji berbahasa Indonesia, lalu putuskan lanjut, pivot, atau berhenti.
 1. **Kerangka proxy.** Endpoint non-streaming, upstream Ollama, config YAML.
 2. **Jalur provider.** Adapter Anthropic, lalu Gemini, lalu OpenAI.
 3. **PII tokenisasi.** Entitas Indonesia, deteksi credentials, `omnirail eval`, dan baseline recall/precision.
@@ -87,7 +88,9 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 
 ## Dokumen
 
-Blueprint lengkap tersedia dalam tiga format:
+- [PRD MVP v1.0](docs/PRD.md): acuan scope, requirements, kriteria terima, dan tahapan MVP. Bila berbeda dengan blueprint, PRD yang berlaku.
+
+Blueprint v1.1 (latar belakang, pemetaan regulasi, dan arah setelah MVP) tersedia dalam tiga format:
 
 - [Markdown](docs/OmniRail_Engine_Blueprint_v1.1.md)
 - [PDF](docs/OmniRail_Engine_Blueprint_v1.1.pdf)
