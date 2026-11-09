@@ -1,4 +1,4 @@
-# OmniRail Engine — PRD MVP v1.0
+# OmniRail Engine — PRD MVP v1.1
 
 | | |
 | --- | --- |
@@ -181,7 +181,7 @@ Kriteria terima:
 | PII-04 | P0 | Format token `<JENIS_n>`. Bila input sudah memuat teks berbentuk token (misalnya pengguna menulis `<EMAIL_1>`), penomoran melompati nomor itu, dan hanya token yang diterbitkan OmniRail yang dipulihkan |
 | PII-05 | P0 | Tabel token hanya hidup di memori selama satu request dan tidak pernah ditulis ke log, disk, atau metrik |
 | PII-06 | P0 | Pemulihan hanya untuk kecocokan persis. Token tak dikenal dibiarkan apa adanya. Token yang diterbitkan tetapi tidak kembali dihitung sebagai metrik, bukan error |
-| PII-07 | P0 | Bila satu rentang teks cocok dengan lebih dari satu entitas, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nik` (struktur valid) > `npwp` > `bank_account` > `phone_id` > `email`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang |
+| PII-07 | P0 | Bila satu rentang teks lolos validator lebih dari satu entitas, kata konteks yang paling dekat menentukan jenisnya (misalnya `NIK` atau `kartu`). Tanpa kata konteks, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nik` (struktur valid) > `npwp` > `bank_account` > `phone_id` > `email`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang |
 | PII-08 | P1 | Entitas kustom di `omnirail.yaml` (customisasi tingkat 2) dengan validator bawaan yang bisa dipilih |
 | PII-09 | P2 | NER lokal (ONNX) untuk nama, alamat, dan nama instansi |
 
@@ -189,7 +189,7 @@ Kriteria terima:
 
 - [ ] Untuk input "email saya a@b.co dan a@b.co", provider menerima dua kemunculan `<EMAIL_1>`, dan aplikasi menerima dua kemunculan `a@b.co`.
 - [ ] Input yang sudah memuat `<EMAIL_1>` tidak dipulihkan menjadi email orang lain.
-- [ ] Nomor 16 digit yang lolos Luhn dan memiliki prefix kartu dikenali sebagai `credit_card`, bukan `nik`.
+- [ ] Nomor 16 digit yang lolos Luhn dan memiliki prefix kartu, tanpa kata konteks NIK, dikenali sebagai `credit_card`, bukan `nik`. Nilai yang sama setelah kata `NIK` dikenali sebagai `nik` (dataset D050 dan D051).
 - [ ] Nomor pesanan 16 digit dengan tanggal tidak valid di posisi 7 sampai 12 tidak dikenali sebagai `nik`.
 - [ ] `grep` nilai uji di semua log setelah menjalankan set uji tidak menemukan satu pun nilai.
 
@@ -309,7 +309,7 @@ Kriteria terima:
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
-| EVAL-01 | P0 | `uji_pii_id.csv` di repo, dengan kolom `id`, `kategori`, `teks`, `diharapkan`, `cakupan_mvp`, `catatan`, dibagi `dev` dan `holdout`, dan seluruhnya data rekaan |
+| EVAL-01 | P0 | `eval/dev/uji_pii_id.csv` dan `eval/holdout/uji_pii_id.csv` di repo (format di `eval/README.md`), dengan kolom `id`, `kategori`, `teks`, `diharapkan`, `cakupan_mvp`, `catatan`, dibagi `dev` dan `holdout`, dan seluruhnya data rekaan |
 | EVAL-02 | P0 | `omnirail eval` menghasilkan recall, precision, dan false positive per entitas; tingkat blokir credentials; deteksi deny-list; dan pemulihan token. Hasilnya disimpan sebagai JSON bernomor versi (kode, pack, dataset, waktu) plus ringkasan Markdown |
 | EVAL-03 | P0 | `omnirail test --pack <dir>` gagal bila satu baris `should_detect` tidak terdeteksi, atau satu baris `should_ignore` terdeteksi |
 | EVAL-04 | P0 | CI menjalankan `omnirail test` untuk semua pack dan `omnirail eval` pada `dev`. CI gagal bila recall turun atau false positive naik melewati ambang yang ditetapkan dari baseline |
@@ -449,3 +449,4 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 | Versi | Tanggal | Perubahan |
 | --- | --- | --- |
 | 1.0 | 9 November 2026 | Draf pertama dari blueprint v1.1, dengan perbaikan di bagian 1 |
+| 1.1 | 9 November 2026 | PII-07: kata konteks menentukan jenis bila dua validator lolos. EVAL-01: lokasi dataset. Rincian task di [TASKS.md](TASKS.md) |

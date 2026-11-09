@@ -88,7 +88,9 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 
 ## Dokumen
 
-- [PRD MVP v1.0](docs/PRD.md): acuan scope, requirements, kriteria terima, dan tahapan MVP. Bila berbeda dengan blueprint, PRD yang berlaku.
+- [PRD MVP](docs/PRD.md): acuan scope, requirements, kriteria terima, dan tahapan MVP. Bila berbeda dengan blueprint, PRD yang berlaku.
+- [Rincian task](docs/TASKS.md): task per tahap dengan kriteria selesai.
+- [Dataset uji](eval/README.md): set uji PII dan credentials berbahasa Indonesia (draf).
 
 Blueprint v1.1 (latar belakang, pemetaan regulasi, dan arah setelah MVP) tersedia dalam tiga format:
 
