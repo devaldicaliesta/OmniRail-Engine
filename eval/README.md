@@ -2,37 +2,40 @@
 
 Set uji berlabel untuk Tahap 0 (perbandingan dengan LiteLLM + Presidio) dan untuk `omnirail eval` (PRD EVAL-01, EVAL-02).
 
-> **Status: v0.4.** Format NIP (termasuk NI PPPK), paspor, BPJS, dan kode plat sudah disesuaikan dengan hasil verifikasi di PRD Lampiran A. Setiap entitas (P0 dan P1) punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
+> **Status: v0.5.** Format NIP (termasuk NI PPPK), paspor, BPJS, dan kode plat sudah disesuaikan dengan hasil verifikasi di PRD Lampiran A. Setiap entitas (P0 dan P1) punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
 
 ## Isi
 
 | Berkas | Baris | Kegunaan |
 | --- | --- | --- |
-| `dev/uji_pii_id.csv` | 1.276 | Boleh dilihat dan dipakai saat menyetel aturan |
-| `holdout/uji_pii_id.csv` | 549 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
+| `dev/uji_pii_id.csv` | 2.361 | Boleh dilihat dan dipakai saat menyetel aturan |
+| `holdout/uji_pii_id.csv` | 1.009 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
 
 ### Jumlah per entitas (dev + holdout)
 
 | Entitas | Prioritas | Positif | Negatif | Kasus di luar cakupan |
 | --- | --- | --- | --- | --- |
-| `email` | P0 | 108 | 61 | — |
-| `phone_id` | P0 | 97 | 62 | 5 (telepon kantor) |
-| `credit_card` | P0 | 79 | 59 | — |
-| `nik` | P0 | 101 | 64 | 5 (NIK berpemisah) |
-| `npwp` | P0 | 70 | 58 | — |
-| `bank_account` | P0 | 76 | 61 | 5 (tanpa kata konteks) |
-| `nip` | P0 | 58 | 54 | — |
-| `kk` | P0 | 58 | 54 | — |
-| `passport_id` | P0 | 64 | 54 | 6 (tanpa kata konteks) |
-| `bpjs` | P0 | 59 | 54 | 6 (tanpa kata konteks) |
-| `birth_date` | P0 | 62 | 54 | — |
-| `vehicle_plate` | P1 | 54 | 54 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
-| `ip_address` | P1 | 54 | 54 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
+| `email` | P0 | 168 | 111 | — |
+| `phone_id` | P0 | 157 | 112 | 5 (telepon kantor) |
+| `credit_card` | P0 | 139 | 109 | — |
+| `nik` | P0 | 161 | 114 | 5 (NIK berpemisah) |
+| `npwp` | P0 | 130 | 108 | — |
+| `bank_account` | P0 | 136 | 111 | 5 (tanpa kata konteks) |
+| `nip` | P0 | 118 | 104 | — |
+| `kk` | P0 | 118 | 104 | — |
+| `passport_id` | P0 | 124 | 104 | 6 (tanpa kata konteks) |
+| `bpjs` | P0 | 119 | 104 | 6 (tanpa kata konteks) |
+| `birth_date` | P0 | 122 | 104 | — |
+| `vehicle_plate` | P1 | 114 | 104 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
+| `ip_address` | P1 | 114 | 104 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
 
-Hitungan positif menghitung kemunculan entitas, sehingga baris campuran terhitung di beberapa entitas sekaligus. Baris positif entitas P1 bertanda `cakupan_mvp = tidak` karena detektornya mati secara default. Baris negatifnya tetap `ya`, karena tidak boleh memicu detektor MVP mana pun. Di luar itu ada 140 baris credentials (termasuk Midtrans, Xendit, dan token bot Telegram), 44 baris injeksi, serta 40 kemunculan nama dan alamat yang butuh NER.
+Hitungan positif menghitung kemunculan entitas, sehingga baris campuran terhitung di beberapa entitas sekaligus. Baris positif entitas P1 bertanda `cakupan_mvp = tidak` karena detektornya mati secara default. Baris negatifnya tetap `ya`, karena tidak boleh memicu detektor MVP mana pun. Di luar itu ada 203 baris credentials (termasuk Midtrans, Xendit, dan token bot Telegram), 96 baris injeksi, serta 40 kemunculan nama dan alamat yang butuh NER.
 
 ### Variasi
 
+- **Bingkai teks (v0.5):** sekitar sepertiga baris dibungkus bentuk yang lazim sampai ke proxy LLM: instruksi tugas ("Ringkas percakapan berikut:", "Terjemahkan ke bahasa Inggris:", "Ekstrak informasi penting… dalam format JSON"), transkrip chat CS dengan atau tanpa jam, badan email formal, tabel Markdown, dan kalimat panjang dengan konteks tambahan. Holdout memakai bingkai yang tidak ada di dev: YAML, payload JSON, pesan terusan WhatsApp, dan catatan internal. Bingkai sengaja tidak memuat data pribadi.
+- **Gaya ketik (v0.5):** singkatan chat (`tlg`, `yg`, `udh`, `gak`, `sy`, `mhn`) dan gaya voice-to-text (huruf kecil tanpa tanda baca). Kata konteks ikut berubah huruf, sedangkan nilai entitas tetap utuh. Gaya voice-to-text hanya ada di dev.
+- **Credentials dalam prompt teknis (v0.5):** "Tolong review kode berikut:" dengan blok kode, "Kenapa error ini muncul?", dan pada holdout isi `.env` serta log deploy.
 - **Gaya kalimat:** chat CS formal dan informal (singkatan, slang, emoji), log aplikasi, JSON, CSV, `key=value`, header email, SQL, perintah shell, potongan kode, dan kalimat campuran bahasa Inggris.
 - **Format nilai:** 36 prefix operator seluler dengan 8 gaya penulisan (`08…`, `+62`, `62`, pemisah spasi, titik, atau tanda hubung); kartu Visa, Mastercard (seri 5 dan 2), Amex, dan JCB dengan atau tanpa pemisah; NIK laki-laki dan perempuan dari semua provinsi; NPWP 15 digit bertitik, 15 digit polos, dan 16 digit; rekening 10 sampai 16 digit dari 16 nama bank.
 - **Negatif yang menjebak:** `git@github.com:…`, `logo@2x.png`, IMEI yang lolos Luhn, barcode EAN-13, nomor seri faktur pajak, kode wilayah Kemendagri, saldo bertitik di dekat kata "rekening", pesan bisnis wajar yang memuat frasa deny-list, "mohon maaf lahir dan batin" diikuti tanggal, "KKN", SKU berbentuk nomor paspor, "Kamar D 12 VIP" yang cocok pola plat, serta nomor versi empat bagian dan subnet mask yang mirip IPv4.
