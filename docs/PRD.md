@@ -1,4 +1,4 @@
-# OmniRail Engine — PRD MVP v1.2
+# OmniRail Engine — PRD MVP v1.3
 
 | | |
 | --- | --- |
@@ -19,7 +19,7 @@ Blueprint sudah kuat dari sisi posisi produk, batas klaim, dan konteks regulasi.
 | # | Perubahan | Alasan |
 | --- | --- | --- |
 | 1 | **Tahap 0 (validasi) ditambahkan sebagai gerbang keputusan** sebelum menulis kode proxy | Blueprint menyebut perbandingan dengan LiteLLM + Presidio, tetapi tidak menaruhnya di roadmap. Tanpa gerbang ini, risiko membangun ulang yang sudah ada tidak pernah diuji |
-| 2 | **Tokenisasi reversibel tidak lagi diklaim sebagai pembeda** | LiteLLM dengan guardrail Presidio sudah punya opsi `output_parse_pii` yang memulihkan token di jawaban (perlu dikonfirmasi di Tahap 0). Pembeda yang dipegang: entitas Indonesia dengan validator struktur, eval terbuka berbahasa Indonesia, policy pack bertes, dan audit log dengan hash kebijakan |
+| 2 | **Tokenisasi reversibel tidak lagi diklaim sebagai pembeda** | LiteLLM dengan guardrail Presidio sudah punya opsi `output_parse_pii` yang memulihkan token di jawaban (terkonfirmasi di dokumentasi LiteLLM; ada laporan bug pemulihan di jalur Anthropic, lihat Lampiran A). Pembeda yang dipegang: entitas Indonesia dengan validator struktur, eval terbuka berbahasa Indonesia, policy pack bertes, dan audit log dengan hash kebijakan |
 | 3 | **Urutan alur request diubah:** credentials dan kebijakan dicek pada teks asli, **sebelum** penyamaran PII | Di diagram blueprint, PII disamarkan dulu lalu kebijakan dicek pada teks bertoken. Request yang pasti diblokir tidak perlu ditokenisasi, dan deteksi credentials harus melihat teks utuh |
 | 4 | **Urutan alur response diubah:** perbaikan sintaks → parse → pemulihan token di dalam nilai string → validasi schema | Di blueprint, validasi JSON jalan sebelum pemulihan. Akibatnya schema dengan `format: email` atau `pattern` akan gagal pada `<EMAIL_1>`, dan pemulihan berbasis teks bisa merusak JSON bila nilai asli mengandung tanda kutip |
 | 5 | **Semantik `mode: shadow` didefinisikan** (bagian 7.6) | Blueprint hanya menulis "catat tanpa memblokir". Tanpa definisi, mode shadow bisa diartikan meneruskan data mentah, termasuk credentials, ke provider |
@@ -201,7 +201,7 @@ Kriteria terima:
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
-| CRED-01 | P0 | Detektor: `api_key` (prefix dikenal seperti `sk-`, `sk-ant-`, `AIza`, `AKIA`, `ghp_`, `github_pat_`, `glpat-`, `xox?-`, Midtrans `Mid-server-` dan `SB-Mid-server-`, Xendit `xnd_production_` dan `xnd_development_`, serta token bot Telegram `<angka>:<35 karakter>`), `jwt` (tiga segmen base64url dengan header JSON berisi `alg`), `private_key` (blok `-----BEGIN ... PRIVATE KEY-----`), `connection_string` (skema basis data atau broker dengan password tidak kosong), `password_assignment` (`password`, `pwd`, `kata sandi` diikuti `:` atau `=`) |
+| CRED-01 | P0 | Detektor: `api_key` (prefix dikenal seperti `sk-`, `sk-ant-`, `AIza`, `AKIA`, `ghp_`, `github_pat_`, `glpat-`, `xox?-`, Midtrans `Mid-server-` dan `SB-Mid-server-`, Xendit `xnd_production_` dan `xnd_development_` dengan sufiks berpanjang variabel yang bisa memuat `+`, `/`, dan `=`, serta token bot Telegram `\d{8,10}:[A-Za-z0-9_-]{35}`; kunci publik `xnd_public_` dan client key Midtrans tidak diblokir), `jwt` (tiga segmen base64url dengan header JSON berisi `alg`), `private_key` (blok `-----BEGIN ... PRIVATE KEY-----`), `connection_string` (skema basis data atau broker dengan password tidak kosong), `password_assignment` (`password`, `pwd`, `kata sandi` diikuti `:` atau `=`) |
 | CRED-02 | P0 | Aksi `block` (default) atau `redact`. Credentials **tidak pernah** ditokenisasi dan tidak pernah dipulihkan |
 | CRED-03 | P0 | Placeholder umum (`***`, `<password>`, `${VAR}`, `xxx`) tidak dianggap credentials |
 | CRED-04 | P1 | Deteksi entropi tinggi setelah kata kunci (`token=`, `secret=`) untuk secret tanpa prefix |
@@ -305,15 +305,15 @@ Kriteria terima:
 | `email` | Bagian lokal + `@` + domain dengan TLD ≥ 2 huruf | Panjang total ≤ 254 | Tidak wajib | Rendah |
 | `phone_id` | `+62`, `62`, atau `0` diikuti `8`, lalu 7 sampai 11 digit, boleh dipisah spasi, titik, atau tanda hubung | Setelah dinormalisasi menjadi `08…`, panjangnya 10 sampai 13 digit | Tidak wajib | Sedang (bentrok dengan angka panjang lain) |
 | `credit_card` | 13 sampai 19 digit, boleh dipisah spasi atau tanda hubung | Luhn **dan** prefix jaringan dikenal (Visa, Mastercard, Amex, JCB; prefix GPN dicek di Q5) | Menaikkan keyakinan | Rendah bila validator lengkap |
-| `nik` | 16 digit | Struktur: 2 digit kode provinsi valid, 4 digit kode kab/kota dan kecamatan, 6 digit tanggal lahir `DDMMYY` (tanggal 01 sampai 31, atau 41 sampai 71 untuk perempuan; bulan 01 sampai 12), lalu 4 digit nomor urut bukan `0000` | `nik`, `ktp`, `no. induk` menaikkan keyakinan | Sedang (bentrok dengan nomor kartu dan NPWP 16 digit) |
-| `npwp` | 15 digit berformat `99.999.999.9-999.999`, atau 15 dan 16 digit tanpa format | 15 digit tanpa format dan 16 digit wajib punya kata konteks | `npwp`, `nomor pokok wajib pajak` | Sedang. NPWP orang pribadi kini memakai NIK (Q4) |
+| `nik` | 16 digit | Struktur: 2 digit kode provinsi valid (termasuk 93 s.d. 96 untuk provinsi Papua hasil pemekaran, Q5), 4 digit kode kab/kota dan kecamatan, 6 digit tanggal lahir `DDMMYY` (tanggal 01 sampai 31, atau 41 sampai 71 untuk perempuan; bulan 01 sampai 12), lalu 4 digit nomor urut bukan `0000` | `nik`, `ktp`, `no. induk` menaikkan keyakinan | Sedang (bentrok dengan nomor kartu dan NPWP 16 digit) |
+| `npwp` | 15 digit berformat `99.999.999.9-999.999`, atau 15 dan 16 digit tanpa format | 15 digit tanpa format dan 16 digit wajib punya kata konteks. Sejak 1 Juli 2024 (PMK 136/2023), NPWP orang pribadi penduduk = NIK, sedangkan badan dan bukan penduduk memakai `0` + 15 digit lama | `npwp`, `nomor pokok wajib pajak` | Sedang. NPWP 15 digit masih muncul di dokumen lama |
 | `bank_account` | 8 sampai 16 digit, boleh dipisah | **Wajib** kata konteks dalam jarak ≤ 5 kata | `rekening`, `rek`, `no rek`, `norek`, `a/n`, `account` | Tinggi tanpa konteks, karenanya konteks diwajibkan |
-| `nip` | 18 digit, boleh dipisah spasi (`19850315 201001 1 002`) | Tanggal lahir `YYYYMMDD` valid (1940 s.d. 2008), TMT `YYYYMM` valid dan ≥ tahun lahir + 18, digit ke-15 `1` atau `2`, nomor urut bukan `000` (Q10) | `nip`, `pns`, `asn`, `pegawai` menaikkan keyakinan | Rendah |
+| `nip` | 18 digit, boleh dipisah spasi (`19580818 198404 1 001`), termasuk NI PPPK | Tanggal lahir `YYYYMMDD` valid (1940 s.d. 2008); tahun pengangkatan ≥ tahun lahir + 18; digit ke-13 s.d. ke-14 berupa bulan TMT `01` s.d. `12` (PNS) **atau** frekuensi pengangkatan `21` s.d. `29` (PPPK); digit ke-15 `1` atau `2`; nomor urut bukan `000` | `nip`, `pns`, `asn`, `pegawai` menaikkan keyakinan | Rendah |
 | `kk` | 16 digit | Struktur wilayah seperti NIK, 6 digit tanggal terbit `DDMMYY` (tanggal 01 s.d. 31), nomor urut bukan `0000` | **Wajib**: `kk`, `kartu keluarga`, `no. kk` | Rendah dengan konteks; tanpa konteks diperlakukan sebagai `nik` |
-| `passport_id` | 1 huruf + 7 digit, boleh dengan spasi setelah huruf (`A1234567`) | Format dicek ke Ditjen Imigrasi (Q11) | **Wajib**: `paspor`, `passport` | Tinggi tanpa konteks (kode produk, nomor tiket) |
-| `bpjs` | 13 digit (Kesehatan/KIS) atau 11 digit (Ketenagakerjaan/KPJ) | Panjang; format dicek ke BPJS (Q11) | **Wajib**: `bpjs`, `kis`, `jkn`, `kpj` | Tinggi tanpa konteks |
+| `passport_id` | 1 s.d. 2 huruf + 6 s.d. 7 digit, boleh dengan spasi setelah huruf (`A1234567`, `AB123456`) | Tanpa checksum. Pola mengikuti definisi Microsoft Purview; belum dari Ditjen Imigrasi (Q11) | **Wajib**: `paspor`, `passport` | Tinggi tanpa konteks (kode produk, nomor tiket) |
+| `bpjs` | 13 digit (Kesehatan/KIS); 11 atau 16 digit (Ketenagakerjaan; sumber berbeda soal panjangnya) | Panjang. Nomor 16 digit yang juga lolos struktur NIK ditentukan oleh kata konteks | **Wajib**: `bpjs`, `kis`, `jkn`, `kpj` | Tinggi tanpa konteks |
 | `birth_date` | `DD-MM-YYYY`, `DD/MM/YYYY`, `DD.MM.YYYY`, `YYYY-MM-DD`, `DD Bulan YYYY` (nama bulan Indonesia lengkap atau 3 huruf) | Tanggal valid, tahun 1900 s.d. tahun berjalan. Nilai hanya tanggalnya, tanpa kota pada TTL | **Wajib** dalam jarak ≤ 5 kata: `lahir`, `tgl lahir`, `tanggal lahir`, `ttl`, `dob`, `birth`, `kelahiran`; frasa `lahir dan batin` dan `hari lahir` dikecualikan | Sedang |
-| `vehicle_plate` (P1) | Kode wilayah dikenal + 1 s.d. 4 digit + **wajib** 1 s.d. 3 huruf kapital, spasi opsional (`B 1234 ABC`) | Kode wilayah dari daftar Korlantas (Q12) | `plat`, `nopol`, `nomor polisi`, `kendaraan`, `mobil`, `motor` menaikkan keyakinan | Sedang (`Kamar D 12 VIP`, `Ruang B 201 AC`); plat huruf kecil belum dicakup |
+| `vehicle_plate` (P1) | Kode wilayah dikenal + 1 s.d. 4 digit + **wajib** 1 s.d. 3 huruf kapital, spasi opsional (`B 1234 ABC`) | Kode wilayah mengikuti Perpol 7/2021 ditambah kode Papua baru (`PG`, `PS`, `PT`, `PY`); `DS` tidak berlaku lagi (Q12) | `plat`, `nopol`, `nomor polisi`, `kendaraan`, `mobil`, `motor` menaikkan keyakinan | Sedang (`Kamar D 12 VIP`, `Ruang B 201 AC`); plat huruf kecil belum dicakup |
 | `ip_address` (P1) | IPv4 dan IPv6 | Oktet 0 s.d. 255 tanpa nol di depan, tidak diapit `.angka` (menghindari OID); IP privat, loopback, link-local, dan ≥ 224 dikecualikan | Tidak wajib | Sedang (nomor versi empat bagian seperti `4.5.4.3`) |
 
 ### 7.11 Evaluasi dan CLI
@@ -450,15 +450,15 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 | Q1 | Siapa yang menyusun `uji_pii_id.csv`, dan berapa baris minimum per entitas untuk baseline yang bermakna (usulan: ≥ 50 positif dan ≥ 50 negatif per entitas)? | Pembangun | Tahap 0 |
 | Q2 | Apa kriteria angka untuk keputusan "lanjut" di Tahap 0 (misalnya selisih recall ≥ 10 poin atau false positive setengahnya)? | Pembangun | Tahap 0 |
 | Q3 | Apakah default `shadow.apply_transforms: true` diterima calon pengguna, atau mereka ingin shadow murni mengamati? | Calon pengguna (wawancara) | Tidak |
-| Q4 | Aturan NPWP 16 digit: sejak penerapan NIK sebagai NPWP (PMK 112/2022), bagaimana membedakan NPWP badan 16 digit dari angka lain, dan adakah checksum resmi? | Pembangun, dicek ke sumber DJP | Precision `npwp` di Tahap 3 |
-| Q5 | Daftar prefix kartu GPN dan sumber resmi kode provinsi untuk validator NIK (kode wilayah Kemendagri) | Pembangun | Tahap 3 |
+| Q4 | ~~Aturan NPWP 16 digit~~ **Terjawab sebagian** (Lampiran A): NIK untuk orang pribadi, `0` + 15 digit untuk badan. Yang tersisa: adakah checksum resmi NPWP? | Pembangun, dicek ke sumber DJP | Tidak |
+| Q5 | Daftar prefix kartu GPN (tidak ditemukan sumber publik), dan konfirmasi kode provinsi 93 s.d. 96 dari Kepmendagri 100.1.1-6117/2022 | Pembangun | Tahap 3 |
 | Q6 | Teks resmi UU 27/2022 Pasal 36 s.d. 39 dan 56, serta PP 33/2026, sebelum dipakai di materi publik atau pack `id-fintech` | Penanggung jawab kepatuhan | Pack `id-fintech`, bukan MVP |
 | Q7 | Format Gemini API dicek ke dokumentasi resmi ai.google.dev | Pembangun | Adapter Gemini (Tahap 2) |
 | Q8 | Retensi dan tujuan audit log: cukup stdout + file berotasi, atau perlu sink lain sejak awal? | Calon pengguna fintech | Tidak |
 | Q9 | Apakah Windows perlu didukung sejak rilis awal? | Wawancara | Tidak |
-| Q10 | Struktur NIP (18 digit) dicek ke aturan BKN, termasuk NIP PPPK | Pembangun | Precision `nip` di Tahap 3 |
-| Q11 | Format resmi nomor paspor (Ditjen Imigrasi) serta nomor BPJS Kesehatan dan Ketenagakerjaan | Pembangun | Precision `passport_id` dan `bpjs` di Tahap 3 |
-| Q12 | Daftar kode wilayah plat nomor dari Korlantas, dan apakah plat termasuk data pribadi untuk pengguna sasaran | Pembangun, calon pengguna | `vehicle_plate` (P1) |
+| Q10 | ~~Struktur NIP~~ **Terjawab** untuk PNS (Perka BKN 22/2007). NI PPPK baru dari sumber sekunder; konfirmasi ke dokumen BKN | Pembangun | Tidak |
+| Q11 | Format resmi nomor paspor dari Ditjen Imigrasi (sekarang memakai definisi Microsoft Purview), dampak sistem paspor tunggal 2027, dan panjang resmi nomor BPJS Ketenagakerjaan (11 atau 16 digit) | Pembangun | Precision `passport_id` dan `bpjs` di Tahap 3 |
+| Q12 | Daftar kode plat dicek langsung ke teks Perpol 7/2021 (sekarang dari sumber sekunder), dan apakah plat termasuk data pribadi untuk pengguna sasaran | Pembangun, calon pengguna | `vehicle_plate` (P1) |
 | Q13 | Apakah nama bank (BCA, BRI, dan seterusnya) dijadikan kata konteks `bank_account`? | Pembangun | Tidak |
 
 ## 14. Riwayat dokumen
@@ -468,3 +468,24 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 | 1.0 | 9 November 2026 | Draf pertama dari blueprint v1.1, dengan perbaikan di bagian 1 |
 | 1.1 | 9 November 2026 | PII-07: kata konteks menentukan jenis bila dua validator lolos. EVAL-01: lokasi dataset. Rincian task di [TASKS.md](TASKS.md) |
 | 1.2 | 9 November 2026 | Entitas baru (perubahan 15), urutan prioritas PII-07 diperluas, detektor credentials Midtrans/Xendit/Telegram, Q10 s.d. Q13 |
+| 1.3 | 9 November 2026 | Format diverifikasi ke sumber publik (Lampiran A): NI PPPK, paspor 1–2 huruf + 6–7 digit, BPJS TK 16 digit, kode plat Perpol 7/2021, NPWP 16 digit, prefix Xendit/Midtrans/Telegram, `output_parse_pii` LiteLLM |
+
+## Lampiran A. Hasil verifikasi format (9 November 2026)
+
+Dicek lewat pencarian web. Sebagian halaman sumber tidak bisa dibuka langsung dari lingkungan kerja, jadi beberapa poin berasal dari ringkasan hasil pencarian. Tingkat keyakinan ditulis apa adanya.
+
+| Hal | Temuan | Keyakinan | Sumber |
+| --- | --- | --- | --- |
+| NIP PNS | 18 digit: tanggal lahir `YYYYMMDD`, TMT CPNS `YYYYMM`, jenis kelamin (1 pria, 2 wanita), nomor urut 3 digit. Contoh resmi `19580818 198404 1 001` | Tinggi (peraturan) | [Perka BKN 22/2007](https://peraturan.bpk.go.id/Download/250999/Perka%20BKN%20Nomor%2022%20Tahun%202007.pdf), [Perka BKN 43/2007](https://pasal.id/peraturan/perban/perka-bkn-no-43-tahun-2007) |
+| NI PPPK | 18 digit; digit ke-13 s.d. ke-14 adalah frekuensi pengangkatan yang dimulai dari `21`, bukan bulan. Contoh `199002192019211001` | Sedang (sumber sekunder) | [kumparan](https://kumparan.com/info-cpns/nip-pppk-apakah-sama-dengan-pns-ini-penjelasannya-1xSqrwxpPsT), [JadiASN](https://jadiasn.id/apa-perbedaan-nip-pns-dan-pppk/) |
+| Paspor | 7 s.d. 9 karakter: 1 s.d. 2 huruf diikuti 6 s.d. 7 digit, tanpa checksum | Sedang (definisi vendor, bukan Imigrasi) | [Microsoft Purview](https://learn.microsoft.com/en-us/purview/sit-defn-indonesia-passport-number) |
+| BPJS Kesehatan | 13 digit | Tinggi | [Kompas TV](https://www.kompas.tv/info-publik/559588/cara-cek-nomor-bpjs-kesehatan-secara-online-lewat-hp), [OCBC](https://www.ocbc.id/id/article/2022/01/03/bpjs-adalah) |
+| BPJS Ketenagakerjaan | KPJ 11 digit menurut sumber lama; 16 digit menurut CNN Indonesia (2025). Bukan NIK | Rendah (sumber bertentangan) | [CNN Indonesia 2025](https://www.cnnindonesia.com/edukasi/20250121153434-561-1189775/bagaimana-jika-lupa-nomor-bpjs-ketenagakerjaan-ini-cara-mengatasinya), [Bisnis 2023](https://finansial.bisnis.com/read/20230208/215/1626091/begini-cara-cek-nomor-kpj-bpjs-ketenagakerjaan-dengan-gampang) |
+| NPWP 16 digit | Orang pribadi penduduk memakai NIK; badan, instansi, dan bukan penduduk memakai `0` + 15 digit lama; berlaku penuh 1 Juli 2024 (PMK 136/2023) | Tinggi | [DJP SP-40/2023](https://www.pajak.go.id/sites/default/files/2023-12/SP-40%202023%20Pemerintah%20Atur%20Kembali%20Saat%20Implementasi%20Penuh%20NIK-NPWP.pdf), [DJP](https://pajak.go.id/id/artikel/hikmah-di-balik-perpanjangan-implementasi-npwp-16-digit) |
+| Kode plat | Diatur Perpol 7/2021. `DC` (Sulawesi Barat) dan `DW` (Bone, Soppeng, Wajo, Sinjai) ada; `DS` diganti `PA`/`PB`; provinsi Papua baru memakai `PG`, `PS`, `PT`, `PY` | Sedang (sumber sekunder) | [Itera](https://blog.itera.ac.id/kode-pelat-nomor-kendaraan-indonesia-lengkap-dari-a-sampai-z-dan-asal-daerahnya/), [Wikipedia](https://ipfs.aleph.im/ipfs/QmXoypizjW3WknFiJnKLwHCnL72vedxjQkDDP1mXWo6uco/wiki/Indonesian_car_number_plates.html), [detikOto](https://oto.detik.com/berita/d-7086258/plat-d-daerah-mana-cek-daftar-kode-plat-nomor-seluruh-indonesia) |
+| Kode provinsi Papua baru | Empat provinsi baru (38 provinsi). Kode 93 s.d. 96 belum ditemukan di tabel resmi | Rendah | [NU Online](https://nu.or.id/nasional/indonesia-resmi-miliki-38-provinsi-ini-yang-terbaru-K2V5I), [Kepmendagri 100.1.1-6117/2022](https://id.wikisource.org/wiki/Halaman:Kepmendagri_Nomor_100.1.1-6117_Tahun_2022.pdf/3754) |
+| Midtrans | Server key sandbox berawalan `SB-Mid-server-`, production `Mid-server-`; dipakai sebagai username Basic Auth | Tinggi untuk sandbox, sedang untuk production | [Midtrans docs](https://docs.midtrans.com/docs/api-authorization-headers), [Access Keys](https://docs.midtrans.com/docs/access-keys), [GitGuardian](https://docs.gitguardian.com/secrets-detection/secrets-detection-engine/detectors/specifics/midtrans_apikey) |
+| Xendit | Secret key `xnd_production_` (live) dan `xnd_development_` (test); kunci publik `xnd_public_`; panjang dan karakter sufiks tidak tetap | Tinggi | [Xendit Help Center](https://help.xendit.co/hc/en-us/articles/16516398053273-What-is-API-Key-and-How-Do-I-Create-Them) |
+| Token bot Telegram | ID bot (angka), titik dua, 35 karakter `[A-Za-z0-9_-]` | Sedang (bukan dokumentasi Telegram) | [gitleaks](https://www.github.com/gitleaks/gitleaks/pull/1404), [RedHunt Labs](https://docs.redhuntlabs.com/docs/exposure-risks/credentials/telegram_bot_token) |
+| LiteLLM `output_parse_pii` | Ada; hanya memulihkan token setelah model menjawab. Ada laporan bug: pemulihan tidak jalan di jalur Anthropic native | Tinggi (dokumentasi resmi) | [LiteLLM docs](https://docs.litellm.ai/docs/proxy/guardrails/pii_masking_v2), [Issue #22821](https://github.com/BerriAI/litellm/issues/22821) |
+| Prefix kartu GPN | Tidak ditemukan sumber publik | — | [Bank Indonesia](https://www.bi.go.id/id/fungsi-utama/sistem-pembayaran/ritel/instrumen/default.aspx) |

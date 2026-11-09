@@ -2,7 +2,7 @@
 
 Set uji berlabel untuk Tahap 0 (perbandingan dengan LiteLLM + Presidio) dan untuk `omnirail eval` (PRD EVAL-01, EVAL-02).
 
-> **Status: v0.3.** Setiap entitas (P0 dan P1) sudah punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
+> **Status: v0.4.** Format NIP (termasuk NI PPPK), paspor, BPJS, dan kode plat sudah disesuaikan dengan hasil verifikasi di PRD Lampiran A. Setiap entitas (P0 dan P1) punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
 
 ## Isi
 
@@ -15,16 +15,16 @@ Set uji berlabel untuk Tahap 0 (perbandingan dengan LiteLLM + Presidio) dan untu
 
 | Entitas | Prioritas | Positif | Negatif | Kasus di luar cakupan |
 | --- | --- | --- | --- | --- |
-| `email` | P0 | 106 | 61 | — |
-| `phone_id` | P0 | 94 | 62 | 5 (telepon kantor) |
-| `credit_card` | P0 | 81 | 59 | — |
-| `nik` | P0 | 99 | 64 | 5 (NIK berpemisah) |
-| `npwp` | P0 | 68 | 58 | — |
-| `bank_account` | P0 | 78 | 61 | 5 (tanpa kata konteks) |
-| `nip` | P0 | 63 | 54 | — |
-| `kk` | P0 | 64 | 54 | — |
-| `passport_id` | P0 | 59 | 54 | 6 (tanpa kata konteks) |
-| `bpjs` | P0 | 57 | 54 | 6 (tanpa kata konteks) |
+| `email` | P0 | 108 | 61 | — |
+| `phone_id` | P0 | 97 | 62 | 5 (telepon kantor) |
+| `credit_card` | P0 | 79 | 59 | — |
+| `nik` | P0 | 101 | 64 | 5 (NIK berpemisah) |
+| `npwp` | P0 | 70 | 58 | — |
+| `bank_account` | P0 | 76 | 61 | 5 (tanpa kata konteks) |
+| `nip` | P0 | 58 | 54 | — |
+| `kk` | P0 | 58 | 54 | — |
+| `passport_id` | P0 | 64 | 54 | 6 (tanpa kata konteks) |
+| `bpjs` | P0 | 59 | 54 | 6 (tanpa kata konteks) |
 | `birth_date` | P0 | 62 | 54 | — |
 | `vehicle_plate` | P1 | 54 | 54 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
 | `ip_address` | P1 | 54 | 54 | seluruh baris positif bertanda `cakupan_mvp = tidak` |

@@ -14,7 +14,7 @@ Turunan dari [PRD MVP v1.0](PRD.md). Satu task berarti satu PR dengan kriteria s
 | [x] | T-002 | Lengkapi dataset sampai ≥ 50 positif dan ≥ 50 negatif per entitas MVP | EVAL-01, Q1 | Hitungan per entitas memenuhi target, dan holdout ≥ 30% dari total | T-001 |
 | [ ] | T-003 | Tetapkan kriteria angka keputusan "lanjut, pivot, berhenti" | Q2 | Kriteria tertulis di catatan keputusan **sebelum** T-004 dijalankan | — |
 | [ ] | T-004 | Jalankan dataset (dev) terhadap Presidio dengan recognizer Indonesia sederhana (regex tanpa validator) | Tahap 0 | Recall, precision, dan false positive per entitas tercatat di `eval/results/` | T-002, T-003 |
-| [ ] | T-005 | Uji LiteLLM + guardrail Presidio sebagai proxy: pemulihan token (`output_parse_pii`), blokir credentials, dan overhead latensi | Tahap 0 | Laporan singkat: fitur yang benar-benar ada, celahnya, dan cara memasangnya | — |
+| [ ] | T-005 | Uji LiteLLM + guardrail Presidio sebagai proxy: pemulihan token (`output_parse_pii`), blokir credentials, dan overhead latensi. Cek juga status bug pemulihan di jalur Anthropic ([BerriAI/litellm#22821](https://github.com/BerriAI/litellm/issues/22821)) | Tahap 0 | Laporan singkat: fitur yang benar-benar ada, celahnya, dan cara memasangnya | — |
 | [ ] | T-006 | Keputusan Tahap 0 | Tahap 0 | Catatan keputusan berisi angka T-004 dan T-005 dibandingkan dengan kriteria T-003 | T-004, T-005 |
 
 Bila keputusannya **pivot**, Tahap 1 dan 2 diganti dengan plugin untuk LiteLLM atau Presidio, sedangkan Tahap 3 (entitas, validator, pack, dan eval) tetap dipakai.
@@ -92,4 +92,5 @@ Bila keputusannya **pivot**, Tahap 1 dan 2 diganti dengan plugin untuk LiteLLM a
 | 9 Nov 2026 | Dataset v0.2: 701 baris dev dan 307 holdout. Template kalimat dev dan holdout dipisah. Baris negatif menandai entitas yang dijebak di `catatan` (`[nik]`, `[email]`, dan seterusnya) |
 | 9 Nov 2026 | Terbuka (PRD Q13): apakah nama bank (BCA, BRI, dan seterusnya) dijadikan kata konteks `bank_account`? Sekarang baris seperti itu ditandai `cakupan_mvp = tidak` |
 | 9 Nov 2026 | Entitas ditambah (PRD v1.2): `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` masuk P0; `vehicle_plate` dan `ip_address` P1. Dataset v0.3: 1.276 baris dev dan 549 holdout |
+| 9 Nov 2026 | Format diverifikasi (PRD Lampiran A). NI PPPK ditambahkan ke validator `nip` (digit 13-14 bernilai 21 s.d. 29), paspor diperluas menjadi 1-2 huruf + 6-7 digit, BPJS Ketenagakerjaan 16 digit ditambahkan, kode plat disesuaikan Perpol 7/2021. Baris hasil template dibangkitkan ulang; baris tulisan tangan (D001-D106, H001-H047) tidak berubah |
 | 9 Nov 2026 | Pola plat mewajibkan huruf akhiran, dan IP ≥ 224 dikecualikan. Keduanya ditemukan saat pemeriksaan silang dataset ("gate A1", "Vitamin B 12", subnet mask) |
