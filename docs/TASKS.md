@@ -42,12 +42,24 @@ Bila keputusannya **pivot**, Tahap 1 dan 2 diganti dengan plugin untuk LiteLLM a
 | [ ] | T-205 | Adapter OpenAI (passthrough) | UP-05, UP-06 | Sama seperti T-202 | T-201 |
 | [ ] | T-206 | `allowed_providers`, timeout upstream, dan penyaringan body error provider | UP-03, UP-04, UP-07 | Provider terlarang gagal saat start dan mendapat 403 saat request; timeout mendapat 504; body error provider tidak muncul di respons maupun log | T-202 |
 
+## Verifikasi format (sebelum atau paralel dengan T-302)
+
+Tindak lanjut keterbatasan K1 s.d. K5 di PRD Lampiran A. T-302 boleh dimulai dengan asumsi sementara. Task ini dianggap selesai bila hasilnya tercatat di Lampiran A dan dataset diperbarui bila perlu.
+
+| | ID | Task | Requirement | Selesai bila | Butuh |
+| --- | --- | --- | --- | --- | --- |
+| [ ] | T-321 | Cari daftar prefix (BIN) kartu GPN; putuskan jalur deteksi kartu debit GPN | K1, Q5 | Daftar prefix bersumber resmi, **atau** keputusan tertulis memakai Luhn + kata konteks; baris dataset kartu GPN ditambahkan | — |
+| [ ] | T-322 | Konfirmasi kode provinsi Papua Selatan, Papua Tengah, Papua Pegunungan, dan Papua Barat Daya | K2, Q5 | Kode dicocokkan dengan tabel Kemendagri; validator NIK/KK dan dataset disesuaikan | — |
+| [ ] | T-323 | Pastikan panjang nomor BPJS Ketenagakerjaan (11 atau 16 digit) | K3, Q11 | Format bersumber resmi atau dari contoh calon pengguna (bukan data asli); spesifikasi `bpjs` diperbarui | — |
+| [ ] | T-324 | Cek format nomor paspor ke sumber Imigrasi, termasuk dampak paspor tunggal 2027 | K4, Q11 | Pola `passport_id` bersumber Imigrasi, atau catatan bahwa sumber resmi tidak tersedia | — |
+| [ ] | T-325 | Buka ulang sumber yang tidak bisa diakses (NI PPPK, kode plat, token Telegram) dari jaringan tanpa batasan | K5, Q10, Q12 | Tingkat keyakinan di Lampiran A diperbarui berdasarkan sumber primer | — |
+
 ## Tahap 3 — PII, credentials, kebijakan, dan audit
 
 | | ID | Task | Requirement | Selesai bila | Butuh |
 | --- | --- | --- | --- | --- | --- |
 | [ ] | T-301 | Normalisasi teks (NFKC, casefold, hapus karakter lebar-nol) dengan peta posisi ke teks asli | POL-02 | Rentang temuan pada teks normal bisa dipetakan kembali ke teks asli; test Unicode lulus | T-101 |
-| [ ] | T-302 | Validator: Luhn + prefix kartu, struktur NIK, KK, dan NIP, nomor HP, NPWP, paspor, BPJS, tanggal | PII-01, bagian 7.10 | Test unit memakai semua baris dev yang relevan | T-301 |
+| [ ] | T-302 | Validator: Luhn + prefix kartu, struktur NIK, KK, dan NIP, nomor HP, NPWP, paspor, BPJS, tanggal | PII-01, bagian 7.10 | Test unit memakai semua baris dev yang relevan; asumsi yang belum terverifikasi (K1 s.d. K5) ditandai di kode agar mudah diganti | T-301 (T-321 s.d. T-325 bila sudah selesai) |
 | [ ] | T-303 | Detektor entitas, kata konteks wajib, dan aturan prioritas tumpang tindih | PII-01, PII-07 | D050 terdeteksi sebagai `nik`, D051 sebagai `credit_card`; `kk`, `passport_id`, `bpjs`, `birth_date`, dan `bank_account` tanpa konteks tidak terdeteksi | T-302 |
 | [ ] | T-304 | Tokenisasi dan pemulihan: token konsisten, lompati token yang sudah ada di input, tabel hanya di memori | PII-02 s.d. PII-06 | Kriteria terima PII di PRD 7.4 lulus | T-303 |
 | [ ] | T-305 | Detektor credentials dan pengecualian placeholder | CRED-01 s.d. CRED-03 | Semua baris `kredensial` dev dengan `cakupan_mvp = ya` lulus | T-301 |

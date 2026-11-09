@@ -468,7 +468,7 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 | 1.0 | 9 November 2026 | Draf pertama dari blueprint v1.1, dengan perbaikan di bagian 1 |
 | 1.1 | 9 November 2026 | PII-07: kata konteks menentukan jenis bila dua validator lolos. EVAL-01: lokasi dataset. Rincian task di [TASKS.md](TASKS.md) |
 | 1.2 | 9 November 2026 | Entitas baru (perubahan 15), urutan prioritas PII-07 diperluas, detektor credentials Midtrans/Xendit/Telegram, Q10 s.d. Q13 |
-| 1.3 | 9 November 2026 | Format diverifikasi ke sumber publik (Lampiran A): NI PPPK, paspor 1–2 huruf + 6–7 digit, BPJS TK 16 digit, kode plat Perpol 7/2021, NPWP 16 digit, prefix Xendit/Midtrans/Telegram, `output_parse_pii` LiteLLM |
+| 1.3 | 9 November 2026 | Keterbatasan verifikasi K1 s.d. K5 dicatat di Lampiran A. Format diverifikasi ke sumber publik (Lampiran A): NI PPPK, paspor 1–2 huruf + 6–7 digit, BPJS TK 16 digit, kode plat Perpol 7/2021, NPWP 16 digit, prefix Xendit/Midtrans/Telegram, `output_parse_pii` LiteLLM |
 
 ## Lampiran A. Hasil verifikasi format (9 November 2026)
 
@@ -489,3 +489,15 @@ Dicek lewat pencarian web. Sebagian halaman sumber tidak bisa dibuka langsung da
 | Token bot Telegram | ID bot (angka), titik dua, 35 karakter `[A-Za-z0-9_-]` | Sedang (bukan dokumentasi Telegram) | [gitleaks](https://www.github.com/gitleaks/gitleaks/pull/1404), [RedHunt Labs](https://docs.redhuntlabs.com/docs/exposure-risks/credentials/telegram_bot_token) |
 | LiteLLM `output_parse_pii` | Ada; hanya memulihkan token setelah model menjawab. Ada laporan bug: pemulihan tidak jalan di jalur Anthropic native | Tinggi (dokumentasi resmi) | [LiteLLM docs](https://docs.litellm.ai/docs/proxy/guardrails/pii_masking_v2), [Issue #22821](https://github.com/BerriAI/litellm/issues/22821) |
 | Prefix kartu GPN | Tidak ditemukan sumber publik | — | [Bank Indonesia](https://www.bi.go.id/id/fungsi-utama/sistem-pembayaran/ritel/instrumen/default.aspx) |
+
+### Keterbatasan verifikasi dan tindak lanjut
+
+Lima hal berikut belum bisa dipastikan. Validator memakai asumsi sementara di kolom "Asumsi sekarang" sampai sumber resmi didapat. Setiap butir punya task di [TASKS.md](TASKS.md) (T-321 s.d. T-325).
+
+| # | Keterbatasan | Asumsi sekarang | Risiko bila asumsi salah | Tindak lanjut | Task |
+| --- | --- | --- | --- | --- | --- |
+| K1 | **Prefix kartu GPN tidak ditemukan di sumber publik** | Kartu hanya dikenali bila prefix-nya Visa, Mastercard, Amex, atau JCB | Kartu debit GPN 16 digit tidak terdeteksi sebagai `credit_card` (false negative). Bila juga lolos struktur NIK, kartu itu bisa salah dilabeli `nik`, tetapi tetap tersamarkan | Minta daftar BIN GPN ke ASPI, Bank Indonesia, atau bank calon pengguna. Sementara itu, pertimbangkan Luhn + kata konteks `kartu`/`debit`/`GPN` sebagai jalur deteksi kedua | T-321 |
+| K2 | **Kode provinsi Papua baru (93 s.d. 96) belum terkonfirmasi** dari tabel Kemendagri | Kode 93, 94, 95, 96 diterima di validator NIK dan KK | Bila kodenya berbeda, NIK dari provinsi itu tidak terdeteksi, dan angka berawalan 93 s.d. 96 bisa salah ditandai sebagai NIK | Cocokkan dengan lampiran Kepmendagri 100.1.1-6117/2022 atau peraturan kode wilayah yang lebih baru; perbarui daftar dan dataset | T-322 |
+| K3 | **Panjang resmi nomor BPJS Ketenagakerjaan bertentangan** (11 digit menurut sumber lama, 16 digit menurut CNN Indonesia 2025) | Keduanya diterima, selama ada kata konteks `bpjs`, `kpj`, `jkn`, atau `kis` | Bila hanya satu yang berlaku, precision `bpjs` sedikit turun. Dampaknya kecil, karena kata konteks tetap wajib | Cek kartu digital JMO atau dokumen resmi BPJS Ketenagakerjaan; minta contoh format (bukan data asli) dari calon pengguna fintech atau HR | T-323 |
+| K4 | **Format paspor bersandar pada definisi Microsoft Purview**, bukan Ditjen Imigrasi. Rencana sistem paspor tunggal 2027 belum diketahui dampaknya ke format nomor | 1 s.d. 2 huruf + 6 s.d. 7 digit, kata konteks wajib | Format baru 2027 bisa tidak terdeteksi | Cari peraturan Imigrasi tentang nomor paspor dan pengumuman paspor tunggal 2027; pantau sebelum rilis | T-324 |
+| K5 | **Beberapa halaman sumber tidak bisa dibuka langsung**, karena jaringan lingkungan kerja membatasi domainnya (detik.com, learn.microsoft.com, cnnindonesia.com, dan lain-lain). Temuan NI PPPK, kode plat, dan token Telegram hanya bersandar pada ringkasan hasil pencarian | Temuan dipakai dengan tingkat keyakinan seperti di tabel Lampiran A | Detail kecil bisa keliru, misalnya rentang frekuensi PPPK `21` s.d. `29`, daftar kode plat, atau panjang ID bot Telegram | Buka ulang sumber dari jaringan tanpa batasan, utamakan sumber primer (dokumen BKN, teks Perpol 7/2021, dokumentasi Telegram Bot API), lalu perbarui tabel ini | T-325 |
