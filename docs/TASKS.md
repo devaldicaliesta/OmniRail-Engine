@@ -11,7 +11,7 @@ Turunan dari [PRD MVP v1.0](PRD.md). Satu task berarti satu PR dengan kriteria s
 | | ID | Task | Requirement | Selesai bila | Butuh |
 | --- | --- | --- | --- | --- | --- |
 | [x] | T-001 | Draf dataset `eval/{dev,holdout}/uji_pii_id.csv` | EVAL-01 | 106 baris dev dan 47 holdout, format terdokumentasi di `eval/README.md` | — |
-| [ ] | T-002 | Lengkapi dataset sampai ≥ 50 positif dan ≥ 50 negatif per entitas MVP | EVAL-01, Q1 | Hitungan per entitas memenuhi target, dan holdout ≥ 30% dari total | T-001 |
+| [x] | T-002 | Lengkapi dataset sampai ≥ 50 positif dan ≥ 50 negatif per entitas MVP | EVAL-01, Q1 | Hitungan per entitas memenuhi target, dan holdout ≥ 30% dari total | T-001 |
 | [ ] | T-003 | Tetapkan kriteria angka keputusan "lanjut, pivot, berhenti" | Q2 | Kriteria tertulis di catatan keputusan **sebelum** T-004 dijalankan | — |
 | [ ] | T-004 | Jalankan dataset (dev) terhadap Presidio dengan recognizer Indonesia sederhana (regex tanpa validator) | Tahap 0 | Recall, precision, dan false positive per entitas tercatat di `eval/results/` | T-002, T-003 |
 | [ ] | T-005 | Uji LiteLLM + guardrail Presidio sebagai proxy: pemulihan token (`output_parse_pii`), blokir credentials, dan overhead latensi | Tahap 0 | Laporan singkat: fitur yang benar-benar ada, celahnya, dan cara memasangnya | — |
@@ -88,3 +88,5 @@ Bila keputusannya **pivot**, Tahap 1 dan 2 diganti dengan plugin untuk LiteLLM a
 | --- | --- |
 | 9 Nov 2026 | Dataset dipisah per folder (`eval/dev/`, `eval/holdout/`) dengan nama berkas dan kolom yang sama, bukan kolom `split` tambahan |
 | 9 Nov 2026 | Bila satu nilai lolos validator NIK dan kartu sekaligus, kata konteks menentukan jenisnya; tanpa konteks, dipakai urutan prioritas PII-07 |
+| 9 Nov 2026 | Dataset v0.2: 701 baris dev dan 307 holdout. Template kalimat dev dan holdout dipisah. Baris negatif menandai entitas yang dijebak di `catatan` (`[nik]`, `[email]`, dan seterusnya) |
+| 9 Nov 2026 | Terbuka: apakah nama bank (BCA, BRI, dan seterusnya) dijadikan kata konteks `bank_account`? Sekarang baris seperti itu ditandai `cakupan_mvp = tidak` |

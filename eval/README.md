@@ -2,14 +2,36 @@
 
 Set uji berlabel untuk Tahap 0 (perbandingan dengan LiteLLM + Presidio) dan untuk `omnirail eval` (PRD EVAL-01, EVAL-02).
 
-> **Status: draf v0.1.** Jumlah baris per entitas masih di bawah usulan minimum (≥ 50 positif dan ≥ 50 negatif per entitas, PRD Q1). Baseline dari draf ini hanya indikatif.
+> **Status: v0.2.** Setiap entitas MVP sudah punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
 
 ## Isi
 
 | Berkas | Baris | Kegunaan |
 | --- | --- | --- |
-| `dev/uji_pii_id.csv` | 106 | Boleh dilihat dan dipakai saat menyetel aturan |
-| `holdout/uji_pii_id.csv` | 47 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
+| `dev/uji_pii_id.csv` | 701 | Boleh dilihat dan dipakai saat menyetel aturan |
+| `holdout/uji_pii_id.csv` | 307 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
+
+### Jumlah per entitas (dev + holdout, `cakupan_mvp = ya`)
+
+| Entitas | Positif | Negatif |
+| --- | --- | --- |
+| `email` | 103 | 61 |
+| `phone_id` | 89 | 62 |
+| `credit_card` | 81 | 59 |
+| `nik` | 91 | 64 |
+| `npwp` | 68 | 58 |
+| `bank_account` | 78 | 61 |
+
+Hitungan positif menghitung kemunculan entitas, sehingga baris campuran terhitung di beberapa entitas sekaligus. Di luar itu ada 70 baris credentials, 31 baris injeksi, serta 55 kemunculan entitas yang sengaja di luar cakupan MVP (nama, alamat, NIK berpemisah, telepon kantor, dan rekening tanpa kata konteks).
+
+### Variasi
+
+- **Gaya kalimat:** chat CS formal dan informal (singkatan, slang, emoji), log aplikasi, JSON, CSV, `key=value`, header email, SQL, perintah shell, potongan kode, dan kalimat campuran bahasa Inggris.
+- **Format nilai:** 36 prefix operator seluler dengan 8 gaya penulisan (`08…`, `+62`, `62`, pemisah spasi, titik, atau tanda hubung); kartu Visa, Mastercard (seri 5 dan 2), Amex, dan JCB dengan atau tanpa pemisah; NIK laki-laki dan perempuan dari semua provinsi; NPWP 15 digit bertitik, 15 digit polos, dan 16 digit; rekening 10 sampai 16 digit dari 16 nama bank.
+- **Negatif yang menjebak:** `git@github.com:…`, `logo@2x.png`, IMEI yang lolos Luhn, barcode EAN-13, nomor seri faktur pajak, kode wilayah Kemendagri, saldo bertitik di dekat kata "rekening", dan pesan bisnis wajar yang memuat frasa deny-list.
+- **Template dev dan holdout terpisah.** Kalimat holdout memakai template yang tidak pernah muncul di dev, sehingga holdout menguji generalisasi, bukan hafalan pola kalimat.
+
+Baris berlabel `negatif sulit` di kolom `catatan` adalah kasus yang kemungkinan besar gagal di MVP. Baris ini tetap dihitung, karena tujuannya memperlihatkan false positive yang nyata.
 
 Semua data adalah **data rekaan**: NIK, nomor kartu, nomor HP, email (domain `example.*` dan `.test`), dan credentials dibuat secara acak. NIK dan nomor kartu dibangkitkan agar lolos validator struktur dan Luhn, sehingga bentuknya realistis. Data nyata hanya boleh masuk setelah dianonimkan dan disetujui penanggung jawab data.
 
@@ -22,7 +44,7 @@ Semua data adalah **data rekaan**: NIK, nomor kartu, nomor HP, email (domain `ex
 | `teks` | Isi pesan pengguna. Bisa multi-baris (dikutip sesuai CSV) |
 | `diharapkan` | Lihat aturan di bawah |
 | `cakupan_mvp` | `ya` bila MVP seharusnya menangani baris ini; `tidak` bila baris ini sengaja mendokumentasikan batas MVP |
-| `catatan` | Alasan baris ini ada atau apa yang diuji |
+| `catatan` | Alasan baris ini ada atau apa yang diuji. Untuk baris `negatif`, diawali entitas yang dijebak, misalnya `[nik]` |
 
 Aturan kolom `diharapkan`:
 
