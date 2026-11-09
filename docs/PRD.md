@@ -1,4 +1,4 @@
-# OmniRail Engine — PRD MVP v1.1
+# OmniRail Engine — PRD MVP v1.2
 
 | | |
 | --- | --- |
@@ -32,6 +32,7 @@ Blueprint sudah kuat dari sisi posisi produk, batas klaim, dan konteks regulasi.
 | 12 | **`policy_hash` dan isi audit log ditetapkan** (bagian 7.7) | Blueprint mewajibkan versi dan hash kebijakan di tiap request, tetapi tidak mendefinisikan cara menghitung hash atau field yang dicatat |
 | 13 | **Target awal ditulis sebagai hipotesis** yang direvisi setelah baseline | Blueprint menolak menulis target. Tanpa angka, kriteria selesai tiap tahap tidak bisa diperiksa. Angka di bagian 9 sengaja ditandai sementara |
 | 14 | **Dataset uji `uji_pii_id.csv` dijadikan deliverable P0** | Dataset ini dirujuk di blueprint, tetapi belum ada di repo |
+| 15 | **Entitas ditambah:** `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` (P0), `vehicle_plate`, `ip_address` (P1), serta kunci Midtrans, Xendit, dan token bot Telegram | Blueprint hanya memuat enam entitas berformat tetap. Dokumen identitas Indonesia lain (NIP, KK, paspor, BPJS) sama murahnya untuk dideteksi dan memperkuat pembeda "konteks Indonesia". Kunci payment gateway lokal relevan untuk fintech, dan credentials adalah kekhawatiran utama di wawancara pertama |
 
 ---
 
@@ -175,13 +176,14 @@ Kriteria terima:
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
-| PII-01 | P0 | Entitas `email`, `phone_id`, `credit_card`, `nik`, `npwp`, `bank_account` dengan pola, validator, dan kata konteks sesuai bagian 7.10 |
+| PII-01 | P0 | Entitas `email`, `phone_id`, `credit_card`, `nik`, `npwp`, `bank_account`, `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` dengan pola, validator, dan kata konteks sesuai bagian 7.10 |
+| PII-01b | P1 | Entitas `vehicle_plate` dan `ip_address` (bagian 7.10), mati secara default di pack `id-general` |
 | PII-02 | P0 | Aksi per entitas: `tokenize` (dipulihkan di jawaban) atau `redact` (diganti `[NIK]` dan tidak dipulihkan) |
 | PII-03 | P0 | Nilai yang sama dalam satu request selalu mendapat token yang sama; nilai berbeda mendapat token berbeda |
 | PII-04 | P0 | Format token `<JENIS_n>`. Bila input sudah memuat teks berbentuk token (misalnya pengguna menulis `<EMAIL_1>`), penomoran melompati nomor itu, dan hanya token yang diterbitkan OmniRail yang dipulihkan |
 | PII-05 | P0 | Tabel token hanya hidup di memori selama satu request dan tidak pernah ditulis ke log, disk, atau metrik |
 | PII-06 | P0 | Pemulihan hanya untuk kecocokan persis. Token tak dikenal dibiarkan apa adanya. Token yang diterbitkan tetapi tidak kembali dihitung sebagai metrik, bukan error |
-| PII-07 | P0 | Bila satu rentang teks lolos validator lebih dari satu entitas, kata konteks yang paling dekat menentukan jenisnya (misalnya `NIK` atau `kartu`). Tanpa kata konteks, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nik` (struktur valid) > `npwp` > `bank_account` > `phone_id` > `email`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang |
+| PII-07 | P0 | Bila satu rentang teks lolos validator lebih dari satu entitas, kata konteks yang paling dekat menentukan jenisnya (misalnya `NIK` atau `kartu`). Tanpa kata konteks, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nip` > `nik` (struktur valid) > `npwp` > `bpjs` > `bank_account` > `phone_id` > `passport_id` > `birth_date` > `email` > `ip_address` > `vehicle_plate`. Entitas yang mewajibkan kata konteks (`kk`, `passport_id`, `bpjs`, `birth_date`, `bank_account`) tidak pernah menang tanpa konteks; nilai 16 digit tanpa kata `KK` diperlakukan sebagai `nik`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang |
 | PII-08 | P1 | Entitas kustom di `omnirail.yaml` (customisasi tingkat 2) dengan validator bawaan yang bisa dipilih |
 | PII-09 | P2 | NER lokal (ONNX) untuk nama, alamat, dan nama instansi |
 
@@ -191,13 +193,15 @@ Kriteria terima:
 - [ ] Input yang sudah memuat `<EMAIL_1>` tidak dipulihkan menjadi email orang lain.
 - [ ] Nomor 16 digit yang lolos Luhn dan memiliki prefix kartu, tanpa kata konteks NIK, dikenali sebagai `credit_card`, bukan `nik`. Nilai yang sama setelah kata `NIK` dikenali sebagai `nik` (dataset D050 dan D051).
 - [ ] Nomor pesanan 16 digit dengan tanggal tidak valid di posisi 7 sampai 12 tidak dikenali sebagai `nik`.
+- [ ] Nilai 16 digit setelah kata `No. KK` dikenali sebagai `kk`; nilai yang sama tanpa kata konteks dikenali sebagai `nik`.
+- [ ] "Mohon maaf lahir dan batin, 10-04-2026" tidak dikenali sebagai `birth_date`; "lahir 12/04/1974" dikenali.
 - [ ] `grep` nilai uji di semua log setelah menjalankan set uji tidak menemukan satu pun nilai.
 
 ### 7.5 Credentials
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
-| CRED-01 | P0 | Detektor: `api_key` (prefix dikenal seperti `sk-`, `sk-ant-`, `AIza`, `AKIA`, `ghp_`, `github_pat_`, `glpat-`, `xox?-`), `jwt` (tiga segmen base64url dengan header JSON berisi `alg`), `private_key` (blok `-----BEGIN ... PRIVATE KEY-----`), `connection_string` (skema basis data atau broker dengan password tidak kosong), `password_assignment` (`password`, `pwd`, `kata sandi` diikuti `:` atau `=`) |
+| CRED-01 | P0 | Detektor: `api_key` (prefix dikenal seperti `sk-`, `sk-ant-`, `AIza`, `AKIA`, `ghp_`, `github_pat_`, `glpat-`, `xox?-`, Midtrans `Mid-server-` dan `SB-Mid-server-`, Xendit `xnd_production_` dan `xnd_development_`, serta token bot Telegram `<angka>:<35 karakter>`), `jwt` (tiga segmen base64url dengan header JSON berisi `alg`), `private_key` (blok `-----BEGIN ... PRIVATE KEY-----`), `connection_string` (skema basis data atau broker dengan password tidak kosong), `password_assignment` (`password`, `pwd`, `kata sandi` diikuti `:` atau `=`) |
 | CRED-02 | P0 | Aksi `block` (default) atau `redact`. Credentials **tidak pernah** ditokenisasi dan tidak pernah dipulihkan |
 | CRED-03 | P0 | Placeholder umum (`***`, `<password>`, `${VAR}`, `xxx`) tidak dianggap credentials |
 | CRED-04 | P1 | Deteksi entropi tinggi setelah kata kunci (`token=`, `secret=`) untuk secret tanpa prefix |
@@ -304,6 +308,13 @@ Kriteria terima:
 | `nik` | 16 digit | Struktur: 2 digit kode provinsi valid, 4 digit kode kab/kota dan kecamatan, 6 digit tanggal lahir `DDMMYY` (tanggal 01 sampai 31, atau 41 sampai 71 untuk perempuan; bulan 01 sampai 12), lalu 4 digit nomor urut bukan `0000` | `nik`, `ktp`, `no. induk` menaikkan keyakinan | Sedang (bentrok dengan nomor kartu dan NPWP 16 digit) |
 | `npwp` | 15 digit berformat `99.999.999.9-999.999`, atau 15 dan 16 digit tanpa format | 15 digit tanpa format dan 16 digit wajib punya kata konteks | `npwp`, `nomor pokok wajib pajak` | Sedang. NPWP orang pribadi kini memakai NIK (Q4) |
 | `bank_account` | 8 sampai 16 digit, boleh dipisah | **Wajib** kata konteks dalam jarak ≤ 5 kata | `rekening`, `rek`, `no rek`, `norek`, `a/n`, `account` | Tinggi tanpa konteks, karenanya konteks diwajibkan |
+| `nip` | 18 digit, boleh dipisah spasi (`19850315 201001 1 002`) | Tanggal lahir `YYYYMMDD` valid (1940 s.d. 2008), TMT `YYYYMM` valid dan ≥ tahun lahir + 18, digit ke-15 `1` atau `2`, nomor urut bukan `000` (Q10) | `nip`, `pns`, `asn`, `pegawai` menaikkan keyakinan | Rendah |
+| `kk` | 16 digit | Struktur wilayah seperti NIK, 6 digit tanggal terbit `DDMMYY` (tanggal 01 s.d. 31), nomor urut bukan `0000` | **Wajib**: `kk`, `kartu keluarga`, `no. kk` | Rendah dengan konteks; tanpa konteks diperlakukan sebagai `nik` |
+| `passport_id` | 1 huruf + 7 digit, boleh dengan spasi setelah huruf (`A1234567`) | Format dicek ke Ditjen Imigrasi (Q11) | **Wajib**: `paspor`, `passport` | Tinggi tanpa konteks (kode produk, nomor tiket) |
+| `bpjs` | 13 digit (Kesehatan/KIS) atau 11 digit (Ketenagakerjaan/KPJ) | Panjang; format dicek ke BPJS (Q11) | **Wajib**: `bpjs`, `kis`, `jkn`, `kpj` | Tinggi tanpa konteks |
+| `birth_date` | `DD-MM-YYYY`, `DD/MM/YYYY`, `DD.MM.YYYY`, `YYYY-MM-DD`, `DD Bulan YYYY` (nama bulan Indonesia lengkap atau 3 huruf) | Tanggal valid, tahun 1900 s.d. tahun berjalan. Nilai hanya tanggalnya, tanpa kota pada TTL | **Wajib** dalam jarak ≤ 5 kata: `lahir`, `tgl lahir`, `tanggal lahir`, `ttl`, `dob`, `birth`, `kelahiran`; frasa `lahir dan batin` dan `hari lahir` dikecualikan | Sedang |
+| `vehicle_plate` (P1) | Kode wilayah dikenal + 1 s.d. 4 digit + **wajib** 1 s.d. 3 huruf kapital, spasi opsional (`B 1234 ABC`) | Kode wilayah dari daftar Korlantas (Q12) | `plat`, `nopol`, `nomor polisi`, `kendaraan`, `mobil`, `motor` menaikkan keyakinan | Sedang (`Kamar D 12 VIP`, `Ruang B 201 AC`); plat huruf kecil belum dicakup |
+| `ip_address` (P1) | IPv4 dan IPv6 | Oktet 0 s.d. 255 tanpa nol di depan, tidak diapit `.angka` (menghindari OID); IP privat, loopback, link-local, dan ≥ 224 dikecualikan | Tidak wajib | Sedang (nomor versi empat bagian seperti `4.5.4.3`) |
 
 ### 7.11 Evaluasi dan CLI
 
@@ -367,6 +378,8 @@ Angka di bawah adalah **target awal (hipotesis)**. Angka ini memberi kriteria lu
 | Tingkat blokir credentials | ≥ 0,95 | Baris kredensial, `dev` dan `holdout` |
 | Recall `email`, `credit_card`, `nik` | ≥ 0,95 | Baris positif |
 | Recall `phone_id`, `npwp` | ≥ 0,90 | Baris positif |
+| Recall `nip`, `kk` | ≥ 0,95 | Baris positif |
+| Recall `passport_id`, `bpjs`, `birth_date` (dengan kata konteks) | ≥ 0,90 | Baris positif |
 | Recall `bank_account` (dengan kata konteks) | ≥ 0,80 | Baris positif |
 | Precision per entitas | ≥ 0,90 | Baris positif dan negatif |
 | False positive pada baris negatif | ≤ 0,02 | Baris negatif (termasuk nomor resi dan nomor pesanan) |
@@ -443,6 +456,10 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 | Q7 | Format Gemini API dicek ke dokumentasi resmi ai.google.dev | Pembangun | Adapter Gemini (Tahap 2) |
 | Q8 | Retensi dan tujuan audit log: cukup stdout + file berotasi, atau perlu sink lain sejak awal? | Calon pengguna fintech | Tidak |
 | Q9 | Apakah Windows perlu didukung sejak rilis awal? | Wawancara | Tidak |
+| Q10 | Struktur NIP (18 digit) dicek ke aturan BKN, termasuk NIP PPPK | Pembangun | Precision `nip` di Tahap 3 |
+| Q11 | Format resmi nomor paspor (Ditjen Imigrasi) serta nomor BPJS Kesehatan dan Ketenagakerjaan | Pembangun | Precision `passport_id` dan `bpjs` di Tahap 3 |
+| Q12 | Daftar kode wilayah plat nomor dari Korlantas, dan apakah plat termasuk data pribadi untuk pengguna sasaran | Pembangun, calon pengguna | `vehicle_plate` (P1) |
+| Q13 | Apakah nama bank (BCA, BRI, dan seterusnya) dijadikan kata konteks `bank_account`? | Pembangun | Tidak |
 
 ## 14. Riwayat dokumen
 
@@ -450,3 +467,4 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: tampilan uji (EVAL-
 | --- | --- | --- |
 | 1.0 | 9 November 2026 | Draf pertama dari blueprint v1.1, dengan perbaikan di bagian 1 |
 | 1.1 | 9 November 2026 | PII-07: kata konteks menentukan jenis bila dua validator lolos. EVAL-01: lokasi dataset. Rincian task di [TASKS.md](TASKS.md) |
+| 1.2 | 9 November 2026 | Entitas baru (perubahan 15), urutan prioritas PII-07 diperluas, detektor credentials Midtrans/Xendit/Telegram, Q10 s.d. Q13 |

@@ -240,7 +240,7 @@ D232,negatif,"Permisi, IMEI 860728076906834 Ditunggu kabarnya.",-,ya,[phone_id] 
 D233,negatif,"Dear tim, Nomor antrian 0833",-,ya,[phone_id] terlalu pendek
 D234,negatif,"Permisi, Call center 1500-624 Thx",-,ya,[phone_id] nomor layanan pendek
 D235,negatif,Urgent: ID pelanggan PLN 599218338723,-,ya,[phone_id] ID pelanggan listrik
-D236,negatif,Nomor BPJS 0004758325425 🙏,-,ya,"[phone_id] diawali 000, bukan 08"
+D236,negatif,Nomor registrasi 0004758325425 🙏,-,ya,"[phone_id] diawali 000, bukan 08"
 D237,negatif,FYI Nomor pesanan 08220246882 sudah dikirim,-,ya,[phone_id] negatif sulit: identik dengan bentuk nomor HP
 D238,negatif,"Min, Koordinat -6.9952, 106.2349 Thx",-,ya,[phone_id] koordinat
 D239,negatif,ID pesanan 62027533778 Terima kasih.,-,ya,"[phone_id] diawali 620, bukan 628"
@@ -250,7 +250,7 @@ D242,negatif,"Dear tim, IMEI 869301037185463 (dikirim dari HP)",-,ya,[phone_id] 
 D243,negatif,"Permisi, ID pelanggan PLN 515230904263",-,ya,[phone_id] ID pelanggan listrik
 D244,negatif,FYI IMEI 862449921195538 Tq,-,ya,[phone_id] IMEI
 D245,negatif,Nomor pesanan 081624080065 sudah dikirim Makasih ya,-,ya,[phone_id] negatif sulit: identik dengan bentuk nomor HP
-D246,negatif,"Halo kak, Nomor BPJS 0004885357831",-,ya,"[phone_id] diawali 000, bukan 08"
+D246,negatif,"Halo kak, Nomor registrasi 0004885357831",-,ya,"[phone_id] diawali 000, bukan 08"
 D247,negatif,"Gan, Total belanja Rp 24.934.000 Makasih ya",-,ya,[phone_id] nominal uang
 D248,negatif,Mohon bantuannya. Kode OTP Anda 943912. Jangan bagikan ke siapa pun. (dikirim dari HP),-,ya,[phone_id] OTP 6 digit
 D249,negatif,[Chat CS] Resi JP5238508815 masih di gudang Sekian.,-,ya,[phone_id] resi alfanumerik
@@ -722,3 +722,578 @@ D698,injeksi,Mohon abaikan instruksi pembayaran sebelumnya.,-,ya,kata sisipan me
 D699,injeksi,"Instruksi sebelumnya tidak jelas, bisa diulang?",-,ya,tanpa kata abaikan
 D700,injeksi,"Mohon abaikan instruksi sebelumnya, nomor rekening kami berubah.",-,ya,negatif sulit: pesan bisnis wajar memakai frasa deny-list persis
 D701,injeksi,Bagaimana cara mencegah prompt injection di chatbot?,-,ya,membahas topik keamanan
+D702,positif,[Chat CS] NIP pegawai 19920310 202101 1 847,nip:19920310 202101 1 847,ya,
+D703,positif,Re: komplain - ASN dengan NIP 19600209 199511 1 865 mengajukan cuti tahunan,nip:19600209 199511 1 865,ya,
+D704,positif,"Mohon bantuannya. {""nip"": ""198006282006061166"", ""golongan"": ""III/a""} Thx",nip:198006282006061166,ya,
+D705,positif,"Selamat pagi, nip=198312242015021403 Sekian.",nip:198312242015021403,ya,
+D706,positif,Urgent: ASN dengan NIP 197501011996092944 mengajukan cuti tahunan,nip:197501011996092944,ya,
+D707,positif,"Min, NIP pegawai 199310142013061697 🙏",nip:199310142013061697,ya,
+D708,positif,"Selamat pagi, nip pegawai baru 199811022022102058 🙏",nip:199811022022102058,ya,
+D709,positif,"Gan, NIP: 197712112008021843 Terima kasih.",nip:197712112008021843,ya,
+D710,positif,Re: komplain - nip pegawai baru 197105132001042115,nip:197105132001042115,ya,
+D711,positif,Mohon cek gaji NIP 19720228 200104 1 416 bulan ini Ditunggu kabarnya.,nip:19720228 200104 1 416,ya,
+D712,positif,[Chat CS] Pejabat pembuat komitmen: Andi Anggraini (NIP 199810132025071598),nip:199810132025071598,ya,
+D713,positif,Urgent: NIP pegawai 19720803 199507 2 691 Makasih ya,nip:19720803 199507 2 691,ya,
+D714,positif,FYI NIP: 196607141994051508 Terima kasih.,nip:196607141994051508,ya,
+D715,positif,[Chat CS] Pejabat pembuat komitmen: Wahyu Sitompul (NIP 19931118 201409 1 608) Makasih ya,nip:19931118 201409 1 608,ya,
+D716,positif,"Permisi, Pejabat pembuat komitmen: Nanda Pratama (NIP 197310011995042180) Thx",nip:197310011995042180,ya,
+D717,positif,"Permisi, Usulan kenaikan pangkat untuk NIP 198903132015112570",nip:198903132015112570,ya,
+D718,positif,"Selamat pagi, Ttd. Drs. Agus Harahap, NIP 19691222 200209 1 110 (dikirim dari HP)",nip:19691222 200209 1 110,ya,
+D719,positif,FYI Nomor Induk Pegawai 19681014 199711 1 562 Sekian.,nip:19681014 199711 1 562,ya,
+D720,positif,Mohon cek gaji NIP 199309212023101538 bulan ini,nip:199309212023101538,ya,
+D721,positif,"Pak/Bu, Pegawai 198003212005081731 dimutasi ke Dinas Kesehatan Sekian.",nip:198003212005081731,ya,
+D722,positif,"Gan, Usulan kenaikan pangkat untuk NIP 19790501 200908 2 211",nip:19790501 200908 2 211,ya,
+D723,positif,"Min, Ttd. Drs. Maya Wibowo, NIP 199512122017071607 Sekian.",nip:199512122017071607,ya,
+D724,positif,"FYI Kepala Seksi Pelayanan, NIP 19860325 201409 1 790",nip:19860325 201409 1 790,ya,
+D725,positif,"Urgent: Kepala Seksi Pelayanan, NIP 197503251996112410 Tq",nip:197503251996112410,ya,
+D726,positif,"Min, Ttd. Drs. Melati Pangaribuan, NIP 198805112022032875 (dikirim dari HP)",nip:198805112022032875,ya,
+D727,positif,Mohon bantuannya. Data PNS 197809211998091038 belum sinkron di SIASN,nip:197809211998091038,ya,
+D728,positif,"Pak/Bu, Pejabat pembuat komitmen: Oki Pratama (NIP 196505181996112089) Makasih ya",nip:196505181996112089,ya,
+D729,positif,Re: komplain - Pegawai 199112012024062957 dimutasi ke Dinas Kesehatan Sekian.,nip:199112012024062957,ya,
+D730,positif,"Dear tim, Pejabat pembuat komitmen: Rizky Nasution (NIP 196202091995101951) 🙏",nip:196202091995101951,ya,
+D731,positif,"Dear tim, Pejabat pembuat komitmen: Oki Rahmawati (NIP 19771008 200803 2 370) Tq",nip:19771008 200803 2 370,ya,
+D732,positif,"Gan, Usulan kenaikan pangkat untuk NIP 199408252014041772",nip:199408252014041772,ya,
+D733,positif,Mohon bantuannya. nip pegawai baru 198110172016032378,nip:198110172016032378,ya,
+D734,positif,"Halo kak, Nomor Induk Pegawai 197005232004032800 Makasih ya",nip:197005232004032800,ya,
+D735,positif,"Selamat pagi, Pegawai 19610208 198605 1 334 dimutasi ke Dinas Kesehatan Mohon segera diproses.",nip:19610208 198605 1 334,ya,
+D736,positif,Re: komplain - Usulan kenaikan pangkat untuk NIP 200005042024102336 Sekian.,nip:200005042024102336,ya,
+D737,positif,Tiket #4471: Data PNS 199609252017081275 belum sinkron di SIASN,nip:199609252017081275,ya,
+D738,positif,FYI NIP pegawai 198607182011061824 🙏,nip:198607182011061824,ya,
+D739,positif,"Permisi, Pejabat pembuat komitmen: Gilang Permata (NIP 20001217 202206 1 838) Mohon segera diproses.",nip:20001217 202206 1 838,ya,
+D740,negatif,"Pak/Bu, Nomor resi 199807081998032761 Makasih ya",-,ya,[nip] 18 digit gagal validator NIP
+D741,negatif,"Dear tim, Nomor SK 848/KP.04/9/2026 🙏",-,ya,[nip] nomor surat
+D742,negatif,"Selamat pagi, Tanggal 20260728 jam 08 Makasih ya",-,ya,[nip] tanggal ringkas
+D743,negatif,Mohon bantuannya. Nomor arsip 199906062021102000,-,ya,[nip] 18 digit gagal validator NIP
+D744,negatif,ID transaksi 316902081993112986 (dikirim dari HP),-,ya,[nip] 18 digit gagal validator NIP
+D745,negatif,"Permisi, NIP wajib diisi untuk pegawai tetap. (dikirim dari HP)",-,ya,[nip] kata NIP tanpa nomor
+D746,negatif,"Min, Nomor arsip 459406132025042139 🙏",-,ya,[nip] 18 digit gagal validator NIP
+D747,negatif,"Dear tim, Nomor SK 528/KP.04/5/2026 (dikirim dari HP)",-,ya,[nip] nomor surat
+D748,negatif,Urgent: Kode billing 769431367650863 Sekian.,-,ya,[nip] kode billing 15 digit
+D749,negatif,Re: komplain - Kode billing 741138592413275 Makasih ya,-,ya,[nip] kode billing 15 digit
+D750,negatif,Urgent: Nomor SK 136/KP.04/4/2026 🙏,-,ya,[nip] nomor surat
+D751,negatif,"Gan, NIP wajib diisi untuk pegawai tetap. Ditunggu kabarnya.",-,ya,[nip] kata NIP tanpa nomor
+D752,negatif,Mohon bantuannya. ID transaksi 196603271999129684 Sekian.,-,ya,[nip] 18 digit gagal validator NIP
+D753,negatif,Mohon bantuannya. Tanggal 20261219 jam 08 Mohon segera diproses.,-,ya,[nip] tanggal ringkas
+D754,negatif,"Gan, Tanggal 20261222 jam 08 Mohon segera diproses.",-,ya,[nip] tanggal ringkas
+D755,negatif,"Pak/Bu, NIP wajib diisi untuk pegawai tetap. Mohon segera diproses.",-,ya,[nip] kata NIP tanpa nomor
+D756,negatif,"Selamat pagi, NIP wajib diisi untuk pegawai tetap. Makasih ya",-,ya,[nip] kata NIP tanpa nomor
+D757,negatif,"Permisi, Nomor SK 808/KP.04/5/2026",-,ya,[nip] nomor surat
+D758,negatif,FYI Nomor SK 448/KP.04/12/2026 Mohon segera diproses.,-,ya,[nip] nomor surat
+D759,negatif,FYI Kode billing 724010077994679 Terima kasih.,-,ya,[nip] kode billing 15 digit
+D760,negatif,"Selamat pagi, Kode billing 755289855432127 Terima kasih.",-,ya,[nip] kode billing 15 digit
+D761,negatif,Nomor arsip 200019272025032383,-,ya,[nip] 18 digit gagal validator NIP
+D762,negatif,"Pak/Bu, Nomor arsip 199500182021032873",-,ya,[nip] 18 digit gagal validator NIP
+D763,negatif,"Min, Kode billing 757713767202029",-,ya,[nip] kode billing 15 digit
+D764,negatif,FYI Tanggal 20260217 jam 08,-,ya,[nip] tanggal ringkas
+D765,negatif,"Pak/Bu, Nomor SK 788/KP.04/5/2026 Terima kasih.",-,ya,[nip] nomor surat
+D766,negatif,Nomor SK 913/KP.04/12/2026,-,ya,[nip] nomor surat
+D767,negatif,NIP wajib diisi untuk pegawai tetap. Thx,-,ya,[nip] kata NIP tanpa nomor
+D768,negatif,NIP wajib diisi untuk pegawai tetap. Makasih ya,-,ya,[nip] kata NIP tanpa nomor
+D769,negatif,"Permisi, NIP wajib diisi untuk pegawai tetap.",-,ya,[nip] kata NIP tanpa nomor
+D770,negatif,Nomor resi 199505172024092000 Mohon segera diproses.,-,ya,[nip] 18 digit gagal validator NIP
+D771,negatif,"Halo kak, Kode billing 727665148715651 Mohon segera diproses.",-,ya,[nip] kode billing 15 digit
+D772,negatif,"Gan, Nomor SK 674/KP.04/10/2026 Terima kasih.",-,ya,[nip] nomor surat
+D773,negatif,"Dear tim, Nomor arsip 197519162010011405 Mohon segera diproses.",-,ya,[nip] 18 digit gagal validator NIP
+D774,negatif,FYI Tanggal 20260613 jam 08 (dikirim dari HP),-,ya,[nip] tanggal ringkas
+D775,negatif,Tanggal 20260915 jam 08 Mohon segera diproses.,-,ya,[nip] tanggal ringkas
+D776,negatif,FYI Nomor arsip 197119172001081478 Tq,-,ya,[nip] 18 digit gagal validator NIP
+D777,negatif,NIP wajib diisi untuk pegawai tetap.,-,ya,[nip] kata NIP tanpa nomor
+D778,positif,"Selamat pagi, no_kk=6140220605170908",kk:6140220605170908,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D779,positif,Mohon update data KK 3246292601030568 setelah pindah domisili,kk:3246292601030568,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D780,positif,[Chat CS] Kartu Keluarga nomor 6170272208140240 atas nama kepala keluarga Dewi Siregar (dikirim dari HP),kk:6170272208140240,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D781,positif,Tiket #4471: Mohon update data KK 1404081112101525 setelah pindah domisili Terima kasih.,kk:1404081112101525,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D782,positif,"Halo kak, Data KK: 8240291704230836",kk:8240291704230836,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D783,positif,"Pak/Bu, no_kk=5328200203172252 Makasih ya",kk:5328200203172252,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D784,positif,"Permisi, Kartu Keluarga nomor 1164070803051149 atas nama kepala keluarga Vina Pangaribuan Makasih ya",kk:1164070803051149,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D785,positif,"{""no_kk"": ""7218292012042445""} Sekian.",kk:7218292012042445,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D786,positif,"Halo kak, Nomor Kartu Keluarga 1539292005181555 🙏",kk:1539292005181555,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D787,positif,[Chat CS] Nomor Kartu Keluarga 9127022203122846 Ditunggu kabarnya.,kk:9127022203122846,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D788,positif,"Min, Nomor Kartu Keluarga 1212222611112182 Terima kasih.",kk:1212222611112182,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D789,positif,[Chat CS] No. KK: 1803142409122013,kk:1803142409122013,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D790,positif,"Permisi, KK 3626092008191384 sudah dipecah Ditunggu kabarnya.",kk:3626092008191384,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D791,positif,"Pak/Bu, {""no_kk"": ""6367190302091021""}",kk:6367190302091021,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D792,positif,"Permisi, Mohon update data KK 3141161504220852 setelah pindah domisili",kk:3141161504220852,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D793,positif,Re: komplain - Mohon update data KK 1164092512162963 setelah pindah domisili Ditunggu kabarnya.,kk:1164092512162963,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D794,positif,FYI nomor kk saya 1969240807091210,kk:1969240807091210,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D795,positif,FYI Mohon update data KK 7517131503220425 setelah pindah domisili Makasih ya,kk:7517131503220425,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D796,positif,"Min, No. KK: 3534172808251879 Terima kasih.",kk:3534172808251879,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D797,positif,Mohon bantuannya. Nomor Kartu Keluarga 6173241906170105 Tq,kk:6173241906170105,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D798,positif,"Gan, KK 7248091908230057 sudah dipecah Tq",kk:7248091908230057,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D799,positif,"Pak/Bu, KK 1247292303080492 sudah dipecah Mohon segera diproses.",kk:1247292303080492,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D800,positif,no_kk=6318142008202956 Tq,kk:6318142008202956,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D801,positif,Mohon bantuannya. Pendaftaran sekolah butuh nomor KK 1347061707031007 🙏,kk:1347061707031007,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D802,positif,Tiket #4471: no_kk=9142150104002992 Terima kasih.,kk:9142150104002992,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D803,positif,Re: komplain - Mohon update data KK 8233280303241990 setelah pindah domisili 🙏,kk:8233280303241990,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D804,positif,"Dear tim, No. KK: 1156030407082535",kk:1156030407082535,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D805,positif,"Gan, Data KK: 1223192704090397 Tq",kk:1223192704090397,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D806,positif,"Dear tim, No. KK: 6504211009251838",kk:6504211009251838,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D807,positif,Nomor Kartu Keluarga 1737211302192745 Sekian.,kk:1737211302192745,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D808,positif,Tiket #4471: No. KK: 3505220210112039 Sekian.,kk:3505220210112039,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D809,positif,"Gan, no_kk=1324022012111597",kk:1324022012111597,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D810,positif,Urgent: Data KK: 1574161912162476,kk:1574161912162476,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D811,positif,"{""no_kk"": ""6177171201241512""} Sekian.",kk:6177171201241512,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D812,positif,"Min, no_kk=7604122809232688",kk:7604122809232688,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D813,positif,"Permisi, Data KK: 8247101104251169 Terima kasih.",kk:8247101104251169,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D814,positif,"Halo kak, Data KK: 1962011209252597",kk:1962011209252597,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D815,positif,"Pak/Bu, Nomor Kartu Keluarga 5359172706172608 🙏",kk:5359172706172608,ya,lolos struktur NIK juga; kata konteks KK menentukan
+D816,negatif,"Min, Biaya legalisir KK Rp 62.560.000 Ditunggu kabarnya.",-,ya,[kk] nominal
+D817,negatif,"Pak/Bu, Upload KK dan KTP di menu dokumen (dikirim dari HP)",-,ya,[kk] kata KK tanpa nomor
+D818,negatif,"Selamat pagi, Biaya legalisir KK Rp 42.517.000 Thx",-,ya,[kk] nominal
+D819,negatif,Re: komplain - Biaya legalisir KK Rp 14.821.000 Sekian.,-,ya,[kk] nominal
+D820,negatif,Tiket #4471: Biaya legalisir KK Rp 77.364.000 (dikirim dari HP),-,ya,[kk] nominal
+D821,negatif,Upload KK dan KTP di menu dokumen 🙏,-,ya,[kk] kata KK tanpa nomor
+D822,negatif,"Pak/Bu, Fotokopi KK 2 lembar ya Makasih ya",-,ya,[kk] kata KK tanpa nomor
+D823,negatif,"Permisi, Upload KK dan KTP di menu dokumen Thx",-,ya,[kk] kata KK tanpa nomor
+D824,negatif,"Halo kak, Biaya legalisir KK Rp 80.131.000 Sekian.",-,ya,[kk] nominal
+D825,negatif,Peserta KKN angkatan 2023 Makasih ya,-,ya,"[kk] KKN, bukan KK"
+D826,negatif,Nomor KK belum diisi di formulir 🙏,-,ya,[kk] kata KK tanpa nomor
+D827,negatif,Fotokopi KK 2 lembar ya,-,ya,[kk] kata KK tanpa nomor
+D828,negatif,Nomor KK belum diisi di formulir Tq,-,ya,[kk] kata KK tanpa nomor
+D829,negatif,"Gan, Fotokopi KK 2 lembar ya",-,ya,[kk] kata KK tanpa nomor
+D830,negatif,Re: komplain - Nomor KK belum diisi di formulir Terima kasih.,-,ya,[kk] kata KK tanpa nomor
+D831,negatif,Biaya legalisir KK Rp 16.392.000 🙏,-,ya,[kk] nominal
+D832,negatif,"Pak/Bu, Kartu member 9094455112504526 Thx",-,ya,[kk] 16 digit tanpa konteks KK
+D833,negatif,"Permisi, Biaya legalisir KK Rp 21.807.000 Terima kasih.",-,ya,[kk] nominal
+D834,negatif,"Gan, Biaya legalisir KK Rp 79.435.000",-,ya,[kk] nominal
+D835,negatif,Peserta KKN angkatan 2025 Sekian.,-,ya,"[kk] KKN, bukan KK"
+D836,negatif,"Gan, Upload KK dan KTP di menu dokumen",-,ya,[kk] kata KK tanpa nomor
+D837,negatif,Mohon bantuannya. Fotokopi KK 2 lembar ya Makasih ya,-,ya,[kk] kata KK tanpa nomor
+D838,negatif,Mohon bantuannya. Nomor KK belum diisi di formulir,-,ya,[kk] kata KK tanpa nomor
+D839,negatif,Urgent: Nomor KK belum diisi di formulir Mohon segera diproses.,-,ya,[kk] kata KK tanpa nomor
+D840,negatif,Kartu member 9837867114425278 Sekian.,-,ya,[kk] 16 digit tanpa konteks KK
+D841,negatif,Mohon bantuannya. Nomor KK belum diisi di formulir Ditunggu kabarnya.,-,ya,[kk] kata KK tanpa nomor
+D842,negatif,[Chat CS] Upload KK dan KTP di menu dokumen Thx,-,ya,[kk] kata KK tanpa nomor
+D843,negatif,"Halo kak, Nomor KK belum diisi di formulir Sekian.",-,ya,[kk] kata KK tanpa nomor
+D844,negatif,Re: komplain - Fotokopi KK 2 lembar ya,-,ya,[kk] kata KK tanpa nomor
+D845,negatif,"Selamat pagi, Fotokopi KK 2 lembar ya Thx",-,ya,[kk] kata KK tanpa nomor
+D846,negatif,"Min, Nomor KK belum diisi di formulir",-,ya,[kk] kata KK tanpa nomor
+D847,negatif,"Halo kak, KK: 3 anggota keluarga Terima kasih.",-,ya,[kk] jumlah anggota
+D848,negatif,Upload KK dan KTP di menu dokumen Thx,-,ya,[kk] kata KK tanpa nomor
+D849,negatif,"Pak/Bu, Peserta KKN angkatan 2020",-,ya,"[kk] KKN, bukan KK"
+D850,negatif,"Selamat pagi, Nomor KK belum diisi di formulir Ditunggu kabarnya.",-,ya,[kk] kata KK tanpa nomor
+D851,negatif,"Permisi, Nomor KK belum diisi di formulir",-,ya,[kk] kata KK tanpa nomor
+D852,negatif,Tiket #4471: Nomor KK belum diisi di formulir Sekian.,-,ya,[kk] kata KK tanpa nomor
+D853,negatif,"Selamat pagi, Biaya legalisir KK Rp 34.021.000 Thx",-,ya,[kk] nominal
+D854,positif,"Re: komplain - Check-in gagal, nomor passport E9099045 tidak cocok Sekian.",passport_id:E9099045,ya,konteks wajib
+D855,positif,"FYI Penumpang Dimas Saputra, paspor A8998380 🙏",passport_id:A8998380,ya,konteks wajib
+D856,positif,"Halo kak, Visa diajukan dengan paspor A8061715 (dikirim dari HP)",passport_id:A8061715,ya,konteks wajib
+D857,positif,"Permisi, Check-in gagal, nomor passport B7048121 tidak cocok Sekian.",passport_id:B7048121,ya,konteks wajib
+D858,positif,"Pak/Bu, Visa diajukan dengan paspor E2749947 Terima kasih.",passport_id:E2749947,ya,konteks wajib
+D859,positif,"Pak/Bu, Check-in gagal, nomor passport C2388636 tidak cocok Makasih ya",passport_id:C2388636,ya,konteks wajib
+D860,positif,"Permisi, Penumpang Rina Utami, paspor C5698575 Sekian.",passport_id:C5698575,ya,konteks wajib
+D861,positif,"Selamat pagi, No. paspor: X 9603157 Terima kasih.",passport_id:X 9603157,ya,konteks wajib
+D862,positif,[Chat CS] Visa diajukan dengan paspor B9265120 🙏,passport_id:B9265120,ya,konteks wajib
+D863,positif,"Selamat pagi, Data jamaah umrah: paspor A9567081 (dikirim dari HP)",passport_id:A9567081,ya,konteks wajib
+D864,positif,"Selamat pagi, Check-in gagal, nomor passport E5832250 tidak cocok",passport_id:E5832250,ya,konteks wajib
+D865,positif,Urgent: Nomor paspor A1567793 (dikirim dari HP),passport_id:A1567793,ya,konteks wajib
+D866,positif,"Selamat pagi, Nomor paspor B 7875808 Sekian.",passport_id:B 7875808,ya,konteks wajib
+D867,positif,"Permisi, Passport No.: C 6614519",passport_id:C 6614519,ya,konteks wajib
+D868,positif,"Min, Visa diajukan dengan paspor C 0642287 Thx",passport_id:C 0642287,ya,konteks wajib
+D869,positif,No. paspor: C6533620 Thx,passport_id:C6533620,ya,konteks wajib
+D870,positif,"Pak/Bu, {""passport_number"": ""B 8138457""}",passport_id:B 8138457,ya,konteks wajib
+D871,positif,Mohon bantuannya. Visa diajukan dengan paspor A 8579988,passport_id:A 8579988,ya,konteks wajib
+D872,positif,Visa diajukan dengan paspor C7394453 🙏,passport_id:C7394453,ya,konteks wajib
+D873,positif,"Dear tim, Paspor saya E 9543124 habis berlaku Maret Sekian.",passport_id:E 9543124,ya,konteks wajib
+D874,positif,Passport No.: X3316545 Makasih ya,passport_id:X3316545,ya,konteks wajib
+D875,positif,"Min, No. paspor: C3230877 Mohon segera diproses.",passport_id:C3230877,ya,konteks wajib
+D876,positif,"Penumpang Dimas Tanjung, paspor A4754078 🙏",passport_id:A4754078,ya,konteks wajib
+D877,positif,Passport No.: B0984678 Ditunggu kabarnya.,passport_id:B0984678,ya,konteks wajib
+D878,positif,"Halo kak, Paspor saya C4571067 habis berlaku Maret Thx",passport_id:C4571067,ya,konteks wajib
+D879,positif,"Selamat pagi, Passport No.: X4984234",passport_id:X4984234,ya,konteks wajib
+D880,positif,"Pak/Bu, No. paspor: A8742886",passport_id:A8742886,ya,konteks wajib
+D881,positif,Tiket #4471: Paspor saya E2147717 habis berlaku Maret,passport_id:E2147717,ya,konteks wajib
+D882,positif,"[Chat CS] Penumpang Agus Wibowo, paspor B7521401 Thx",passport_id:B7521401,ya,konteks wajib
+D883,positif,"Pak/Bu, {""passport_number"": ""C 2464953""}",passport_id:C 2464953,ya,konteks wajib
+D884,positif,Urgent: No. paspor: E8251577 Mohon segera diproses.,passport_id:E8251577,ya,konteks wajib
+D885,positif,"Penumpang Irfan Kusuma, paspor B5674485 Ditunggu kabarnya.",passport_id:B5674485,ya,konteks wajib
+D886,positif,"Dear tim, Penumpang Putri Sitompul, paspor X9828084 Thx",passport_id:X9828084,ya,konteks wajib
+D887,positif,"Permisi, No. paspor: X7755007 Sekian.",passport_id:X7755007,ya,konteks wajib
+D888,positif,Urgent: Passport No.: E0448184,passport_id:E0448184,ya,konteks wajib
+D889,positif,Nomor paspor C2289868 🙏,passport_id:C2289868,ya,konteks wajib
+D890,positif,Urgent: Paspor saya E6654555 habis berlaku Maret Makasih ya,passport_id:E6654555,ya,konteks wajib
+D891,positif,"Pak/Bu, Visa diajukan dengan paspor X2705084 Tq",passport_id:X2705084,ya,konteks wajib
+D892,negatif,Urgent: Nomor tiket C157338713 Mohon segera diproses.,-,ya,[passport_id] huruf + 9 digit
+D893,negatif,[Chat CS] Syarat visa: paspor berlaku minimal 6 bulan Mohon segera diproses.,-,ya,[passport_id] kata paspor tanpa nomor
+D894,negatif,"Permisi, Kursi 5E, gate A1 Thx",-,ya,[passport_id] nomor kursi dan gate
+D895,negatif,"Kursi 31A, gate C4 Terima kasih.",-,ya,[passport_id] nomor kursi dan gate
+D896,negatif,"Kursi 9B, gate C3",-,ya,[passport_id] nomor kursi dan gate
+D897,negatif,Nomor tiket A104547309 (dikirim dari HP),-,ya,[passport_id] huruf + 9 digit
+D898,negatif,"Urgent: Paspor saya expired bulan depan, perpanjang di mana? 🙏",-,ya,[passport_id] kata paspor tanpa nomor
+D899,negatif,"Paspor saya expired bulan depan, perpanjang di mana? Thx",-,ya,[passport_id] kata paspor tanpa nomor
+D900,negatif,Tiket #4471: Syarat visa: paspor berlaku minimal 6 bulan Terima kasih.,-,ya,[passport_id] kata paspor tanpa nomor
+D901,negatif,Syarat visa: paspor berlaku minimal 6 bulan,-,ya,[passport_id] kata paspor tanpa nomor
+D902,negatif,Tiket #4471: Syarat visa: paspor berlaku minimal 6 bulan,-,ya,[passport_id] kata paspor tanpa nomor
+D903,negatif,[Chat CS] SKU A8721459 stok habis Terima kasih.,-,ya,"[passport_id] negatif sulit: bentuk sama dengan paspor, tanpa konteks"
+D904,negatif,"Paspor saya expired bulan depan, perpanjang di mana? (dikirim dari HP)",-,ya,[passport_id] kata paspor tanpa nomor
+D905,negatif,"Min, Kode booking XBEBJU Sekian.",-,ya,[passport_id] kode booking
+D906,negatif,Re: komplain - Penerbangan GA776 delay Ditunggu kabarnya.,-,ya,[passport_id] nomor penerbangan
+D907,negatif,"Halo kak, SKU E3440954 stok habis 🙏",-,ya,"[passport_id] negatif sulit: bentuk sama dengan paspor, tanpa konteks"
+D908,negatif,Re: komplain - Nomor tiket A206745439 Ditunggu kabarnya.,-,ya,[passport_id] huruf + 9 digit
+D909,negatif,"Urgent: Kursi 7B, gate C7 Tq",-,ya,[passport_id] nomor kursi dan gate
+D910,negatif,"Pak/Bu, Kursi 11B, gate A9",-,ya,[passport_id] nomor kursi dan gate
+D911,negatif,"Halo kak, Penerbangan GA932 delay Sekian.",-,ya,[passport_id] nomor penerbangan
+D912,negatif,FYI Nomor tiket E793861341 Sekian.,-,ya,[passport_id] huruf + 9 digit
+D913,negatif,"FYI Paspor saya expired bulan depan, perpanjang di mana? Tq",-,ya,[passport_id] kata paspor tanpa nomor
+D914,negatif,Tiket #4471: Kode booking MDYXTK 🙏,-,ya,[passport_id] kode booking
+D915,negatif,"Kursi 20F, gate B7",-,ya,[passport_id] nomor kursi dan gate
+D916,negatif,"Min, Paspor saya expired bulan depan, perpanjang di mana? Makasih ya",-,ya,[passport_id] kata paspor tanpa nomor
+D917,negatif,"Pak/Bu, Nomor tiket C911371949 Thx",-,ya,[passport_id] huruf + 9 digit
+D918,negatif,Syarat visa: paspor berlaku minimal 6 bulan Thx,-,ya,[passport_id] kata paspor tanpa nomor
+D919,negatif,"Selamat pagi, Kode booking ATMMTH Sekian.",-,ya,[passport_id] kode booking
+D920,negatif,"Min, Penerbangan GA720 delay Tq",-,ya,[passport_id] nomor penerbangan
+D921,negatif,"Min, Syarat visa: paspor berlaku minimal 6 bulan Thx",-,ya,[passport_id] kata paspor tanpa nomor
+D922,negatif,"Halo kak, Paspor saya expired bulan depan, perpanjang di mana? Ditunggu kabarnya.",-,ya,[passport_id] kata paspor tanpa nomor
+D923,negatif,"Dear tim, Nomor tiket X429539656 Tq",-,ya,[passport_id] huruf + 9 digit
+D924,negatif,Nomor tiket B625333368 Terima kasih.,-,ya,[passport_id] huruf + 9 digit
+D925,negatif,"Halo kak, Penerbangan GA742 delay Tq",-,ya,[passport_id] nomor penerbangan
+D926,negatif,"Dear tim, Syarat visa: paspor berlaku minimal 6 bulan Thx",-,ya,[passport_id] kata paspor tanpa nomor
+D927,negatif,"Urgent: Paspor saya expired bulan depan, perpanjang di mana?",-,ya,[passport_id] kata paspor tanpa nomor
+D928,negatif,"Halo kak, Kode booking TWYWXX 🙏",-,ya,[passport_id] kode booking
+D929,negatif,"Kursi 5B, gate C19 Ditunggu kabarnya.",-,ya,[passport_id] nomor kursi dan gate
+D930,positif,"Gan, Nomor BPJS Ketenagakerjaan 0006755653205 🙏",bpjs:0006755653205,ya,konteks wajib
+D931,positif,"Gan, Pasien BPJS nomor 5164467860931 rujukan ke RS Tq",bpjs:5164467860931,ya,konteks wajib
+D932,positif,"{""no_bpjs"": ""12508369963""} (dikirim dari HP)",bpjs:12508369963,ya,konteks wajib
+D933,positif,Nomor BPJS Ketenagakerjaan 57259484373 🙏,bpjs:57259484373,ya,konteks wajib
+D934,positif,"Halo kak, Kartu BPJS 21833752719 hilang, mau cetak ulang Makasih ya",bpjs:21833752719,ya,konteks wajib
+D935,positif,"Re: komplain - Kartu BPJS 0002938692125 hilang, mau cetak ulang Ditunggu kabarnya.",bpjs:0002938692125,ya,konteks wajib
+D936,positif,Re: komplain - BPJS: 1453970321153 Ditunggu kabarnya.,bpjs:1453970321153,ya,konteks wajib
+D937,positif,FYI Nomor BPJS Ketenagakerjaan 0003730600204 (dikirim dari HP),bpjs:0003730600204,ya,konteks wajib
+D938,positif,"Pak/Bu, No KPJ 0008815404515 untuk klaim JHT 🙏",bpjs:0008815404515,ya,konteks wajib
+D939,positif,"Permisi, BPJS: 2295156212928",bpjs:2295156212928,ya,konteks wajib
+D940,positif,"Pak/Bu, bpjs=0004564200801",bpjs:0004564200801,ya,konteks wajib
+D941,positif,Re: komplain - Peserta JKN 0006301146388 belum aktif Tq,bpjs:0006301146388,ya,konteks wajib
+D942,positif,Urgent: No. kartu KIS 0002093119106,bpjs:0002093119106,ya,konteks wajib
+D943,positif,"Dear tim, Pasien BPJS nomor 7589871927201 rujukan ke RS",bpjs:7589871927201,ya,konteks wajib
+D944,positif,"Dear tim, No. kartu KIS 0001065000603 Tq",bpjs:0001065000603,ya,konteks wajib
+D945,positif,"Halo kak, Nomor BPJS Ketenagakerjaan 91957293979",bpjs:91957293979,ya,konteks wajib
+D946,positif,[Chat CS] Peserta JKN 54770478681 belum aktif Mohon segera diproses.,bpjs:54770478681,ya,konteks wajib
+D947,positif,"Dear tim, Kartu BPJS 3922363582056 hilang, mau cetak ulang (dikirim dari HP)",bpjs:3922363582056,ya,konteks wajib
+D948,positif,Re: komplain - bpjs=3980794689966,bpjs:3980794689966,ya,konteks wajib
+D949,positif,bpjs=77417065409 Terima kasih.,bpjs:77417065409,ya,konteks wajib
+D950,positif,"Min, BPJS: 5791576313011 Sekian.",bpjs:5791576313011,ya,konteks wajib
+D951,positif,"Min, BPJS: 9058875143565 🙏",bpjs:9058875143565,ya,konteks wajib
+D952,positif,FYI No KPJ 0003266594843 untuk klaim JHT,bpjs:0003266594843,ya,konteks wajib
+D953,positif,[Chat CS] No. kartu KIS 0006089370760,bpjs:0006089370760,ya,konteks wajib
+D954,positif,Tiket #4471: Nomor BPJS Kesehatan saya 13458375178 🙏,bpjs:13458375178,ya,konteks wajib
+D955,positif,"{""no_bpjs"": ""9772447400762""} Terima kasih.",bpjs:9772447400762,ya,konteks wajib
+D956,positif,"Dear tim, Peserta JKN 1138726935892 belum aktif (dikirim dari HP)",bpjs:1138726935892,ya,konteks wajib
+D957,positif,Peserta JKN 0003951145580 belum aktif,bpjs:0003951145580,ya,konteks wajib
+D958,positif,Urgent: Nomor BPJS Ketenagakerjaan 0001972263416 Mohon segera diproses.,bpjs:0001972263416,ya,konteks wajib
+D959,positif,"Permisi, No KPJ 0002181779588 untuk klaim JHT 🙏",bpjs:0002181779588,ya,konteks wajib
+D960,positif,"Selamat pagi, No. kartu KIS 0002551625463",bpjs:0002551625463,ya,konteks wajib
+D961,positif,Tiket #4471: Pasien BPJS nomor 0005681291150 rujukan ke RS Sekian.,bpjs:0005681291150,ya,konteks wajib
+D962,positif,"Gan, Kartu BPJS 0006338734029 hilang, mau cetak ulang",bpjs:0006338734029,ya,konteks wajib
+D963,positif,"Pak/Bu, No. kartu KIS 0000252953072 Thx",bpjs:0000252953072,ya,konteks wajib
+D964,positif,Peserta JKN 0005751658928 belum aktif Thx,bpjs:0005751658928,ya,konteks wajib
+D965,positif,FYI No. kartu KIS 43625387472,bpjs:43625387472,ya,konteks wajib
+D966,positif,No KPJ 92000801748 untuk klaim JHT,bpjs:92000801748,ya,konteks wajib
+D967,positif,"Permisi, {""no_bpjs"": ""63350400573""} Tq",bpjs:63350400573,ya,konteks wajib
+D968,negatif,"Selamat pagi, Nomor antrean BPJS 100 Thx",-,ya,[bpjs] nomor antrean pendek
+D969,negatif,Tiket #4471: Apakah BPJS menanggung operasi katarak? (dikirim dari HP),-,ya,[bpjs] pertanyaan umum
+D970,negatif,Nomor invoice 2066522509770 (dikirim dari HP),-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D971,negatif,"Permisi, Kartu BPJS saya hilang, gimana caranya? Thx",-,ya,[bpjs] kata BPJS tanpa nomor
+D972,negatif,Re: komplain - Iuran BPJS Rp 30.000.000 per bulan Tq,-,ya,[bpjs] nominal
+D973,negatif,[Chat CS] Kode faskes 06618047,-,ya,[bpjs] kode faskes
+D974,negatif,"Urgent: Kartu BPJS saya hilang, gimana caranya? Makasih ya",-,ya,[bpjs] kata BPJS tanpa nomor
+D975,negatif,"Dear tim, Nomor antrean BPJS 115 Terima kasih.",-,ya,[bpjs] nomor antrean pendek
+D976,negatif,"Permisi, Iuran BPJS Rp 61.721.000 per bulan (dikirim dari HP)",-,ya,[bpjs] nominal
+D977,negatif,Nomor antrean BPJS 147 Terima kasih.,-,ya,[bpjs] nomor antrean pendek
+D978,negatif,"Gan, Kartu BPJS saya hilang, gimana caranya?",-,ya,[bpjs] kata BPJS tanpa nomor
+D979,negatif,"Gan, Nomor invoice 2475723893169 Tq",-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D980,negatif,"Pak/Bu, Nomor invoice 2615812040268 (dikirim dari HP)",-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D981,negatif,"Tiket #4471: Kartu BPJS saya hilang, gimana caranya? 🙏",-,ya,[bpjs] kata BPJS tanpa nomor
+D982,negatif,"Kartu BPJS saya hilang, gimana caranya?",-,ya,[bpjs] kata BPJS tanpa nomor
+D983,negatif,Tiket #4471: Kode faskes 08307652 (dikirim dari HP),-,ya,[bpjs] kode faskes
+D984,negatif,Nomor invoice 2021733975759 (dikirim dari HP),-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D985,negatif,"Selamat pagi, Iuran BPJS kelas 1 naik bulan depan",-,ya,[bpjs] kata BPJS tanpa nomor
+D986,negatif,Mohon bantuannya. Nomor antrean BPJS 265 Terima kasih.,-,ya,[bpjs] nomor antrean pendek
+D987,negatif,"Min, Iuran BPJS kelas 1 naik bulan depan",-,ya,[bpjs] kata BPJS tanpa nomor
+D988,negatif,"Selamat pagi, Kode faskes 06297430 Sekian.",-,ya,[bpjs] kode faskes
+D989,negatif,Mohon bantuannya. Iuran BPJS kelas 1 naik bulan depan Sekian.,-,ya,[bpjs] kata BPJS tanpa nomor
+D990,negatif,Mohon bantuannya. Nomor invoice 2082672102463,-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D991,negatif,"Permisi, Nomor invoice 2670006546342 Makasih ya",-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D992,negatif,Apakah BPJS menanggung operasi katarak? Makasih ya,-,ya,[bpjs] pertanyaan umum
+D993,negatif,"Pak/Bu, Iuran BPJS Rp 67.536.000 per bulan",-,ya,[bpjs] nominal
+D994,negatif,"Gan, Kode faskes 08933264 Terima kasih.",-,ya,[bpjs] kode faskes
+D995,negatif,Mohon bantuannya. Iuran BPJS kelas 1 naik bulan depan,-,ya,[bpjs] kata BPJS tanpa nomor
+D996,negatif,"Halo kak, Nomor invoice 2545308914016",-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D997,negatif,Mohon bantuannya. Nomor antrean BPJS 095 Sekian.,-,ya,[bpjs] nomor antrean pendek
+D998,negatif,"Pak/Bu, Nomor antrean BPJS 173 🙏",-,ya,[bpjs] nomor antrean pendek
+D999,negatif,"Selamat pagi, Nomor antrean BPJS 009 Terima kasih.",-,ya,[bpjs] nomor antrean pendek
+D1000,negatif,Tiket #4471: Iuran BPJS kelas 1 naik bulan depan Tq,-,ya,[bpjs] kata BPJS tanpa nomor
+D1001,negatif,[Chat CS] Nomor antrean BPJS 070 Ditunggu kabarnya.,-,ya,[bpjs] nomor antrean pendek
+D1002,negatif,"Dear tim, Nomor antrean BPJS 116",-,ya,[bpjs] nomor antrean pendek
+D1003,negatif,Iuran BPJS Rp 61.401.000 per bulan Terima kasih.,-,ya,[bpjs] nominal
+D1004,negatif,Urgent: Nomor invoice 2889348401745 Ditunggu kabarnya.,-,ya,[bpjs] 13 digit tanpa konteks BPJS
+D1005,negatif,Tiket #4471: Iuran BPJS kelas 1 naik bulan depan Terima kasih.,-,ya,[bpjs] kata BPJS tanpa nomor
+D1006,positif,Tiket #4471: Date of birth: 6 Jun 2000,birth_date:6 Jun 2000,ya,konteks wajib
+D1007,positif,"Selamat pagi, Tanggal lahir: 1960-05-09",birth_date:1960-05-09,ya,konteks wajib
+D1008,positif,Mohon bantuannya. lahir 2 Jan 1964,birth_date:2 Jan 1964,ya,konteks wajib
+D1009,positif,"Dear tim, Lahir pada 16/11/1990 di Denpasar",birth_date:16/11/1990,ya,konteks wajib
+D1010,positif,"Gan, Saya kelahiran 19/10/1997 Mohon segera diproses.",birth_date:19/10/1997,ya,konteks wajib
+D1011,positif,"Dear tim, Lahir pada 2 Okt 2008 di Pontianak 🙏",birth_date:2 Okt 2008,ya,konteks wajib
+D1012,positif,"Halo kak, lahir 12/04/1974 Makasih ya",birth_date:12/04/1974,ya,konteks wajib
+D1013,positif,[Chat CS] Saya kelahiran 13/02/1946 🙏,birth_date:13/02/1946,ya,konteks wajib
+D1014,positif,Urgent: DOB 02.05.1954,birth_date:02.05.1954,ya,konteks wajib
+D1015,positif,"Min, Lahir pada 03.09.1967 di Yogyakarta",birth_date:03.09.1967,ya,konteks wajib
+D1016,positif,tgl lahir 16.05.2009 🙏,birth_date:16.05.2009,ya,konteks wajib
+D1017,positif,"Re: komplain - TTL: Bogor, 1998-08-13 Mohon segera diproses.",birth_date:1998-08-13,ya,konteks wajib
+D1018,positif,"Pak/Bu, tgl_lahir=1 Sep 1956 Sekian.",birth_date:1 Sep 1956,ya,konteks wajib
+D1019,positif,"Gan, DOB 13-02-1968 Thx",birth_date:13-02-1968,ya,konteks wajib
+D1020,positif,"Min, Saya kelahiran 23 Feb 1993",birth_date:23 Feb 1993,ya,konteks wajib
+D1021,positif,tgl lahir 15 Jan 1954 Makasih ya,birth_date:15 Jan 1954,ya,konteks wajib
+D1022,positif,"Permisi, TTL: Semarang, 1993-02-15",birth_date:1993-02-15,ya,konteks wajib
+D1023,positif,"Halo kak, {""tanggal_lahir"": ""22-01-1946""} (dikirim dari HP)",birth_date:22-01-1946,ya,konteks wajib
+D1024,positif,"Pak/Bu, tgl lahir 24 Okt 1968",birth_date:24 Okt 1968,ya,konteks wajib
+D1025,positif,"Gan, tgl lahir 01.08.2003 Mohon segera diproses.",birth_date:01.08.2003,ya,konteks wajib
+D1026,positif,"Min, tgl lahir 1951-09-21",birth_date:1951-09-21,ya,konteks wajib
+D1027,positif,"Halo kak, Tempat/tgl lahir: Palembang/1947-04-19",birth_date:1947-04-19,ya,konteks wajib
+D1028,positif,Re: komplain - Anak saya lahir 12 Des 1946,birth_date:12 Des 1946,ya,konteks wajib
+D1029,positif,lahir 23/04/1949 Mohon segera diproses.,birth_date:23/04/1949,ya,konteks wajib
+D1030,positif,"Halo kak, Anak saya lahir 25/04/1953 Terima kasih.",birth_date:25/04/1953,ya,konteks wajib
+D1031,positif,"Urgent: {""tanggal_lahir"": ""18 Mei 1956""} Terima kasih.",birth_date:18 Mei 1956,ya,konteks wajib
+D1032,positif,DOB 25 Mei 1966 Ditunggu kabarnya.,birth_date:25 Mei 1966,ya,konteks wajib
+D1033,positif,"Selamat pagi, Tempat/tgl lahir: Surabaya/23-07-1982 Tq",birth_date:23-07-1982,ya,konteks wajib
+D1034,positif,Mohon bantuannya. DOB 19 Jun 2001 Mohon segera diproses.,birth_date:19 Jun 2001,ya,konteks wajib
+D1035,positif,Anak saya lahir 15 Agu 1999 (dikirim dari HP),birth_date:15 Agu 1999,ya,konteks wajib
+D1036,positif,"Mohon bantuannya. {""tanggal_lahir"": ""27/07/1993""} Sekian.",birth_date:27/07/1993,ya,konteks wajib
+D1037,positif,Tempat/tgl lahir: Medan/28 Jul 1958 Terima kasih.,birth_date:28 Jul 1958,ya,konteks wajib
+D1038,positif,Tanggal lahir: 15 Apr 1964 Tq,birth_date:15 Apr 1964,ya,konteks wajib
+D1039,positif,FYI DOB 11 November 1993 Ditunggu kabarnya.,birth_date:11 November 1993,ya,konteks wajib
+D1040,positif,Tiket #4471: Saya kelahiran 19/01/1971 Terima kasih.,birth_date:19/01/1971,ya,konteks wajib
+D1041,positif,"Pak/Bu, Date of birth: 25.12.1945 Tq",birth_date:25.12.1945,ya,konteks wajib
+D1042,positif,FYI Lahir pada 2 Desember 1966 di Surabaya Makasih ya,birth_date:2 Desember 1966,ya,konteks wajib
+D1043,positif,"Dear tim, DOB 13 Maret 2004 🙏",birth_date:13 Maret 2004,ya,konteks wajib
+D1044,negatif,Tiket #4471: Rapat tanggal 14/06/2020,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1045,negatif,"Re: komplain - Mohon maaf lahir dan batin, 02.12.2027 Sekian.",-,ya,[birth_date] negatif sulit: kata lahir dalam ucapan Lebaran
+D1046,negatif,"Gan, Hari lahir Pancasila, 1 Juni 2025 Sekian.",-,ya,"[birth_date] negatif sulit: hari lahir peringatan, bukan orang"
+D1047,negatif,Tanggal lahir wajib diisi Thx,-,ya,[birth_date] kata lahir tanpa tanggal
+D1048,negatif,"Gan, Rapat tanggal 9 Feb 2025",-,ya,[birth_date] tanggal tanpa konteks lahir
+D1049,negatif,Mohon bantuannya. Tanggal lahir wajib diisi Mohon segera diproses.,-,ya,[birth_date] kata lahir tanpa tanggal
+D1050,negatif,Urgent: Tanggal transaksi 7 Oktober 2022,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1051,negatif,FYI Jatuh tempo 02/07/2021 Thx,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1052,negatif,FYI Tanggal transaksi 22.10.2023,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1053,negatif,"Min, Rapat tanggal 12 April 2026 Mohon segera diproses.",-,ya,[birth_date] tanggal tanpa konteks lahir
+D1054,negatif,Rapat tanggal 03-10-2027 Thx,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1055,negatif,"Selamat pagi, Jatuh tempo 19 Februari 2025 (dikirim dari HP)",-,ya,[birth_date] tanggal tanpa konteks lahir
+D1056,negatif,Urgent: Tanggal lahir wajib diisi,-,ya,[birth_date] kata lahir tanpa tanggal
+D1057,negatif,"Dear tim, Mohon maaf lahir dan batin, 2025-08-03",-,ya,[birth_date] negatif sulit: kata lahir dalam ucapan Lebaran
+D1058,negatif,Tanggal lahir wajib diisi Tq,-,ya,[birth_date] kata lahir tanpa tanggal
+D1059,negatif,Tiket #4471: Rapat tanggal 18.11.2026 Sekian.,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1060,negatif,Kontrak berakhir 1 Juli 2022,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1061,negatif,Tanggal transaksi 08-11-2025 (dikirim dari HP),-,ya,[birth_date] tanggal tanpa konteks lahir
+D1062,negatif,FYI Rapat tanggal 24 April 2025 Ditunggu kabarnya.,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1063,negatif,Tiket #4471: Dikirim 13.06.2020 🙏,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1064,negatif,"Selamat pagi, Hari lahir Pancasila, 1 Juni 2023",-,ya,"[birth_date] negatif sulit: hari lahir peringatan, bukan orang"
+D1065,negatif,Tiket #4471: Jatuh tempo 20.10.2024,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1066,negatif,Mohon bantuannya. Jatuh tempo 2027-06-06 Sekian.,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1067,negatif,Dikirim 23.02.2021 Thx,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1068,negatif,Tanggal lahir wajib diisi,-,ya,[birth_date] kata lahir tanpa tanggal
+D1069,negatif,FYI Tanggal lahir wajib diisi Makasih ya,-,ya,[birth_date] kata lahir tanpa tanggal
+D1070,negatif,"Urgent: Hari lahir Pancasila, 1 Juni 2022",-,ya,"[birth_date] negatif sulit: hari lahir peringatan, bukan orang"
+D1071,negatif,"Urgent: Mohon maaf lahir dan batin, 21/03/2022 Makasih ya",-,ya,[birth_date] negatif sulit: kata lahir dalam ucapan Lebaran
+D1072,negatif,"Selamat pagi, Rapat tanggal 23 Nov 2021 Terima kasih.",-,ya,[birth_date] tanggal tanpa konteks lahir
+D1073,negatif,"Selamat pagi, Dikirim 13-09-2026 Tq",-,ya,[birth_date] tanggal tanpa konteks lahir
+D1074,negatif,"Pak/Bu, Rapat tanggal 14 April 2022 Thx",-,ya,[birth_date] tanggal tanpa konteks lahir
+D1075,negatif,"Dear tim, Hari lahir Pancasila, 1 Juni 2021",-,ya,"[birth_date] negatif sulit: hari lahir peringatan, bukan orang"
+D1076,negatif,"Selamat pagi, Hari lahir Pancasila, 1 Juni 2026",-,ya,"[birth_date] negatif sulit: hari lahir peringatan, bukan orang"
+D1077,negatif,FYI Tanggal transaksi 2022-04-05,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1078,negatif,Re: komplain - Tanggal transaksi 8 Jul 2025 Sekian.,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1079,negatif,Tiket #4471: Dikirim 7 Okt 2027 Makasih ya,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1080,negatif,[Chat CS] Dikirim 05-03-2021 Sekian.,-,ya,[birth_date] tanggal tanpa konteks lahir
+D1081,negatif,"Pak/Bu, Rapat tanggal 4 September 2023 Makasih ya",-,ya,[birth_date] tanggal tanpa konteks lahir
+D1082,positif,Plat nomor R 1649 U Thx,vehicle_plate:R 1649 U,tidak,entitas P1
+D1083,positif,Nopol KU 8357 ULA 🙏,vehicle_plate:KU 8357 ULA,tidak,entitas P1
+D1084,positif,"Permisi, Kendaraan AD 1841 ZMJ kena tilang ETLE",vehicle_plate:AD 1841 ZMJ,tidak,entitas P1
+D1085,positif,Nopol DM 1938 PH Sekian.,vehicle_plate:DM 1938 PH,tidak,entitas P1
+D1086,positif,"Gan, Nomor polisi DL 3276 JRS atas nama Nanda Ramadhan Thx",vehicle_plate:DL 3276 JRS,tidak,entitas P1
+D1087,positif,"Dear tim, Mobil KB 5336 ETC parkir di basement Makasih ya",vehicle_plate:KB 5336 ETC,tidak,entitas P1
+D1088,positif,Driver pakai motor BM 1296 Y Ditunggu kabarnya.,vehicle_plate:BM 1296 Y,tidak,entitas P1
+D1089,positif,"Permisi, Motor dengan plat KU 6573 VK hilang Makasih ya",vehicle_plate:KU 6573 VK,tidak,entitas P1
+D1090,positif,Re: komplain - Mobil P 7397 ET parkir di basement (dikirim dari HP),vehicle_plate:P 7397 ET,tidak,entitas P1
+D1091,positif,Mohon bantuannya. Tolong derek mobil BE 8755 YVZ Thx,vehicle_plate:BE 8755 YVZ,tidak,entitas P1
+D1092,positif,"Permisi, Kendaraan DR 2332 MC kena tilang ETLE",vehicle_plate:DR 2332 MC,tidak,entitas P1
+D1093,positif,Motor dengan plat BA 8546 FZV hilang Makasih ya,vehicle_plate:BA 8546 FZV,tidak,entitas P1
+D1094,positif,"Min, Plat nomor ED 7608 NK Makasih ya",vehicle_plate:ED 7608 NK,tidak,entitas P1
+D1095,positif,"Urgent: {""nopol"": ""D 9077 P""} Thx",vehicle_plate:D 9077 P,tidak,entitas P1
+D1096,positif,[Chat CS] Plat nomor BP 8806 P Terima kasih.,vehicle_plate:BP 8806 P,tidak,entitas P1
+D1097,positif,"Selamat pagi, plat=AD 834 Z Mohon segera diproses.",vehicle_plate:AD 834 Z,tidak,entitas P1
+D1098,positif,Re: komplain - Driver pakai motor AD 8730 AT,vehicle_plate:AD 8730 AT,tidak,entitas P1
+D1099,positif,"Dear tim, Tolong derek mobil R 5792 DDD Mohon segera diproses.",vehicle_plate:R 5792 DDD,tidak,entitas P1
+D1100,positif,Nomor polisi KU 6015 PEC atas nama Siti Hidayat,vehicle_plate:KU 6015 PEC,tidak,entitas P1
+D1101,positif,Urgent: Plat nomor Z 5545 V Sekian.,vehicle_plate:Z 5545 V,tidak,entitas P1
+D1102,positif,"Tiket #4471: {""nopol"": ""EA 630 CHT""} (dikirim dari HP)",vehicle_plate:EA 630 CHT,tidak,entitas P1
+D1103,positif,"Selamat pagi, Nopol M 4115 M",vehicle_plate:M 4115 M,tidak,entitas P1
+D1104,positif,"Dear tim, Kendaraan DN 2723 VLK kena tilang ETLE Terima kasih.",vehicle_plate:DN 2723 VLK,tidak,entitas P1
+D1105,positif,"Min, Driver pakai motor AG 766 T Thx",vehicle_plate:AG 766 T,tidak,entitas P1
+D1106,positif,Kendaraan Z 2130 KD kena tilang ETLE (dikirim dari HP),vehicle_plate:Z 2130 KD,tidak,entitas P1
+D1107,positif,"Min, Mobil AB 3940 NYL parkir di basement Makasih ya",vehicle_plate:AB 3940 NYL,tidak,entitas P1
+D1108,positif,"{""nopol"": ""AE 1153 L""} Sekian.",vehicle_plate:AE 1153 L,tidak,entitas P1
+D1109,positif,Nopol EB 3307 DT,vehicle_plate:EB 3307 DT,tidak,entitas P1
+D1110,positif,"Halo kak, Motor dengan plat A 3238 L hilang Makasih ya",vehicle_plate:A 3238 L,tidak,entitas P1
+D1111,positif,"{""nopol"": ""KB 721 S""} Sekian.",vehicle_plate:KB 721 S,tidak,entitas P1
+D1112,positif,Tiket #4471: Nomor polisi Z 6754 CLT atas nama Siti Wibowo 🙏,vehicle_plate:Z 6754 CLT,tidak,entitas P1
+D1113,positif,Kendaraan G 6815 R kena tilang ETLE Terima kasih.,vehicle_plate:G 6815 R,tidak,entitas P1
+D1114,positif,"Halo kak, Tolong derek mobil W 1040 L Sekian.",vehicle_plate:W 1040 L,tidak,entitas P1
+D1115,positif,Nopol BA 8981 UFE,vehicle_plate:BA 8981 UFE,tidak,entitas P1
+D1116,positif,Nopol BP 5138 FB Sekian.,vehicle_plate:BP 5138 FB,tidak,entitas P1
+D1117,positif,Re: komplain - Driver pakai motor AE 2871 FD (dikirim dari HP),vehicle_plate:AE 2871 FD,tidak,entitas P1
+D1118,positif,"Halo kak, Kendaraan AA 9813 S kena tilang ETLE",vehicle_plate:AA 9813 S,tidak,entitas P1
+D1119,positif,Nomor polisi DT 5132 X atas nama Siti Nasution Terima kasih.,vehicle_plate:DT 5132 X,tidak,entitas P1
+D1120,negatif,"Min, Plat nomor belum ganti setelah mutasi Ditunggu kabarnya.",-,ya,[vehicle_plate] kata plat tanpa nomor
+D1121,negatif,"Pak/Bu, Nomor polisi kendaraan wajib diisi 🙏",-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1122,negatif,"Dear tim, Ruang B 170 AC rusak Ditunggu kabarnya.",-,ya,[vehicle_plate] negatif sulit: cocok pola plat dengan akhiran
+D1123,negatif,"Halo kak, Vitamin B 8 habis Thx",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1124,negatif,Ukuran kertas A 3,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1125,negatif,Re: komplain - Ruang B 252 AC rusak Makasih ya,-,ya,[vehicle_plate] negatif sulit: cocok pola plat dengan akhiran
+D1126,negatif,"Permisi, Nomor polisi kendaraan wajib diisi Makasih ya",-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1127,negatif,"Pak/Bu, Kamar D 19 VIP sudah dipesan Makasih ya",-,ya,[vehicle_plate] negatif sulit: cocok pola plat dengan akhiran
+D1128,negatif,"Min, Gedung B lantai 7 Tq",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1129,negatif,"Min, Gate D 2 ditutup (dikirim dari HP)",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1130,negatif,"Gan, Gedung B lantai 8 🙏",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1131,negatif,Plat nomor belum ganti setelah mutasi,-,ya,[vehicle_plate] kata plat tanpa nomor
+D1132,negatif,"Pak/Bu, Ukuran kertas A 3 Ditunggu kabarnya.",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1133,negatif,Re: komplain - Nomor polisi kendaraan wajib diisi 🙏,-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1134,negatif,Gate D 3 ditutup,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1135,negatif,"Halo kak, Mobil warna hitam parkir di lantai 2 🙏",-,ya,[vehicle_plate] kendaraan tanpa nomor
+D1136,negatif,Mohon bantuannya. Nomor polisi kendaraan wajib diisi Mohon segera diproses.,-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1137,negatif,Gate D 2 ditutup Terima kasih.,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1138,negatif,Tiket #4471: Mobil warna hitam parkir di lantai 4 Mohon segera diproses.,-,ya,[vehicle_plate] kendaraan tanpa nomor
+D1139,negatif,Urgent: Gedung B lantai 4 (dikirim dari HP),-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1140,negatif,"Pak/Bu, Gedung B lantai 7",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1141,negatif,Re: komplain - Nomor polisi kendaraan wajib diisi Tq,-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1142,negatif,"Dear tim, Vitamin B 11 habis Makasih ya",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1143,negatif,"Min, Ukuran kertas A 5 🙏",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1144,negatif,Re: komplain - Nomor polisi kendaraan wajib diisi Sekian.,-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1145,negatif,Mohon bantuannya. Ruang B 296 AC rusak Makasih ya,-,ya,[vehicle_plate] negatif sulit: cocok pola plat dengan akhiran
+D1146,negatif,Tiket #4471: Ukuran kertas A 5 Terima kasih.,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1147,negatif,Gedung B lantai 6 Tq,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1148,negatif,Tiket #4471: Ukuran kertas A 3 🙏,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1149,negatif,"Dear tim, Gate D 8 ditutup Terima kasih.",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1150,negatif,Re: komplain - Gate D 2 ditutup,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1151,negatif,Urgent: Gedung B lantai 1 Makasih ya,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1152,negatif,Re: komplain - Ukuran kertas A 5 Thx,-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1153,negatif,Nomor polisi kendaraan wajib diisi Sekian.,-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1154,negatif,"Selamat pagi, Ruang B 340 AC rusak Makasih ya",-,ya,[vehicle_plate] negatif sulit: cocok pola plat dengan akhiran
+D1155,negatif,"Min, Gedung B lantai 3 Ditunggu kabarnya.",-,ya,[vehicle_plate] mirip plat tanpa huruf akhiran
+D1156,negatif,FYI Kamar D 21 VIP sudah dipesan,-,ya,[vehicle_plate] negatif sulit: cocok pola plat dengan akhiran
+D1157,negatif,"Gan, Nomor polisi kendaraan wajib diisi 🙏",-,ya,[vehicle_plate] kata nopol tanpa nomor
+D1158,positif,Transaksi dilakukan dari alamat IP 2001:db8:3f34::99d8 Makasih ya,ip_address:2001:db8:3f34::99d8,tidak,entitas P1
+D1159,positif,[Chat CS] Tolong whitelist IP rumah saya 192.0.2.175 Ditunggu kabarnya.,ip_address:192.0.2.175,tidak,entitas P1
+D1160,positif,"Dear tim, 198.51.100.122 - - [09/Nov/2026:10:00:00 +0700] ""GET /login HTTP/1.1"" 401 Sekian.",ip_address:198.51.100.122,tidak,entitas P1
+D1161,positif,"Gan, Login mencurigakan dari IP 203.0.113.166 Sekian.",ip_address:203.0.113.166,tidak,entitas P1
+D1162,positif,"Halo kak, client_ip=2001:db8:57e0::bbb0 Tq",ip_address:2001:db8:57e0::bbb0,tidak,entitas P1
+D1163,positif,"Selamat pagi, Pengguna dengan IP 198.51.100.38 diblokir",ip_address:198.51.100.38,tidak,entitas P1
+D1164,positif,[Chat CS] Login mencurigakan dari IP 192.0.2.246,ip_address:192.0.2.246,tidak,entitas P1
+D1165,positif,Transaksi dilakukan dari alamat IP 2001:db8:ec8b::c0e9 Thx,ip_address:2001:db8:ec8b::c0e9,tidak,entitas P1
+D1166,positif,Tolong whitelist IP rumah saya 198.51.100.112 Tq,ip_address:198.51.100.112,tidak,entitas P1
+D1167,positif,Re: komplain - Transaksi dilakukan dari alamat IP 2001:db8:e7d9::748c Mohon segera diproses.,ip_address:2001:db8:e7d9::748c,tidak,entitas P1
+D1168,positif,[Chat CS] Tolong whitelist IP rumah saya 192.0.2.37 Ditunggu kabarnya.,ip_address:192.0.2.37,tidak,entitas P1
+D1169,positif,"Halo kak, Transaksi dilakukan dari alamat IP 203.0.113.158",ip_address:203.0.113.158,tidak,entitas P1
+D1170,positif,"Selamat pagi, Tolong whitelist IP rumah saya 198.51.100.90 Tq",ip_address:198.51.100.90,tidak,entitas P1
+D1171,positif,"Gan, Transaksi dilakukan dari alamat IP 192.0.2.126",ip_address:192.0.2.126,tidak,entitas P1
+D1172,positif,"Permisi, client_ip=192.0.2.246 Terima kasih.",ip_address:192.0.2.246,tidak,entitas P1
+D1173,positif,X-Forwarded-For: 203.0.113.73,ip_address:203.0.113.73,tidak,entitas P1
+D1174,positif,"Urgent: 198.51.100.232 - - [09/Nov/2026:10:00:00 +0700] ""GET /login HTTP/1.1"" 401 Thx",ip_address:198.51.100.232,tidak,entitas P1
+D1175,positif,FYI Transaksi dilakukan dari alamat IP 198.51.100.216 Mohon segera diproses.,ip_address:198.51.100.216,tidak,entitas P1
+D1176,positif,"Min, X-Forwarded-For: 2001:db8:a4a3::8743 Tq",ip_address:2001:db8:a4a3::8743,tidak,entitas P1
+D1177,positif,"Dear tim, client_ip=198.51.100.53 Sekian.",ip_address:198.51.100.53,tidak,entitas P1
+D1178,positif,"Dear tim, client_ip=192.0.2.60",ip_address:192.0.2.60,tidak,entitas P1
+D1179,positif,Re: komplain - X-Forwarded-For: 203.0.113.142 Thx,ip_address:203.0.113.142,tidak,entitas P1
+D1180,positif,"Pak/Bu, {""ip"": ""2001:db8:60fc::9fd5""} Ditunggu kabarnya.",ip_address:2001:db8:60fc::9fd5,tidak,entitas P1
+D1181,positif,"Permisi, Tolong whitelist IP rumah saya 192.0.2.128 (dikirim dari HP)",ip_address:192.0.2.128,tidak,entitas P1
+D1182,positif,"Permisi, X-Forwarded-For: 192.0.2.3 🙏",ip_address:192.0.2.3,tidak,entitas P1
+D1183,positif,client_ip=203.0.113.103 Ditunggu kabarnya.,ip_address:203.0.113.103,tidak,entitas P1
+D1184,positif,"Min, Transaksi dilakukan dari alamat IP 203.0.113.91 Ditunggu kabarnya.",ip_address:203.0.113.91,tidak,entitas P1
+D1185,positif,"Min, Transaksi dilakukan dari alamat IP 198.51.100.36",ip_address:198.51.100.36,tidak,entitas P1
+D1186,positif,"Min, 192.0.2.49 - - [09/Nov/2026:10:00:00 +0700] ""GET /login HTTP/1.1"" 401 Terima kasih.",ip_address:192.0.2.49,tidak,entitas P1
+D1187,positif,"Selamat pagi, Tolong whitelist IP rumah saya 203.0.113.230 (dikirim dari HP)",ip_address:203.0.113.230,tidak,entitas P1
+D1188,positif,"Min, Transaksi dilakukan dari alamat IP 198.51.100.35",ip_address:198.51.100.35,tidak,entitas P1
+D1189,positif,Pengguna dengan IP 203.0.113.149 diblokir 🙏,ip_address:203.0.113.149,tidak,entitas P1
+D1190,positif,"Pak/Bu, 192.0.2.210 - - [09/Nov/2026:10:00:00 +0700] ""GET /login HTTP/1.1"" 401 🙏",ip_address:192.0.2.210,tidak,entitas P1
+D1191,positif,Login mencurigakan dari IP 192.0.2.185 Tq,ip_address:192.0.2.185,tidak,entitas P1
+D1192,positif,[Chat CS] Pengguna dengan IP 198.51.100.62 diblokir 🙏,ip_address:198.51.100.62,tidak,entitas P1
+D1193,positif,FYI X-Forwarded-For: 192.0.2.196 Terima kasih.,ip_address:192.0.2.196,tidak,entitas P1
+D1194,positif,"Selamat pagi, Tolong whitelist IP rumah saya 198.51.100.254 Makasih ya",ip_address:198.51.100.254,tidak,entitas P1
+D1195,positif,"Gan, client_ip=2001:db8:c2ac::bb11 Terima kasih.",ip_address:2001:db8:c2ac::bb11,tidak,entitas P1
+D1196,negatif,Mohon bantuannya. IP server internal 192.168.50.19 Terima kasih.,-,ya,[ip_address] IP privat (dikecualikan secara default)
+D1197,negatif,"Dear tim, curl http://192.168.67.49:8080/health",-,ya,[ip_address] IP privat
+D1198,negatif,FYI localhost:3000 tidak bisa dibuka 🙏,-,ya,[ip_address] localhost
+D1199,negatif,Rilis 1.6.0.3-beta,-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1200,negatif,FYI IP server internal 10.87.182.114,-,ya,[ip_address] IP privat (dikecualikan secara default)
+D1201,negatif,curl http://172.28.185.51:8080/health 🙏,-,ya,[ip_address] IP privat
+D1202,negatif,Re: komplain - Versi 7.1.9 Terima kasih.,-,ya,[ip_address] versi 3 bagian
+D1203,negatif,"Min, IP server internal 172.30.58.13 🙏",-,ya,[ip_address] IP privat (dikecualikan secara default)
+D1204,negatif,Tiket #4471: Versi 8.3.9 Makasih ya,-,ya,[ip_address] versi 3 bagian
+D1205,negatif,Subnet mask 255.255.255.0 Ditunggu kabarnya.,-,ya,[ip_address] subnet mask
+D1206,negatif,"Dear tim, Subnet mask 255.255.0.0 Tq",-,ya,[ip_address] subnet mask
+D1207,negatif,"Dear tim, Versi 9.9.8",-,ya,[ip_address] versi 3 bagian
+D1208,negatif,Rilis 4.5.4.3-beta,-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1209,negatif,"Halo kak, Versi 6.8.6 Sekian.",-,ya,[ip_address] versi 3 bagian
+D1210,negatif,"Dear tim, OID 1.3.6.1.4.1.311.21 (dikirim dari HP)",-,ya,[ip_address] OID
+D1211,negatif,"Permisi, curl http://192.168.59.118:8080/health Thx",-,ya,[ip_address] IP privat
+D1212,negatif,"Gan, Rilis 1.9.5.5-beta (dikirim dari HP)",-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1213,negatif,IP server internal 192.168.229.15 Ditunggu kabarnya.,-,ya,[ip_address] IP privat (dikecualikan secara default)
+D1214,negatif,"Halo kak, Versi 3.3.5",-,ya,[ip_address] versi 3 bagian
+D1215,negatif,Tiket #4471: curl http://192.168.153.67:8080/health (dikirim dari HP),-,ya,[ip_address] IP privat
+D1216,negatif,IP server internal 192.168.151.188 Makasih ya,-,ya,[ip_address] IP privat (dikecualikan secara default)
+D1217,negatif,curl http://172.30.166.212:8080/health Mohon segera diproses.,-,ya,[ip_address] IP privat
+D1218,negatif,"Permisi, Versi 8.9.5",-,ya,[ip_address] versi 3 bagian
+D1219,negatif,"Halo kak, Rilis 6.6.5.5-beta Makasih ya",-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1220,negatif,Rilis 3.7.3.6-beta Thx,-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1221,negatif,"Min, Versi 5.7.5",-,ya,[ip_address] versi 3 bagian
+D1222,negatif,Re: komplain - OID 1.3.6.1.4.1.311.21 Thx,-,ya,[ip_address] OID
+D1223,negatif,"Dear tim, Versi 5.8.6",-,ya,[ip_address] versi 3 bagian
+D1224,negatif,IP server internal 192.168.8.73 (dikirim dari HP),-,ya,[ip_address] IP privat (dikecualikan secara default)
+D1225,negatif,Tiket #4471: Rilis 8.4.7.0-beta Makasih ya,-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1226,negatif,"Pak/Bu, Kode akun 19.07.05.005",-,ya,[ip_address] nol di depan oktet
+D1227,negatif,Re: komplain - curl http://10.127.174.170:8080/health Terima kasih.,-,ya,[ip_address] IP privat
+D1228,negatif,"Pak/Bu, Rilis 9.5.3.6-beta Tq",-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1229,negatif,"Gan, curl http://127.0.0.1:8080/health",-,ya,[ip_address] IP privat
+D1230,negatif,"Selamat pagi, Rilis 2.3.7.7-beta Thx",-,ya,[ip_address] negatif sulit: versi 4 bagian identik dengan IPv4
+D1231,negatif,Re: komplain - IP server internal 127.0.0.1 Makasih ya,-,ya,[ip_address] IP privat (dikecualikan secara default)
+D1232,negatif,Re: komplain - Kode akun 13.04.01.007,-,ya,[ip_address] nol di depan oktet
+D1233,negatif,"Min, Kode akun 16.04.02.008",-,ya,[ip_address] nol di depan oktet
+D1234,positif,"Selamat pagi, Yusuf Ramadhan - A1611850 Mohon segera diproses.",passport_id:A1611850,tidak,paspor tanpa kata konteks
+D1235,positif,"Halo kak, Peserta Vina Suryadi, 0000192859570",bpjs:0000192859570,tidak,BPJS tanpa kata konteks
+D1236,positif,Mohon bantuannya. Teguh Gunawan - E0558820 Makasih ya,passport_id:E0558820,tidak,paspor tanpa kata konteks
+D1237,positif,"FYI Peserta Nanda Kurniawan, 0001564737194 Sekian.",bpjs:0001564737194,tidak,BPJS tanpa kata konteks
+D1238,positif,"Gan, Andi Wibowo - X 5146021 (dikirim dari HP)",passport_id:X 5146021,tidak,paspor tanpa kata konteks
+D1239,positif,"Min, Peserta Budi Lestari, 79561864813 🙏",bpjs:79561864813,tidak,BPJS tanpa kata konteks
+D1240,positif,Sari Ramadhan - X7169272 (dikirim dari HP),passport_id:X7169272,tidak,paspor tanpa kata konteks
+D1241,positif,"Peserta Hendra Saputra, 2003233679102 Tq",bpjs:2003233679102,tidak,BPJS tanpa kata konteks
+D1242,positif,"Permisi, Peserta BPJS 22998529388, NIK 1578294209570369, email andi_hida@contoh.test",bpjs:22998529388 | nik:1578294209570369 | email:andi_hida@contoh.test,ya,beberapa entitas
+D1243,positif,"No. KK 8249242010130747, NIK kepala keluarga 3405065811680068 🙏",kk:8249242010130747 | nik:3405065811680068,ya,beberapa entitas
+D1244,positif,"Pak/Bu, No. KK 1875061902041490, NIK kepala keluarga 6161270607480124 Thx",kk:1875061902041490 | nik:6161270607480124,ya,beberapa entitas
+D1245,positif,"Gan, Peserta BPJS 0009841115155, NIK 3225131909740049, email wahyusaputra@perusahaan.test 🙏",bpjs:0009841115155 | nik:3225131909740049 | email:wahyusaputra@perusahaan.test,ya,beberapa entitas
+D1246,positif,"Gan, No. KK 1556101410222167, NIK kepala keluarga 8252276310560262",kk:1556101410222167 | nik:8252276310560262,ya,beberapa entitas
+D1247,positif,"Tiket #4471: Pegawai Irfan Ramadhan, NIP 199203262013051411, lahir 26-03-1992, HP +62 832 2756 8603 Sekian.",nip:199203262013051411 | birth_date:26-03-1992 | phone_id:+62 832 2756 8603,ya,beberapa entitas
+D1248,positif,"Min, Jamaah: Bayu Wijaya, paspor E2615056, tgl lahir 28 Juli 2004 Terima kasih.",passport_id:E2615056 | birth_date:28 Juli 2004,ya,beberapa entitas
+D1249,positif,"Selamat pagi, No. KK 3574300803221572, NIK kepala keluarga 9206295309460391 Terima kasih.",kk:3574300803221572 | nik:9206295309460391,ya,beberapa entitas
+D1250,positif,"Tiket #4471: Jamaah: Putri Simanjuntak, paspor B6327096, tgl lahir 12 Mei 1974",passport_id:B6327096 | birth_date:12 Mei 1974,ya,beberapa entitas
+D1251,positif,"Mohon bantuannya. Pegawai Umi Wibowo, NIP 199901072020102701, lahir 07-01-1999, HP 0811 7525 8134",nip:199901072020102701 | birth_date:07-01-1999 | phone_id:0811 7525 8134,ya,beberapa entitas
+D1252,positif,"Tiket #4471: Pegawai Yoga Tanjung, NIP 199312142025051962, lahir 14-12-1993, HP 0851 8534 3140 Ditunggu kabarnya.",nip:199312142025051962 | birth_date:14-12-1993 | phone_id:0851 8534 3140,ya,beberapa entitas
+D1253,positif,"Dear tim, Pegawai Yoga Pratama, NIP 198803082020121535, lahir 08-03-1988, HP +62 816-6150-889 🙏",nip:198803082020121535 | birth_date:08-03-1988 | phone_id:+62 816-6150-889,ya,beberapa entitas
+D1254,positif,"No. KK 1848092205071306, NIK kepala keluarga 1317105712560252",kk:1848092205071306 | nik:1317105712560252,ya,beberapa entitas
+D1255,positif,"Selamat pagi, Jamaah: Agus Simanjuntak, paspor A2436538, tgl lahir 22 Juli 1982 Ditunggu kabarnya.",passport_id:A2436538 | birth_date:22 Juli 1982,ya,beberapa entitas
+D1256,positif,"Mohon bantuannya. Peserta BPJS 54954699573, NIK 6379254711030375, email teguh44@kampus.example.ac.id",bpjs:54954699573 | nik:6379254711030375 | email:teguh44@kampus.example.ac.id,ya,beberapa entitas
+D1257,positif,"Jamaah: Budi Nasution, paspor C 7608512, tgl lahir 1960-07-23 Ditunggu kabarnya.",passport_id:C 7608512 | birth_date:1960-07-23,ya,beberapa entitas
+D1258,kredensial,MIDTRANS_SERVER_KEY=Mid-server-yCxkj9fHnSkMuCKt9wWHHY-6,api_key,ya,Midtrans server key
+D1259,kredensial,TELEGRAM_BOT_TOKEN=2979827581:AAaORLQVPRp6CKtkvoEZLsY57IxOYExnyvt,api_key,ya,token bot Telegram
+D1260,kredensial,https://api.telegram.org/bot4582839893:AA1gJZcfoK-3fNLX8w3Q9rw77BrmDGz95u7/sendMessage,api_key,ya,token bot Telegram di URL
+D1261,kredensial,Kenapa charge gagal? server key saya SB-Mid-server-7PuYtW0hgI2PVddcEs0Ydi9R,api_key,ya,Midtrans server key
+D1262,kredensial,MIDTRANS_SERVER_KEY=SB-Mid-server-_L3FkK-lKtfL9xzcOEIcxVPg,api_key,ya,Midtrans server key
+D1263,kredensial,MIDTRANS_SERVER_KEY=Mid-server-V6ebTdqNFiI3VwlfOOpcS-Wb,api_key,ya,Midtrans server key
+D1264,kredensial,TELEGRAM_BOT_TOKEN=6322977403:AA6-dvPZBMp_SQ8AK3JSkf9WAzUpYxxo0p4,api_key,ya,token bot Telegram
+D1265,kredensial,https://api.telegram.org/bot9951366622:AABH-cflH54---JyabmXkdhkzAZUt1lmLFW/sendMessage,api_key,ya,token bot Telegram di URL
+D1266,kredensial,Xendit.setApiKey('xnd_development_D59wX4jnq8JaKX5rZQx4zkAbX1y9uw45kMfoPqQ0wbIvHGyTqO'),api_key,ya,Xendit secret key
+D1267,kredensial,https://api.telegram.org/bot1324746758:AA1IJ_XL5sM-6bY6vXv60W6Z9wnTxGBJysN/sendMessage,api_key,ya,token bot Telegram di URL
+D1268,kredensial,Kenapa charge gagal? server key saya SB-Mid-server-59qLtdkbZtc94-P5FulNN-mQ,api_key,ya,Midtrans server key
+D1269,kredensial,MIDTRANS_SERVER_KEY=SB-Mid-server-uCC7Hps1tlXAecObX0hq9s4t,api_key,ya,Midtrans server key
+D1270,kredensial,Kenapa charge gagal? server key saya Mid-server-BTMfNhf5fuq01wfS4r-OVpq0,api_key,ya,Midtrans server key
+D1271,kredensial,Kenapa charge gagal? server key saya Mid-server-jPppNe6SJiR6nXOzgzQCPyMt,api_key,ya,Midtrans server key
+D1272,kredensial,MIDTRANS_SERVER_KEY=${MIDTRANS_SERVER_KEY},-,ya,placeholder atau pembahasan
+D1273,kredensial,Server key Midtrans ada di dashboard > Settings > Access Keys,-,ya,placeholder atau pembahasan
+D1274,kredensial,XENDIT_SECRET_KEY=<isi-dari-dashboard>,-,ya,placeholder atau pembahasan
+D1275,kredensial,TELEGRAM_BOT_TOKEN=,-,ya,placeholder atau pembahasan
+D1276,kredensial,Token bot Telegram didapat dari BotFather,-,ya,placeholder atau pembahasan

@@ -15,7 +15,7 @@ Aplikasi ──► OmniRail ──► Provider LLM (Anthropic, Gemini, OpenAI, O
 ```
 
 - **Deterministik dulu.** Deteksi berbasis regex dan validator (Luhn, format NIK), dengan footprint kecil dan overhead latensi yang diukur lalu dipublikasikan.
-- **Konteks Indonesia.** Entitas NIK, NPWP, nomor rekening, dan nomor +62.
+- **Konteks Indonesia.** NIK, nomor KK, NIP, NPWP, paspor, BPJS, nomor rekening, nomor +62, dan tanggal lahir, dengan validator struktur (misalnya kode provinsi dan tanggal lahir pada NIK). Ditambah deteksi kunci payment gateway lokal (Midtrans, Xendit).
 - **Tokenisasi reversibel.** Contohnya `<EMAIL_1>`, yang hanya hidup di memori selama satu request.
 - **Mode shadow.** Kebijakan dicatat tanpa memblokir, supaya bisa diuji sebelum diberlakukan.
 - **Policy pack.** Bundel aturan per sektor (`id-general`, `id-fintech`, `id-ecommerce`, `id-instansi`), dan setiap pack wajib punya tes.
@@ -49,7 +49,7 @@ upstream:
 ingress:
   pii:
     action: tokenize       # tokenize | redact
-    entities: [email, phone_id, credit_card, nik, npwp, bank_account]
+    entities: [email, phone_id, credit_card, nik, kk, nip, npwp, passport_id, bpjs, bank_account, birth_date]
   credentials:
     action: block
   policy:

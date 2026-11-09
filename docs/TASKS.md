@@ -47,8 +47,8 @@ Bila keputusannya **pivot**, Tahap 1 dan 2 diganti dengan plugin untuk LiteLLM a
 | | ID | Task | Requirement | Selesai bila | Butuh |
 | --- | --- | --- | --- | --- | --- |
 | [ ] | T-301 | Normalisasi teks (NFKC, casefold, hapus karakter lebar-nol) dengan peta posisi ke teks asli | POL-02 | Rentang temuan pada teks normal bisa dipetakan kembali ke teks asli; test Unicode lulus | T-101 |
-| [ ] | T-302 | Validator: Luhn + prefix kartu, struktur NIK, nomor HP, NPWP | PII-01, bagian 7.10 | Test unit memakai semua baris dev yang relevan | T-301 |
-| [ ] | T-303 | Detektor entitas dan aturan prioritas tumpang tindih | PII-01, PII-07 | D050 terdeteksi sebagai `nik`, D051 sebagai `credit_card`; `bank_account` tanpa konteks tidak terdeteksi | T-302 |
+| [ ] | T-302 | Validator: Luhn + prefix kartu, struktur NIK, KK, dan NIP, nomor HP, NPWP, paspor, BPJS, tanggal | PII-01, bagian 7.10 | Test unit memakai semua baris dev yang relevan | T-301 |
+| [ ] | T-303 | Detektor entitas, kata konteks wajib, dan aturan prioritas tumpang tindih | PII-01, PII-07 | D050 terdeteksi sebagai `nik`, D051 sebagai `credit_card`; `kk`, `passport_id`, `bpjs`, `birth_date`, dan `bank_account` tanpa konteks tidak terdeteksi | T-302 |
 | [ ] | T-304 | Tokenisasi dan pemulihan: token konsisten, lompati token yang sudah ada di input, tabel hanya di memori | PII-02 s.d. PII-06 | Kriteria terima PII di PRD 7.4 lulus | T-303 |
 | [ ] | T-305 | Detektor credentials dan pengecualian placeholder | CRED-01 s.d. CRED-03 | Semua baris `kredensial` dev dengan `cakupan_mvp = ya` lulus | T-301 |
 | [ ] | T-306 | Kebijakan: `max_input_chars`, `deny_patterns`, dan `blocked_keywords` per kata utuh | POL-01, POL-02 | Baris `injeksi` dev dengan `cakupan_mvp = ya` lulus; `politikus` tidak tertangkap oleh kata kunci `politik` | T-301 |
@@ -59,6 +59,7 @@ Bila keputusannya **pivot**, Tahap 1 dan 2 diganti dengan plugin untuk LiteLLM a
 | [ ] | T-311 | Audit log JSON per request, beserta `policy_version` dan `policy_hash` | AUD-01 s.d. AUD-03 | Field sesuai PRD 7.7; hash berubah bila kebijakan berubah dan tetap bila hanya kunci rahasia yang berubah; tidak ada nilai PII di log | T-307 |
 | [ ] | T-312 | Metrik OpenTelemetry (OTLP) | AUD-04 | Metrik di PRD AUD-04 terlihat di collector lokal | T-307 |
 | [ ] | T-313 | `omnirail eval`: metrik per entitas, hasil JSON bernomor versi, dan ringkasan Markdown | EVAL-02 | Menghitung metrik sesuai aturan `eval/README.md` | T-303, T-305, T-306 |
+| [ ] | T-315 | Entitas P1 `vehicle_plate` dan `ip_address`, mati secara default | PII-01b | Baris dev kedua entitas lulus saat diaktifkan; tidak memengaruhi metrik MVP saat mati | T-303 |
 | [ ] | T-314 | Baseline dan ambang CI | EVAL-04 | Baseline dev tercatat; CI gagal bila recall turun atau false positive naik melewati ambang; target PRD bagian 9 direvisi tertulis | T-313, T-310 |
 
 ## Tahap 4 — Validasi JSON
@@ -89,4 +90,6 @@ Bila keputusannya **pivot**, Tahap 1 dan 2 diganti dengan plugin untuk LiteLLM a
 | 9 Nov 2026 | Dataset dipisah per folder (`eval/dev/`, `eval/holdout/`) dengan nama berkas dan kolom yang sama, bukan kolom `split` tambahan |
 | 9 Nov 2026 | Bila satu nilai lolos validator NIK dan kartu sekaligus, kata konteks menentukan jenisnya; tanpa konteks, dipakai urutan prioritas PII-07 |
 | 9 Nov 2026 | Dataset v0.2: 701 baris dev dan 307 holdout. Template kalimat dev dan holdout dipisah. Baris negatif menandai entitas yang dijebak di `catatan` (`[nik]`, `[email]`, dan seterusnya) |
-| 9 Nov 2026 | Terbuka: apakah nama bank (BCA, BRI, dan seterusnya) dijadikan kata konteks `bank_account`? Sekarang baris seperti itu ditandai `cakupan_mvp = tidak` |
+| 9 Nov 2026 | Terbuka (PRD Q13): apakah nama bank (BCA, BRI, dan seterusnya) dijadikan kata konteks `bank_account`? Sekarang baris seperti itu ditandai `cakupan_mvp = tidak` |
+| 9 Nov 2026 | Entitas ditambah (PRD v1.2): `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` masuk P0; `vehicle_plate` dan `ip_address` P1. Dataset v0.3: 1.276 baris dev dan 549 holdout |
+| 9 Nov 2026 | Pola plat mewajibkan huruf akhiran, dan IP ≥ 224 dikecualikan. Keduanya ditemukan saat pemeriksaan silang dataset ("gate A1", "Vitamin B 12", subnet mask) |

@@ -2,33 +2,41 @@
 
 Set uji berlabel untuk Tahap 0 (perbandingan dengan LiteLLM + Presidio) dan untuk `omnirail eval` (PRD EVAL-01, EVAL-02).
 
-> **Status: v0.2.** Setiap entitas MVP sudah punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
+> **Status: v0.3.** Setiap entitas (P0 dan P1) sudah punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
 
 ## Isi
 
 | Berkas | Baris | Kegunaan |
 | --- | --- | --- |
-| `dev/uji_pii_id.csv` | 701 | Boleh dilihat dan dipakai saat menyetel aturan |
-| `holdout/uji_pii_id.csv` | 307 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
+| `dev/uji_pii_id.csv` | 1.276 | Boleh dilihat dan dipakai saat menyetel aturan |
+| `holdout/uji_pii_id.csv` | 549 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
 
-### Jumlah per entitas (dev + holdout, `cakupan_mvp = ya`)
+### Jumlah per entitas (dev + holdout)
 
-| Entitas | Positif | Negatif |
-| --- | --- | --- |
-| `email` | 103 | 61 |
-| `phone_id` | 89 | 62 |
-| `credit_card` | 81 | 59 |
-| `nik` | 91 | 64 |
-| `npwp` | 68 | 58 |
-| `bank_account` | 78 | 61 |
+| Entitas | Prioritas | Positif | Negatif | Kasus di luar cakupan |
+| --- | --- | --- | --- | --- |
+| `email` | P0 | 106 | 61 | — |
+| `phone_id` | P0 | 94 | 62 | 5 (telepon kantor) |
+| `credit_card` | P0 | 81 | 59 | — |
+| `nik` | P0 | 99 | 64 | 5 (NIK berpemisah) |
+| `npwp` | P0 | 68 | 58 | — |
+| `bank_account` | P0 | 78 | 61 | 5 (tanpa kata konteks) |
+| `nip` | P0 | 63 | 54 | — |
+| `kk` | P0 | 64 | 54 | — |
+| `passport_id` | P0 | 59 | 54 | 6 (tanpa kata konteks) |
+| `bpjs` | P0 | 57 | 54 | 6 (tanpa kata konteks) |
+| `birth_date` | P0 | 62 | 54 | — |
+| `vehicle_plate` | P1 | 54 | 54 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
+| `ip_address` | P1 | 54 | 54 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
 
-Hitungan positif menghitung kemunculan entitas, sehingga baris campuran terhitung di beberapa entitas sekaligus. Di luar itu ada 70 baris credentials, 31 baris injeksi, serta 55 kemunculan entitas yang sengaja di luar cakupan MVP (nama, alamat, NIK berpemisah, telepon kantor, dan rekening tanpa kata konteks).
+Hitungan positif menghitung kemunculan entitas, sehingga baris campuran terhitung di beberapa entitas sekaligus. Baris positif entitas P1 bertanda `cakupan_mvp = tidak` karena detektornya mati secara default. Baris negatifnya tetap `ya`, karena tidak boleh memicu detektor MVP mana pun. Di luar itu ada 140 baris credentials (termasuk Midtrans, Xendit, dan token bot Telegram), 44 baris injeksi, serta 40 kemunculan nama dan alamat yang butuh NER.
 
 ### Variasi
 
 - **Gaya kalimat:** chat CS formal dan informal (singkatan, slang, emoji), log aplikasi, JSON, CSV, `key=value`, header email, SQL, perintah shell, potongan kode, dan kalimat campuran bahasa Inggris.
 - **Format nilai:** 36 prefix operator seluler dengan 8 gaya penulisan (`08…`, `+62`, `62`, pemisah spasi, titik, atau tanda hubung); kartu Visa, Mastercard (seri 5 dan 2), Amex, dan JCB dengan atau tanpa pemisah; NIK laki-laki dan perempuan dari semua provinsi; NPWP 15 digit bertitik, 15 digit polos, dan 16 digit; rekening 10 sampai 16 digit dari 16 nama bank.
-- **Negatif yang menjebak:** `git@github.com:…`, `logo@2x.png`, IMEI yang lolos Luhn, barcode EAN-13, nomor seri faktur pajak, kode wilayah Kemendagri, saldo bertitik di dekat kata "rekening", dan pesan bisnis wajar yang memuat frasa deny-list.
+- **Negatif yang menjebak:** `git@github.com:…`, `logo@2x.png`, IMEI yang lolos Luhn, barcode EAN-13, nomor seri faktur pajak, kode wilayah Kemendagri, saldo bertitik di dekat kata "rekening", pesan bisnis wajar yang memuat frasa deny-list, "mohon maaf lahir dan batin" diikuti tanggal, "KKN", SKU berbentuk nomor paspor, "Kamar D 12 VIP" yang cocok pola plat, serta nomor versi empat bagian dan subnet mask yang mirip IPv4.
+- **Konsistensi antar-entitas:** di baris campuran, tanggal lahir yang ditulis sama dengan tanggal lahir di NIP, dan nomor KK yang juga lolos struktur NIK ditandai di `catatan`.
 - **Template dev dan holdout terpisah.** Kalimat holdout memakai template yang tidak pernah muncul di dev, sehingga holdout menguji generalisasi, bukan hafalan pola kalimat.
 
 Baris berlabel `negatif sulit` di kolom `catatan` adalah kasus yang kemungkinan besar gagal di MVP. Baris ini tetap dihitung, karena tujuannya memperlihatkan false positive yang nyata.
