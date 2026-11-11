@@ -1,12 +1,12 @@
-# OmniRail Engine — PRD MVP v1.5
+# OmniRail Engine — PRD MVP v1.6
 
 | | |
 | --- | --- |
 | **Status** | Draf, menunggu tinjauan pemilik produk |
-| **Tanggal** | 9 November 2026 |
+| **Tanggal** | 11 November 2026 |
 | **Pemilik** | devaldi caliesta |
 | **Sumber** | [Blueprint v1.1](OmniRail_Engine_Blueprint_v1.1.md) |
-| **Lingkup** | MVP sampai rilis publik pertama (Tahap 0 s.d. 5) |
+| **Lingkup** | MVP sampai rilis publik pertama, dalam dua rilis: α (periksa, tanpa proxy) dan β (proxy). Tahap 0 s.d. 5 |
 
 PRD ini menjadi acuan **apa yang dibangun dan kapan dianggap selesai** untuk MVP. Blueprint v1.1 tetap menjadi acuan latar belakang, pemetaan regulasi (bagian 6 dan 7), dan arah setelah MVP (bagian 13). Bila keduanya berbeda, PRD ini yang berlaku. Daftar perbedaannya ada di bagian 1.
 
@@ -34,12 +34,23 @@ Blueprint sudah kuat dari sisi posisi produk, batas klaim, dan konteks regulasi.
 | 14 | **Dataset uji `uji_pii_id.csv` dijadikan deliverable P0** | Dataset ini dirujuk di blueprint, tetapi belum ada di repo |
 | 15 | **Entitas ditambah:** `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` (P0), `vehicle_plate`, `ip_address` (P1), serta kunci Midtrans, Xendit, dan token bot Telegram | Blueprint hanya memuat enam entitas berformat tetap. Dokumen identitas Indonesia lain (NIP, KK, paspor, BPJS) sama murahnya untuk dideteksi dan memperkuat pembeda "konteks Indonesia". Kunci payment gateway lokal relevan untuk fintech, dan credentials adalah kekhawatiran utama di wawancara pertama |
 | 16 | **Tampilan uji (playground) dirinci menjadi requirement** (bagian 7.13): endpoint `inspect` dan CLI `omnirail inspect` (P0, Tahap 3), tab Coba mode periksa saja (P0, Tahap 5), kirim ke provider dan tab Evaluasi (P1) | Blueprint bagian 11 sudah menggambarkan tampilan uji, tetapi PRD v1.0 hanya punya satu baris P1. Padahal "cara mencoba tanpa risiko" adalah syarat pemakaian dari wawancara pertama, dan penanggung jawab kepatuhan tidak menulis kode |
+| 17 | **MVP dipecah menjadi dua rilis** (bagian 11). **Rilis α (periksa):** `omnirail-core`, CLI `inspect`, `eval`, dan `scan`, serta demo web WASM, tanpa proxy. **Rilis β (proxy):** rilis publik pertama | Hipotesis inti adalah mutu deteksi data pribadi Indonesia. Hipotesis itu bisa diuji dan dipakai orang dalam hitungan minggu, tanpa menunggu proxy, tiga adapter, dan validasi JSON selesai. Wawancara pun bisa memakai alat nyata |
+| 18 | **Scope rilis β dikecilkan:** validasi JSON (JSON-01 s.d. 04) dan metrik OpenTelemetry (AUD-04) turun ke P1; rilis β hanya wajib adapter Ollama dan **satu** provider cloud (UP-01, UP-08); tampilan uji yang disajikan binary (PG-04, PG-05) turun ke P1 | Provider utama sudah punya structured output bawaan, jadi perbaikan JSON bukan pembeda. Satu pembangun tidak bisa merawat tiga adapter sebelum ada pengguna. Demo WASM menggantikan server tampilan uji untuk kebutuhan mencoba |
+| 19 | **Pseudo-streaming** (API-08): `stream: true` dilayani dengan memanggil provider tanpa streaming, lalu mengirim jawaban yang sudah diperiksa sebagai SSE | Sebagian besar aplikasi chat memakai `stream: true`. Bila ditolak, G2 (cukup ganti `base_url`) gagal untuk mereka. Jawaban di-buffer penuh, jadi tidak ada teks yang lolos sebelum diperiksa |
+| 20 | **Kata konteks lintas pesan** (PII-10, P0) | Di chat CS, kata konteks sering ada di pertanyaan asisten ("Boleh minta nomor rekeningnya?"), sedangkan pengguna hanya mengirim angkanya. Dengan aturan jarak ≤ 5 kata di pesan yang sama, `bank_account`, `passport_id`, `bpjs`, dan `birth_date` **lolos tanpa disamarkan**. Ini celah kebocoran, bukan sekadar salah jenis |
+| 21 | **Angka terucap** (PII-11, P1): `nol delapan satu dua …` di transkrip panggilan dan voice-to-text | Ringkasan panggilan CS adalah kasus LLM yang umum, dan alat umum tidak membaca bilangan berbahasa Indonesia. Dataset v0.6 sudah memuat barisnya |
+| 22 | **Laporan paparan data** `omnirail report` (bagian 7.15, P0) | Mode shadow perlu menghasilkan sesuatu yang bisa dibaca penanggung jawab kepatuhan: data apa terkirim ke provider mana, dari aplikasi mana. Ini nilai yang terlihat sejak minggu pertama tanpa satu request pun diblokir |
+| 23 | **Rute berdasarkan sensitivitas** (bagian 7.16, P1) | Bukan sekadar menyamarkan, tetapi mengarahkan request berisi data pribadi spesifik ke model lokal. Ini menjawab kekhawatiran transfer data ke luar negeri dan berbeda dari fallback antar-provider (non-goal) |
+| 24 | **`omnirail scan`** untuk berkas, repo, dan CI (EVAL-07, EVAL-08), **benchmark terbuka** (DIST-07), **credentials ekosistem lokal tambahan** (CRED-05), dan **eksperimen format token** (Q14) | Jalur adopsi developer tanpa mengubah arsitektur aplikasi, dan bukti terukur yang memperkuat posisi "konteks Indonesia" |
+| 25 | **Kunci token dinormalisasi** (PII-03), aksi `mask` dan `block` per entitas (PII-12, P1), dan **pemulihan toleran** (PII-13, P1). Kriteria keputusan Tahap 0 ditetapkan (Q2) | Nomor yang sama dengan penulisan berbeda harus dikenali model sebagai orang yang sama. `mask` berguna untuk jawaban yang dibaca operator, `block` untuk kebutuhan PCI DSS. Model sering menulis ulang token, dan ini langsung menurunkan pemulihan token (G3) |
 
 ---
 
 ## 2. Ringkasan
 
 OmniRail adalah proxy open-source di depan LLM. Ia menyamarkan data pribadi dan memblokir credentials sebelum request keluar, menegakkan kebijakan sederhana, lalu memvalidasi dan memulihkan jawaban. Semuanya dalam satu binary Rust tanpa GPU. Aplikasi cukup mengganti `base_url` ke OmniRail.
+
+MVP dikirim dalam dua rilis (bagian 11). **Rilis α** membuktikan mutu deteksi: `omnirail inspect`, `eval`, `scan`, dan demo web yang berjalan sepenuhnya di browser. **Rilis β** menambahkan proxy dan menjadi rilis publik pertama.
 
 MVP membuktikan satu hal: **request bisa melewati proxy, datanya tersamarkan, dan jawaban dari provider kembali utuh dan valid, dengan overhead yang terukur.**
 
@@ -60,17 +71,17 @@ Tim di Indonesia yang memakai LLM API (Claude, Gemini, ChatGPT) mengirim prompt 
 | G2 | Integrasi tanpa mengubah kode aplikasi selain `base_url` dan kunci | Pengguna | SDK OpenAI resmi (Python dan Node) berjalan tanpa modifikasi; waktu dari unduh sampai request pertama ≤ 10 menit |
 | G3 | Guard tidak merusak jawaban | Pengguna | Pemulihan token ≥ 99%; false positive pada baris negatif ≤ 2% |
 | G4 | Overhead kecil dan dipublikasikan | Bisnis | Benchmark p50 dan p99 terbit di README untuk setiap rilis |
-| G5 | Hipotesis diferensiasi teruji sebelum fitur lanjutan dibangun | Bisnis | Gerbang Tahap 0 diputuskan tertulis; 5 sampai 10 wawancara calon pengguna tercatat di Tahap 5 |
+| G5 | Hipotesis diferensiasi teruji sebelum fitur lanjutan dibangun | Bisnis | Gerbang Tahap 0 diputuskan tertulis; ≥ 3 wawancara tercatat di rilis α dan 5 sampai 10 sampai rilis β |
 
 ## 5. Non-goals
 
 | Non-goal | Alasan |
 | --- | --- |
-| Menjadi gateway pengganti (fallback, load balancing, tracking biaya) | LiteLLM dan gateway lain sudah melakukannya. OmniRail dipasang di depan atau di samping gateway |
-| Streaming, tool call, gambar, dan format klien asli Anthropic atau Gemini | Streaming bisa memecah token PII dan butuh desain buffer sendiri. Di MVP fitur ini **ditolak eksplisit**, bukan diteruskan tanpa diperiksa |
+| Menjadi gateway pengganti (fallback, load balancing, tracking biaya) | LiteLLM dan gateway lain sudah melakukannya. OmniRail dipasang di depan atau di samping gateway. Rute berdasarkan sensitivitas (7.16) bukan fallback: tujuannya ditentukan kebijakan data, bukan ketersediaan provider |
+| Streaming sejati (token per token), tool call, gambar, dan format klien asli Anthropic atau Gemini | Streaming sejati bisa memecah token PII dan butuh desain buffer sendiri. Di MVP, `stream: true` dilayani sebagai pseudo-streaming (API-08): jawaban diperiksa penuh lebih dulu. Tool call dan gambar **ditolak eksplisit**, bukan diteruskan tanpa diperiksa |
 | Deteksi PII bebas-bentuk (nama, alamat) | Butuh NER. Ditunda ke setelah MVP lewat ONNX lokal |
 | Deteksi prompt injection yang andal | Deny-list hanya penyaring murah. Classifier menyusul. Klaim publik tidak boleh menyebut proteksi injection |
-| Dasbor, admin API, rate limiting, Redis | Log terstruktur dan OpenTelemetry cukup untuk MVP |
+| Dasbor, admin API, rate limiting, Redis | Log terstruktur dan laporan `omnirail report` (7.15) cukup untuk MVP. Metrik OpenTelemetry menyusul (P1) |
 | Klaim kepatuhan hukum | OmniRail adalah kontrol teknis pendukung. Persetujuan subjek data, DPIA, DPO, kontrak provider, notifikasi insiden, dan keabsahan transfer tetap urusan organisasi |
 
 ## 6. Persona dan user stories
@@ -83,7 +94,7 @@ Persona diurutkan menurut prioritas. Pembangun sendiri adalah pengguna pertama u
 2. Sebagai engineer aplikasi, saya ingin jawaban model berisi nilai asli (email, nomor HP) dan bukan token, agar pengguna akhir tidak melihat `<EMAIL_1>`.
 3. Sebagai engineer aplikasi, saya ingin pesan error yang jelas dan berformat OpenAI saat request diblokir, agar aplikasi bisa menampilkan pesan yang tepat tanpa logika khusus.
 4. Sebagai engineer aplikasi, saya ingin output JSON yang rusak diperbaiki otomatis dan dicek terhadap schema, agar parser di aplikasi tidak gagal.
-5. *(Kasus tepi)* Sebagai engineer aplikasi, saya ingin request dengan `stream: true` atau gambar ditolak dengan pesan yang jelas, agar saya tahu fitur itu belum dilindungi dan tidak mengira datanya sudah diperiksa.
+5. *(Kasus tepi)* Sebagai engineer aplikasi, saya ingin request dengan `stream: true` tetap berjalan (jawaban dikirim setelah diperiksa penuh), sedangkan tool call atau gambar ditolak dengan pesan yang jelas, agar saya tahu bagian mana yang belum dilindungi dan tidak mengira datanya sudah diperiksa.
 
 **P2. Penanggung jawab keamanan atau pelindungan data**
 
@@ -113,9 +124,19 @@ Persona diurutkan menurut prioritas. Pembangun sendiri adalah pengguna pertama u
 
 14. Sebagai kontributor pack, saya ingin menulis entitas dan aturan beserta contoh yang wajib terdeteksi dan wajib diabaikan, lalu menjalankan `omnirail test`, agar kualitas pack terbukti sebelum dibagikan.
 
+**Tambahan v1.6**
+
+19. Sebagai penanggung jawab kepatuhan, saya ingin laporan berkala tentang jenis data pribadi yang terkirim ke tiap provider, dari aplikasi dan rute mana, dikelompokkan menurut kategori data pribadi umum dan spesifik, agar saya bisa menilai besar risikonya sebelum memutuskan penegakan.
+20. *(P1)* Sebagai penanggung jawab kepatuhan, saya ingin request yang memuat data pribadi spesifik diarahkan ke model lokal, agar data itu tidak keluar dari infrastruktur sendiri.
+21. Sebagai engineer aplikasi, saya ingin memindai fixture tes, log, dan dataset di repo dengan aturan yang sama sebelum commit, agar data pribadi dan credentials tidak ikut ter-commit.
+22. *(P1)* Sebagai engineer layanan pelanggan, saya ingin nomor yang diucapkan di transkrip panggilan ("nol delapan satu dua …") ikut tersamarkan, agar ringkasan panggilan tidak membocorkan nomor pelanggan.
+23. Sebagai engineer aplikasi, saya ingin nomor yang dikirim pengguna sebagai jawaban atas pertanyaan asisten ("Boleh minta nomor rekeningnya?") tetap terdeteksi, agar data di percakapan CS tidak lolos hanya karena kata konteksnya ada di pesan sebelumnya.
+
 ## 7. Requirements
 
 Prioritas: **P0** wajib untuk rilis awal, **P1** segera setelah rilis bila waktu tidak cukup, **P2** tidak dibangun sekarang tetapi desain tidak boleh menghalanginya.
+
+Sejak v1.6, P0 dibagi menurut rilis. Daftar requirement per rilis ada di bagian 11: yang tercantum di **rilis α** wajib untuk rilis α, dan P0 lainnya wajib untuk rilis β (rilis publik pertama).
 
 ### 7.1 Alur pemrosesan
 
@@ -125,13 +146,14 @@ Urutan ini mengikat. Setiap langkah yang menolak request menghentikan alur dan t
 
 1. Autentikasi kunci OmniRail.
 2. Batas ukuran body (byte) dan parse JSON.
-3. Tolak fitur yang belum didukung: `stream: true`, `tools`/`functions`, konten non-teks.
+3. Tolak fitur yang belum didukung: `tools`/`functions`, konten non-teks, dan `n` > 1. Bila `stream: true`, catat untuk pseudo-streaming (API-08); request tetap diproses tanpa streaming ke provider.
 4. Resolusi rute: alias model → provider + model, lalu cek `allowed_providers`.
 5. Normalisasi teks untuk pencocokan (NFKC, casefold, hapus karakter lebar-nol). Teks yang dikirim ke provider tetap teks asli.
 6. Batas panjang input (`max_input_chars`, dijumlah dari semua pesan).
 7. Deteksi credentials.
 8. Kebijakan: `deny_patterns` dan `blocked_keywords`.
-9. Deteksi dan penyamaran PII (tokenize atau redact).
+9. Deteksi dan penyamaran PII (tokenize atau redact), termasuk kata konteks lintas pesan (PII-10).
+9a. *(P1)* Rute sensitivitas: bila temuan memenuhi `on_sensitive` milik rute, tujuan diganti ke rute itu, lalu `allowed_providers` dicek ulang (7.16).
 10. Ubah format ke adapter provider, lalu panggil upstream dengan timeout.
 
 **Response**
@@ -139,24 +161,26 @@ Urutan ini mengikat. Setiap langkah yang menolak request menghentikan alur dan t
 1. Ubah format dari adapter ke format OpenAI.
 2. Bila rute punya schema JSON: perbaiki sintaks, parse, pulihkan token di dalam nilai string, lalu validasi schema.
 3. Bila tanpa schema: pulihkan token pada teks.
-4. Tulis audit log, lalu kirim jawaban ke aplikasi.
+4. Tulis audit log, lalu kirim jawaban ke aplikasi. Bila `stream: true`, jawaban yang sudah final dikirim sebagai SSE (API-08).
 
 ### 7.2 API klien
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
 | API-01 | P0 | `POST /v1/chat/completions` kompatibel format OpenAI untuk teks, non-streaming |
-| API-02 | P0 | Fitur yang belum didukung ditolak dengan error eksplisit (bagian 8), bukan diteruskan |
+| API-02 | P0 | Fitur yang belum didukung (`tools`/`functions`, konten non-teks, `n` > 1) ditolak dengan error eksplisit (bagian 8), bukan diteruskan |
 | API-03 | P0 | Semua peran pesan (`system`, `user`, `assistant`) diperiksa, termasuk riwayat percakapan |
 | API-04 | P0 | `GET /healthz` (proses hidup) dan `GET /readyz` (konfigurasi termuat, upstream terkonfigurasi) |
 | API-05 | P1 | `GET /v1/models` mengembalikan daftar alias rute |
 | API-06 | P2 | Streaming dengan buffer token, format klien asli Anthropic dan Gemini |
 | API-07 | P0 | Field request yang didukung: `model`, `messages` (`role` dan `content` berupa string atau bagian `type: text`), `temperature`, `top_p`, `max_tokens` dan `max_completion_tokens`, `stop`, `n` (hanya 1), `response_format`, `seed`, dan `user`. Field lain dibuang dan dicatat (seperti UP-06). Field respons: `id`, `object`, `created`, `model` (alias rute), `choices[].message`, `choices[].finish_reason`, dan `usage` |
+| API-08 | P0 | **Pseudo-streaming.** Request dengan `stream: true` diteruskan ke provider **tanpa** streaming. Setelah seluruh alur response selesai (pemulihan token, dan validasi bila ada), jawaban dikirim sebagai SSE format OpenAI (`chat.completion.chunk`), dipecah menjadi beberapa potongan dari teks final, lalu diakhiri `data: [DONE]`. `stream_options.include_usage` dihormati. Respons memuat header `x-omnirail-stream: buffered`. Error sebelum jawaban dikirim tetap memakai respons JSON biasa (bagian 8) |
 
 Kriteria terima:
 
 - [ ] SDK OpenAI resmi Python dan Node mendapat jawaban lewat OmniRail hanya dengan mengganti `base_url` dan kunci.
-- [ ] Request dengan `stream: true` mendapat HTTP 400 kode `omnirail_unsupported_feature` dan provider tidak dipanggil.
+- [ ] SDK OpenAI Python dan Node dengan `stream=True` menerima jawaban lengkap lewat OmniRail; mock upstream membuktikan provider dipanggil tanpa streaming, dan token di potongan SSE sudah dipulihkan.
+- [ ] Request dengan `tools` mendapat HTTP 400 kode `omnirail_unsupported_feature` dan provider tidak dipanggil.
 - [ ] Request dengan bagian `image_url` mendapat HTTP 400 kode yang sama, dan provider tidak dipanggil.
 - [ ] Email di pesan `assistant` dari giliran sebelumnya ikut ditokenisasi.
 - [ ] Respons menyertakan header `x-omnirail-request-id`, yang sama dengan `request_id` di audit log.
@@ -167,13 +191,14 @@ Kriteria terima:
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
-| UP-01 | P0 | Satu format internal dan adapter Ollama (Tahap 1), Anthropic Messages API, Gemini API, dan OpenAI passthrough (Tahap 2) |
+| UP-01 | P0 | Satu format internal, adapter Ollama (untuk uji lokal), dan adapter **satu** provider cloud untuk rilis β: Anthropic Messages API, kecuali calon pengguna dari wawancara rilis α memakai provider lain (diputuskan di T-513) |
 | UP-02 | P0 | Model yang tidak ada di `routes` ditolak dengan 404 `model_not_found`, kecuali ada rute `default` |
 | UP-03 | P0 | Provider di luar `allowed_providers` ditolak saat konfigurasi divalidasi (start gagal) dan saat request (403) |
 | UP-04 | P0 | Timeout upstream bisa diatur (default 60 detik). Tidak ada retry atau fallback antar-provider |
 | UP-05 | P0 | Pemetaan adapter: pesan `system` ke `system` (Anthropic) atau `systemInstruction` (Gemini); `assistant` ke `model` (Gemini); `max_tokens` diisi default rute bila klien tidak mengirim (Anthropic mewajibkannya); `finish_reason` dan `usage` dipetakan ke format OpenAI |
 | UP-06 | P0 | Parameter yang tidak didukung provider tujuan dibuang dan dicatat di log, tidak didiamkan |
 | UP-07 | P0 | Body error dari provider tidak diteruskan mentah ke aplikasi atau log, karena bisa memuat ulang isi prompt |
+| UP-08 | P1 | Adapter provider cloud lainnya (Anthropic Messages API, Gemini API, OpenAI passthrough) setelah rilis β, berurutan sesuai permintaan pengguna |
 
 Kriteria terima:
 
@@ -188,22 +213,29 @@ Kriteria terima:
 | PII-01 | P0 | Entitas `email`, `phone_id`, `credit_card`, `nik`, `npwp`, `bank_account`, `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` dengan pola, validator, dan kata konteks sesuai bagian 7.10 |
 | PII-01b | P1 | Entitas `vehicle_plate` dan `ip_address` (bagian 7.10), mati secara default di pack `id-general` |
 | PII-02 | P0 | Aksi per entitas: `tokenize` (dipulihkan di jawaban) atau `redact` (diganti `[NIK]` dan tidak dipulihkan) |
-| PII-03 | P0 | Nilai yang sama dalam satu request selalu mendapat token yang sama; nilai berbeda mendapat token berbeda |
+| PII-03 | P0 | Nilai yang sama dalam satu request selalu mendapat token yang sama; nilai berbeda mendapat token berbeda. "Sama" dinilai **setelah normalisasi per jenis**: hapus spasi, titik, dan tanda hubung; `+62` dan `62` di depan `phone_id` menjadi `0`; `email` dibandingkan dalam huruf kecil. Pemulihan memakai bentuk yang pertama kali muncul di request |
 | PII-04 | P0 | Format token `<JENIS_n>`. Bila input sudah memuat teks berbentuk token (misalnya pengguna menulis `<EMAIL_1>`), penomoran melompati nomor itu, dan hanya token yang diterbitkan OmniRail yang dipulihkan |
 | PII-05 | P0 | Tabel token hanya hidup di memori selama satu request dan tidak pernah ditulis ke log, disk, atau metrik |
 | PII-06 | P0 | Pemulihan hanya untuk kecocokan persis. Token tak dikenal dibiarkan apa adanya. Token yang diterbitkan tetapi tidak kembali dihitung sebagai metrik, bukan error |
 | PII-07 | P0 | Bila satu rentang teks lolos validator lebih dari satu entitas, kata konteks yang paling dekat menentukan jenisnya (misalnya `NIK` atau `kartu`). Tanpa kata konteks, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nip` > `nik` (struktur valid) > `npwp` > `bpjs` > `bank_account` > `phone_id` > `passport_id` > `birth_date` > `email` > `ip_address` > `vehicle_plate`. Entitas yang mewajibkan kata konteks (`kk`, `passport_id`, `bpjs`, `birth_date`, `bank_account`) tidak pernah menang tanpa konteks; nilai 16 digit tanpa kata `KK` diperlakukan sebagai `nik`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang |
 | PII-08 | P1 | Entitas kustom di `omnirail.yaml` (customisasi tingkat 2) dengan validator bawaan yang bisa dipilih |
 | PII-09 | P2 | NER lokal (ONNX) untuk nama, alamat, dan nama instansi |
+| PII-10 | P0 | **Kata konteks lintas pesan.** Untuk entitas yang mewajibkan atau memakai kata konteks, bila nilai muncul dalam 10 kata pertama sebuah pesan, maka ≤ 15 kata terakhir pesan sebelumnya di `messages` (peran apa pun) ikut dihitung sebagai jendela konteks. Aturan PII-07 (kata konteks terdekat menentukan jenis) berlaku di jendela gabungan ini. Dataset: baris multi-pesan (`<<assistant>>`, `<<user>>`) di `eval/README.md` |
+| PII-11 | P1 | **Angka terucap.** Urutan kata bilangan satu digit (`nol`/`kosong`, `satu` s.d. `sembilan`, serta `plus` untuk `+`), boleh bercampur digit, dinormalisasi menjadi digit sebelum validator dijalankan. Berlaku untuk `phone_id`, `nik`, `kk`, `bank_account`, `npwp`, dan `bpjs`, dengan kata konteks yang sama. Bilangan gabungan (`dua belas`, `delapan puluh`) tidak ditafsirkan. Temuan mencakup seluruh rentang kata asli, sehingga token menggantikan semua kata itu. Mati secara default (`ingress.pii.spoken_digits`) |
+| PII-12 | P1 | Aksi per entitas tambahan: `mask` (sebagian nilai tetap terlihat, misalnya 4 digit terakhir kartu dan rekening, `3273••••••••0001` untuk NIK; tidak dipulihkan) dan `block` (request ditolak 400 `omnirail_policy_violation`, misalnya nomor kartu lengkap untuk organisasi yang terikat PCI DSS). Dalam mode shadow, `block` diperlakukan seperti credentials: nilai diredaksi, request diteruskan, dan dicatat `would_block` |
+| PII-13 | P1 | **Pemulihan toleran**, opt-in per rute (`restore_variants`): variasi token yang lazim ditulis ulang model (`EMAIL_1`, `[EMAIL_1]`, `<email_1>`, `< EMAIL_1 >`) dipulihkan hanya bila token itu diterbitkan di request yang sama. Pemulihan variasi dihitung terpisah di audit log dan metrik. Default mati sampai eksperimen Q14 (T-207) memberi angka |
 
 Kriteria terima:
 
 - [ ] Untuk input "email saya a@b.co dan a@b.co", provider menerima dua kemunculan `<EMAIL_1>`, dan aplikasi menerima dua kemunculan `a@b.co`.
 - [ ] Input yang sudah memuat `<EMAIL_1>` tidak dipulihkan menjadi email orang lain.
+- [ ] `0812-3456-7801` dan `+62 812 3456 7801` dalam satu request mendapat token `<PHONE_ID_1>` yang sama.
 - [ ] Nomor 16 digit yang lolos Luhn dan memiliki prefix kartu, tanpa kata konteks NIK, dikenali sebagai `credit_card`, bukan `nik`. Nilai yang sama setelah kata `NIK` dikenali sebagai `nik` (dataset D050 dan D051).
 - [ ] Nomor pesanan 16 digit dengan tanggal tidak valid di posisi 7 sampai 12 tidak dikenali sebagai `nik`.
 - [ ] Nilai 16 digit setelah kata `No. KK` dikenali sebagai `kk`; nilai yang sama tanpa kata konteks dikenali sebagai `nik`.
 - [ ] "Mohon maaf lahir dan batin, 10-04-2026" tidak dikenali sebagai `birth_date`; "lahir 12/04/1974" dikenali.
+- [ ] Pesan asisten "Boleh minta nomor rekeningnya untuk refund?" diikuti pesan pengguna "1234567890" menghasilkan `bank_account` di pesan pengguna; bila pesan asisten meminta nomor pesanan, tidak ada temuan.
+- [ ] Kata `rekening` yang berjarak lebih dari 15 kata dari akhir pesan sebelumnya tidak menjadi kata konteks.
 - [ ] `grep` nilai uji di semua log setelah menjalankan set uji tidak menemukan satu pun nilai.
 
 ### 7.5 Credentials
@@ -214,6 +246,7 @@ Kriteria terima:
 | CRED-02 | P0 | Aksi `block` (default) atau `redact`. Credentials **tidak pernah** ditokenisasi dan tidak pernah dipulihkan |
 | CRED-03 | P0 | Placeholder umum (`***`, `<password>`, `${VAR}`, `xxx`) tidak dianggap credentials |
 | CRED-04 | P1 | Deteksi entropi tinggi setelah kata kunci (`token=`, `secret=`) untuk secret tanpa prefix |
+| CRED-05 | P1 | Detektor credentials ekosistem lokal tambahan, misalnya token gateway WhatsApp (Fonnte, Wablas), payment gateway lain (DOKU, iPaymu, OY!, Flip), dan API logistik (RajaOngkir, Biteship). Hanya ditambahkan setelah format diverifikasi ke dokumentasi resmi masing-masing layanan dan dicatat di Lampiran A (T-326) |
 
 Kriteria terima:
 
@@ -237,9 +270,11 @@ Kriteria terima:
 | --- | --- | --- |
 | Blokir kebijakan (deny, kata kunci, panjang input) | Tolak request | Teruskan, catat `would_block` |
 | Credentials | Tolak request (`block`) | **Diredaksi**, diteruskan, catat `would_block` |
+| PII beraksi `block` (P1, PII-12) | Tolak request | Diredaksi, diteruskan, catat `would_block` |
 | Penyamaran PII | Diterapkan | Diterapkan bila `shadow.apply_transforms: true` (default); bila `false`, hanya dicatat |
 | `allowed_providers` | Tolak request | **Tetap ditolak** (bukan kontrol yang diuji, melainkan batas keras) |
 | Validasi schema JSON | Mengikuti `fail_mode.egress` | Selalu diteruskan, catat hasilnya |
+| Rute sensitivitas (P1, 7.16) | Diarahkan ke rute tujuan | Tidak diarahkan, catat `would_route` |
 
 Alasan default ini: masa uji tidak boleh lebih bocor daripada penegakan untuk hal yang tidak bisa ditarik kembali (credentials, provider terlarang). Penyamaran PII bisa dipulihkan, sehingga dampaknya ke jawaban kecil.
 
@@ -258,7 +293,7 @@ Kriteria terima:
 | AUD-01 | P0 | Satu baris JSON per request ke stdout (atau file), dengan field di bawah |
 | AUD-02 | P0 | `policy_hash` = SHA-256 dari kebijakan efektif (default + pack + override `omnirail.yaml`) yang diserialisasi sebagai JSON kanonik (kunci terurut), **tanpa** nilai rahasia. `policy_version` = versi `omnirail.yaml` + nama dan versi setiap pack |
 | AUD-03 | P0 | `store_raw_prompts: false` secara default. Bila `true`, start mencetak peringatan dan field ini ikut tercatat di audit log |
-| AUD-04 | P0 | Metrik OpenTelemetry (OTLP): jumlah request per keputusan, temuan per jenis entitas, latensi proxy dan upstream (histogram), hasil JSON, dan statistik pemulihan token |
+| AUD-04 | P1 | Metrik OpenTelemetry (OTLP): jumlah request per keputusan, temuan per jenis entitas, latensi proxy dan upstream (histogram), hasil JSON, dan statistik pemulihan token. Turun dari P0 di v1.6; selama MVP, audit log dan `omnirail report` (7.15) menjadi sumber angka |
 | AUD-05 | P1 | Ekspor ringkasan audit untuk auditor (cikal bakal "laporan bukti pendukung") |
 
 Field audit log:
@@ -274,17 +309,21 @@ Field audit log:
 | `credentials` | Jumlah per jenis credentials |
 | `input_chars`, `latency_ms.proxy`, `latency_ms.upstream` | Ukuran dan waktu |
 | `json` | `n/a`, `valid`, `repaired`, `invalid` |
+| `stream` | `true` bila jawaban dikirim sebagai pseudo-streaming (API-08) |
+| `routed_from`, `route_reason` | *(P1)* Rute asal dan alasan pengalihan (jenis atau kategori data, tanpa nilai) bila rute sensitivitas aktif (7.16) |
 | `tokens` | Jumlah token diterbitkan, dipulihkan, dan hilang |
 | `policy_version`, `policy_hash`, `omnirail_version` | Untuk penelusuran |
 
 ### 7.8 Validasi output JSON
 
+Sejak v1.6 seluruh bagian ini **P1** (setelah rilis β). Provider utama sudah punya structured output bawaan, dan validasi JSON tidak menguji hipotesis inti produk. Urutan alur response di 7.1 tetap menyisakan tempat untuk langkah ini, sehingga desainnya tidak berubah.
+
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
-| JSON-01 | P0 | Schema per rute (`routes.<alias>.json_schema_file`). Rute tanpa schema tidak divalidasi |
-| JSON-02 | P0 | Perbaikan sintaks lokal: buang pagar kode markdown, koma ekstra, kurung yang tidak tertutup di akhir, dan kutip tunggal |
-| JSON-03 | P0 | Urutan: perbaiki → parse → pulihkan token di nilai string → validasi schema → serialisasi ulang |
-| JSON-04 | P0 | Pelanggaran schema mengikuti `fail_mode.egress`: `open` meneruskan dengan header `x-omnirail-json: invalid`, `closed` mengembalikan 502 `omnirail_output_invalid` |
+| JSON-01 | P1 | Schema per rute (`routes.<alias>.json_schema_file`). Rute tanpa schema tidak divalidasi |
+| JSON-02 | P1 | Perbaikan sintaks lokal: buang pagar kode markdown, koma ekstra, kurung yang tidak tertutup di akhir, dan kutip tunggal |
+| JSON-03 | P1 | Urutan: perbaiki → parse → pulihkan token di nilai string → validasi schema → serialisasi ulang |
+| JSON-04 | P1 | Pelanggaran schema mengikuti `fail_mode.egress`: `open` meneruskan dengan header `x-omnirail-json: invalid`, `closed` mengembalikan 502 `omnirail_output_invalid` |
 | JSON-05 | P1 | Menghormati `response_format.json_schema` dari klien bila rute tidak punya schema |
 | JSON-06 | P1 | Satu kali retry ke provider dengan pesan perbaikan, opsional per rute |
 
@@ -336,6 +375,14 @@ Kriteria terima:
 | EVAL-04 | P0 | CI menjalankan `omnirail test` untuk semua pack dan `omnirail eval` pada `dev`. CI gagal bila recall turun atau false positive naik melewati ambang yang ditetapkan dari baseline |
 | EVAL-05 | P0 | Benchmark latensi: mock upstream dengan waktu tetap, input 1 rb, 5 rb, dan 20 rb karakter, mengukur selisih p50 dan p99 dengan dan tanpa proxy |
 | EVAL-06 | P0 | CLI `omnirail inspect "<teks>"` (atau `--file`) menampilkan keputusan, temuan, dan teks bertoken tanpa memanggil provider. Memakai fungsi yang sama dengan endpoint PG-01 |
+| EVAL-07 | P0 | `omnirail scan <path>...` memindai berkas teks (log, CSV, JSON, Markdown, kode) dengan pack yang sama dengan jalur proxy. Keluaran per temuan: `path:baris:kolom`, jenis, dan nilai yang **disamarkan** (`3273••••••••0001`); format `text` dan `json` (SARIF P1). Kode keluar 1 bila ada temuan. Berkas biner dan berkas di atas batas ukuran dilewati. Pengecualian lewat `.omnirailignore` dan komentar `omnirail:ignore` di baris yang sama |
+| EVAL-08 | P0 | Contoh pemasangan `omnirail scan` sebagai hook pre-commit dan sebagai langkah CI, di dokumentasi rilis α |
+
+Kriteria terima `omnirail scan`:
+
+- [ ] Menjalankan `omnirail scan eval/dev/` menemukan nilai positif dataset dan tidak pernah mencetak nilai mentah, kecuali dengan `--show-values`.
+- [ ] Baris yang diberi komentar `omnirail:ignore` dan path di `.omnirailignore` tidak dilaporkan.
+- [ ] Untuk teks yang sama, temuan `scan` identik dengan `inspect`.
 
 ### 7.12 Distribusi
 
@@ -346,18 +393,22 @@ Kriteria terima:
 | DIST-03 | P0 | README dengan quickstart ≤ 5 langkah, batas klaim (bagian 10), dan hasil benchmark terbaru |
 | DIST-04 | P1 | Contoh pemasangan di depan LiteLLM |
 | DIST-05 | P0 | `SECURITY.md` (cara melaporkan kerentanan secara privat, versi yang didukung), `CONTRIBUTING.md`, dan `CODEOWNERS` untuk repo OmniRail sendiri, termasuk folder `policy-packs/` |
+| DIST-06 | P0 | **Demo web WASM.** `omnirail-core` dikompilasi ke WebAssembly dan disajikan sebagai halaman statis (misalnya GitHub Pages) berisi tab Coba mode periksa saja (PG-03, PG-06, PG-07 berlaku). Halaman tidak mengirim permintaan jaringan apa pun setelah dimuat (`Content-Security-Policy: connect-src 'none'`), sehingga teks tidak pernah meninggalkan browser. Hasil identik dengan `omnirail inspect` versi yang sama |
+| DIST-07 | P1 | **Benchmark terbuka.** Split `dev` diterbitkan sebagai dataset publik berbahasa Indonesia, dengan kartu dataset, lisensi (Q15), dan tabel skor alat lain dari Tahap 0. Holdout tidak diterbitkan |
 
 ### 7.13 Tampilan uji (playground)
 
-Satu halaman web yang disajikan langsung oleh binary OmniRail untuk mencoba kebijakan tanpa menulis kode. Halaman ini memakai fungsi inti yang sama dengan jalur proxy, sehingga hasilnya identik dengan perilaku produksi untuk konfigurasi yang sama. Tampilan uji **bukan** dasbor pemantauan dan **tidak bisa** mengubah konfigurasi.
+Satu halaman web untuk mencoba kebijakan tanpa menulis kode. Halaman ini memakai fungsi inti yang sama dengan jalur proxy, sehingga hasilnya identik dengan perilaku produksi untuk konfigurasi yang sama. Tampilan uji **bukan** dasbor pemantauan dan **tidak bisa** mengubah konfigurasi.
+
+Sejak v1.6, tab Coba mode periksa saja dikirim lebih dulu sebagai demo WASM (DIST-06) di rilis α, sehingga teks diperiksa di browser tanpa server. Penyajian halaman yang sama dari binary (PG-04, PG-05) turun ke P1, dan dibutuhkan saat pengguna ingin mencoba pack atau konfigurasi milik mereka sendiri, atau saat fitur P1 seperti kirim ke provider dibangun.
 
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
 | PG-01 | P0 | `POST /omnirail/v1/inspect` menerima `text` atau `messages`, serta `pack` dan `mode` opsional. Endpoint menjalankan alur request 7.1 langkah 5 s.d. 9 **tanpa** memanggil provider, lalu mengembalikan keputusan, daftar temuan, teks bertoken, waktu proses, `policy_version`, dan `policy_hash`. Temuan dikembalikan sebagai **posisi** (`start`, `end`), bukan nilai, karena klien sudah memegang teksnya |
 | PG-02 | P0 | `GET /omnirail/v1/packs` mengembalikan pack yang termuat (nama, versi, jumlah entitas dan aturan) |
-| PG-03 | P0 | Halaman `/playground` dengan **tab Coba** mode periksa saja (memakai PG-01): kotak teks, pilihan pack dan mode, hasil berwarna per entitas, tabel temuan, teks bertoken, keputusan, waktu proses, versi dan hash kebijakan |
-| PG-04 | P0 | Berkas halaman (HTML, CSS, JS) ditanam di binary, tanpa CDN atau skrip pihak ketiga, dan tetap berfungsi tanpa internet. Header `Content-Security-Policy: default-src 'self'`. Ukuran total ≤ 200 KB |
-| PG-05 | P0 | Tampilan uji **mati secara default** (`playground.enabled: false`). Saat aktif, hanya melayani dari loopback, kecuali `playground.admin_keys` diisi. Kunci admin terpisah dari kunci aplikasi, dan kunci aplikasi ditolak dengan 403 `omnirail_admin_required` |
+| PG-03 | P0 | **Tab Coba** mode periksa saja: kotak teks, pilihan pack dan mode, hasil berwarna per entitas, tabel temuan, teks bertoken, keputusan, waktu proses, versi dan hash kebijakan. Rilis α: di demo WASM (DIST-06), memanggil fungsi `inspect` langsung. Setelah rilis β: juga di `/playground` yang disajikan binary, memakai PG-01 |
+| PG-04 | P1 | Berkas halaman (HTML, CSS, JS) ditanam di binary, tanpa CDN atau skrip pihak ketiga, dan tetap berfungsi tanpa internet. Header `Content-Security-Policy: default-src 'self'`. Ukuran total ≤ 200 KB |
+| PG-05 | P1 | Tampilan uji **mati secara default** (`playground.enabled: false`). Saat aktif, hanya melayani dari loopback, kecuali `playground.admin_keys` diisi. Kunci admin terpisah dari kunci aplikasi, dan kunci aplikasi ditolak dengan 403 `omnirail_admin_required` |
 | PG-06 | P0 | Teks input tidak disimpan di server, log, atau `localStorage` browser. Audit log hanya mencatat `source: playground`, keputusan, dan jumlah temuan per entitas |
 | PG-07 | P0 | Nilai di tabel temuan disamarkan secara default (misalnya `3273••••••••0001`); tombol "Tampilkan" hanya membuka nilai di browser, tanpa permintaan ke server |
 | PG-08 | P1 | Tombol **Kirim ke provider** di tab Coba, lewat `POST /omnirail/v1/playground/send`: alur penuh dengan kunci provider di proxy. Menampilkan berdampingan teks bertoken yang dikirim, jawaban provider (bertoken), dan jawaban setelah dipulihkan. Rute dibatasi oleh `playground.allowed_routes` |
@@ -415,6 +466,7 @@ Kriteria terima:
 - [ ] Setelah halaman ditutup, tidak ada teks input di `localStorage`, `sessionStorage`, maupun log server.
 - [ ] Halaman bisa dipakai penuh dengan keyboard. Sorotan entitas tidak hanya dibedakan dengan warna, tetapi juga label jenis. Kontras teks memenuhi WCAG 2.1 AA.
 - [ ] Halaman berfungsi tanpa koneksi internet.
+- [ ] Demo WASM tidak mengirim permintaan jaringan setelah halaman dimuat (uji E2E memblokir dan mencatat semua request setelah `load`).
 
 ### 7.14 Referensi konfigurasi
 
@@ -445,14 +497,18 @@ routes:                          # rute = alias model (7.3)
     provider: anthropic
     model: "claude-sonnet-5-5"
     max_tokens: 1024             # dipakai bila klien tidak mengirim (UP-05)
-    json_schema_file: null       # JSON-01
+    json_schema_file: null       # JSON-01 (P1)
+    on_sensitive: null           # P1, 7.16
+    restore_variants: false      # P1, PII-13
     mode: null                   # null = ikut global
     fail_mode: null              # null = ikut global
 
 ingress:
   pii:
-    action: tokenize             # tokenize | redact, bisa per entitas
+    action: tokenize             # tokenize | redact | mask (P1) | block (P1), bisa per entitas
     restore_on_egress: true
+    cross_message_context: true  # PII-10
+    spoken_digits: false         # P1, PII-11
     entities: [email, phone_id, credit_card, nik, kk, nip, npwp, passport_id, bpjs, bank_account, birth_date]
     # vehicle_plate dan ip_address (P1) mati secara default
   credentials:
@@ -476,7 +532,7 @@ audit:
 logging:
   store_raw_prompts: false
 
-telemetry:
+telemetry:                       # P1
   otlp_endpoint: null            # AUD-04; null = metrik mati
 
 playground:                      # 7.13
@@ -490,6 +546,80 @@ Kriteria terima:
 
 - [ ] Kunci yang tidak dikenal menghentikan start dengan pesan berisi nama kunci, sehingga salah ketik tidak diam-diam diabaikan.
 - [ ] Contoh di atas dimuat tanpa error oleh `omnirail validate` dan dipakai sebagai berkas contoh di repo.
+
+### 7.15 Laporan paparan data
+
+`omnirail report` merangkum audit log (7.7) menjadi laporan yang bisa dibaca penanggung jawab kepatuhan. Laporan hanya memakai isi audit log, yang memang tidak memuat nilai PII, sehingga laporan pun tidak bisa memuat nilai.
+
+| ID | Prioritas | Requirement |
+| --- | --- | --- |
+| REP-01 | P0 | `omnirail report --audit <file>... [--since 7d] [--format md\|json]` menghasilkan: jumlah request per keputusan (`allow`, `block`, `would_block`, `error`); temuan per jenis entitas, per provider, per rute, dan per `api_key_id`; credentials per jenis; aturan `would_block` terbanyak (mode shadow); serta tren harian. Setiap laporan memuat `policy_version` dan `policy_hash` yang berlaku di rentang waktunya |
+| REP-02 | P0 | Setiap entitas di pack punya atribut `kategori_pdp` (`umum` atau `spesifik`). Laporan mengelompokkan temuan menurut kategori ini. Pemetaan di bawah adalah **draf**: laporan menandainya "belum ditinjau" sampai Q6 terjawab, dan setiap laporan memuat kalimat batas klaim (bagian 10) |
+| REP-03 | P1 | Ekspor laporan untuk auditor (menggantikan AUD-05), dengan ringkasan per bulan dan lampiran hasil `omnirail eval` versi yang berlaku |
+
+Draf pemetaan `kategori_pdp`. Dasarnya UU 27/2022 Pasal 4, yang memasukkan data keuangan pribadi dan data kesehatan ke data pribadi spesifik. Pemetaan ini wajib ditinjau penanggung jawab kepatuhan (Q6) sebelum dipakai di materi publik.
+
+| Entitas | Draf kategori | Catatan |
+| --- | --- | --- |
+| `credit_card`, `bank_account` | spesifik | Data keuangan pribadi |
+| `npwp` | spesifik (perlu ditinjau) | Terkait data keuangan; NPWP orang pribadi sama dengan NIK |
+| `bpjs` | spesifik (perlu ditinjau) | Nomor kepesertaan, bukan data kesehatan itu sendiri |
+| `nik`, `kk`, `nip`, `passport_id`, `email`, `phone_id`, `birth_date` | umum | Data yang dapat mengidentifikasi, terutama bila dikombinasikan |
+| `vehicle_plate`, `ip_address` | umum (perlu ditinjau) | Status sebagai data pribadi bergantung konteks (Q12) |
+
+Contoh ringkasan (Markdown):
+
+```text
+Laporan paparan data · 4–10 Nov 2026 · kebijakan v1.1 · a3f9c2 · mode shadow
+Request: 18.240 (allow 17.912 · would_block 328)
+Data pribadi spesifik ke provider luar: 353 temuan (bank_account 312, credit_card 41)
+Credentials: 4 (api_key: xnd_production_ 3, connection_string 1) — semua diredaksi
+Terbanyak per rute: ringkas-chat-cs (nik 1.022, phone_id 884, bank_account 301)
+Kategori PDP: draf, belum ditinjau penanggung jawab kepatuhan.
+OmniRail mengurangi risiko, tidak menjamin kepatuhan.
+```
+
+Kriteria terima:
+
+- [ ] Laporan dari audit log hasil menjalankan set uji tidak memuat satu pun nilai uji (`grep`).
+- [ ] Angka di laporan sama dengan hitungan manual dari audit log yang sama.
+- [ ] Waktu dari memasang mode shadow sampai laporan pertama ≤ 30 menit, diukur pada 3 orang (bagian 9).
+
+### 7.16 Rute berdasarkan sensitivitas (P1)
+
+Request yang memuat data tertentu bisa diarahkan ke rute lain, misalnya model lokal lewat Ollama. Ini keputusan kebijakan yang tercatat di audit log, **bukan** fallback karena provider gagal.
+
+| ID | Prioritas | Requirement |
+| --- | --- | --- |
+| ROUTE-01 | P1 | `routes.<alias>.on_sensitive: { when: <daftar entitas atau kategori_pdp>, route: <alias> }`. Dievaluasi setelah deteksi PII (7.1 langkah 9a). Rute tujuan tetap dicek `allowed_providers`. Pengalihan berantai tidak diizinkan (divalidasi saat start) |
+| ROUTE-02 | P1 | `pii_action: keep` (default: penyamaran tetap berlaku) atau `passthrough` (nilai asli dikirim). `passthrough` hanya diizinkan bila provider tujuan bertanda `local: true` (misalnya Ollama atau endpoint di jaringan sendiri), dan ini dicek saat start. Credentials tetap diblokir dalam keadaan apa pun |
+| ROUTE-03 | P1 | Audit log mencatat `routed_from` dan `route_reason`; dalam mode shadow, request tidak dialihkan dan dicatat sebagai `would_route` |
+
+Contoh:
+
+```yaml
+upstream:
+  providers:
+    anthropic: { api_key: "${ANTHROPIC_API_KEY}" }
+    ollama:    { base_url: "http://10.0.0.5:11434", local: true }
+routes:
+  ringkas-chat-cs:
+    provider: anthropic
+    model: "claude-sonnet-5-5"
+    on_sensitive:
+      when: [kategori_pdp: spesifik]
+      route: ringkas-lokal
+  ringkas-lokal:
+    provider: ollama
+    model: "qwen3:8b"
+    pii_action: passthrough
+```
+
+Kriteria terima:
+
+- [ ] Request berisi `bank_account` ke `ringkas-chat-cs` diteruskan ke Ollama (mock), dan provider cloud tidak dipanggil.
+- [ ] `pii_action: passthrough` ke provider tanpa `local: true` menghentikan start dengan pesan yang jelas.
+- [ ] Dalam shadow, request tetap ke provider awal dan audit log mencatat `would_route`.
 
 ## 8. Kontrak error
 
@@ -510,7 +640,7 @@ Semua error memakai bentuk OpenAI agar SDK menanganinya tanpa kode tambahan:
 | HTTP | `code` | Kapan |
 | --- | --- | --- |
 | 400 | `omnirail_policy_violation` | Credentials, deny-list, atau kata kunci (mode enforce) |
-| 400 | `omnirail_unsupported_feature` | `stream`, tool call, konten non-teks |
+| 400 | `omnirail_unsupported_feature` | Tool call, konten non-teks, `n` > 1 (`stream: true` tidak ditolak, lihat API-08) |
 | 401 | `invalid_api_key` | Kunci OmniRail salah atau tidak ada |
 | 403 | `omnirail_admin_required` | Endpoint tampilan uji dipanggil dengan kunci aplikasi, atau dari luar loopback tanpa kunci admin |
 | 403 | `omnirail_provider_not_allowed` | Rute menunjuk provider di luar `allowed_providers` |
@@ -525,7 +655,7 @@ Pesan error menyebut jenis temuan, tidak pernah nilainya.
 
 ## 9. Metrik keberhasilan
 
-Angka di bawah adalah **target awal (hipotesis)**. Angka ini memberi kriteria lulus yang bisa diperiksa per tahap, lalu direvisi tertulis setelah baseline Tahap 3 dan benchmark Tahap 5. Revisi dicatat di bagian 14.
+Angka di bawah adalah **target awal (hipotesis)**. Angka ini memberi kriteria lulus yang bisa diperiksa per tahap, lalu direvisi tertulis setelah baseline Tahap 1 dan benchmark Tahap 5. Revisi dicatat di bagian 14.
 
 **Indikator awal (diukur per rilis, dari `omnirail eval` dan benchmark)**
 
@@ -537,13 +667,17 @@ Angka di bawah adalah **target awal (hipotesis)**. Angka ini memberi kriteria lu
 | Recall `nip`, `kk` | ≥ 0,95 | Baris positif |
 | Recall `passport_id`, `bpjs`, `birth_date` (dengan kata konteks) | ≥ 0,90 | Baris positif |
 | Recall `bank_account` (dengan kata konteks) | ≥ 0,80 | Baris positif |
+| Recall entitas berkonteks wajib pada baris multi-pesan (PII-10) | ≥ 0,90 | Baris positif lintas pesan |
+| Recall angka terucap (PII-11, P1) | Dilaporkan terpisah, tanpa target sampai PII-11 dibangun | Baris `cakupan_mvp = tidak` bercatatan angka terucap |
 | Precision per entitas | ≥ 0,90 | Baris positif dan negatif |
 | False positive pada baris negatif | ≤ 0,02 | Baris negatif (termasuk nomor resi dan nomor pesanan) |
 | Pemulihan token (token yang dikembalikan model secara persis) | ≥ 0,99 | Baris positif lewat mock dan provider nyata |
 | Overhead latensi, input 5 rb karakter | p50 ≤ 5 ms, p99 ≤ 15 ms | Benchmark EVAL-05 |
-| Output JSON valid setelah perbaikan tanpa retry | ≥ 0,95 dari output yang rusak sintaks | Set uji JSON |
+| Output JSON valid setelah perbaikan tanpa retry (P1) | ≥ 0,95 dari output yang rusak sintaks | Set uji JSON |
 | Waktu dari unduh sampai request pertama berhasil | ≤ 10 menit | Diukur pada 3 orang yang belum pernah memakai |
-| Tugas "coba pack lalu jelaskan satu temuan" di tampilan uji tanpa bantuan | ≥ 3 dari 5 peserta wawancara, ≤ 5 menit | Sesi wawancara Tahap 5 |
+| Waktu dari memasang mode shadow sampai laporan paparan pertama (REP-01) | ≤ 30 menit | Diukur pada 3 orang yang belum pernah memakai |
+| Waktu dari membuka demo WASM sampai melihat temuan pertama | ≤ 1 menit | Sesi wawancara rilis α |
+| Tugas "coba pack lalu jelaskan satu temuan" di tampilan uji tanpa bantuan | ≥ 3 dari 5 peserta wawancara, ≤ 5 menit | Sesi wawancara rilis α dan β |
 
 **Indikator lanjutan (1 sampai 3 bulan setelah rilis)**
 
@@ -563,7 +697,9 @@ Ringkasan threat model blueprint bagian 9, dengan tambahan dari PRD ini:
 | PII berformat tetap dan credentials terkirim ke provider | Sebagian | Format tak lazim dan secret tanpa prefix bisa lolos |
 | PII bebas-bentuk (nama, alamat) | Tidak | Butuh NER |
 | Prompt injection langsung | Tidak | Deny-list hanya penyaring murah |
-| Data tak diperiksa lewat streaming, gambar, atau tool call | Ya | Ditolak eksplisit (API-02) |
+| Data tak diperiksa lewat streaming, gambar, atau tool call | Ya | Streaming di-buffer penuh lalu dikirim sebagai pseudo-streaming (API-08); gambar dan tool call ditolak eksplisit (API-02) |
+| Nomor di transkrip suara (angka terucap) | Tidak | PII-11 (P1); celahnya terlihat di dataset sebagai baris di luar cakupan |
+| Data pribadi ter-commit ke repo (fixture, log, dataset) | Sebagian | `omnirail scan` di pre-commit dan CI (EVAL-07, EVAL-08) |
 | Penghindaran deny-list dengan Unicode | Sebagian | Normalisasi NFKC dan lebar-nol; parafrase tetap lolos |
 | Kebocoran lewat log atau error provider | Ya | Nilai PII tidak pernah ditulis; body error provider tidak diteruskan |
 | Proxy terbuka ke jaringan | Ya | Default `127.0.0.1`, kunci OmniRail wajib |
@@ -582,13 +718,13 @@ Belum ada tanggal. Kecepatan kerja ditetapkan setelah Tahap 1. Satu-satunya tang
 | Tahap | Isi | Selesai bila |
 | --- | --- | --- |
 | **0. Validasi** (maks. 2 minggu) | Susun `uji_pii_id.csv` (dev + holdout). Jalankan terhadap LiteLLM + Presidio dengan recognizer Indonesia sederhana. Konfirmasi fitur pemulihan token LiteLLM | Catatan keputusan tertulis: **lanjut** (celah recall/precision atau ergonomi cukup besar), **pivot** ke plugin untuk LiteLLM atau Presidio (blueprint lapis 3), atau **berhenti** |
-| **1. Kerangka proxy** | API-01, API-04, API-07, UP-01 (Ollama), CFG-01/02/06/07, kontrak error | SDK OpenAI mendapat jawaban lewat proxy; konfigurasi salah menghentikan start dengan pesan yang jelas |
-| **2. Jalur provider** | Adapter Anthropic, lalu Gemini, lalu OpenAI; UP-02 s.d. UP-07 | Uji integrasi lulus terhadap tiap provider; uji mock menutup pemetaan |
-| **3. PII dan credentials** | API-03, PII-01 s.d. 07, CRED-01 s.d. 03, POL-01 s.d. 05, AUD-01 s.d. 04, EVAL-01 s.d. 04 dan EVAL-06, PG-01, PG-02, CFG-10, pack `id-general` | Baseline per entitas tercatat; ambang CI ditetapkan; target bagian 9 direvisi tertulis |
-| **4. Validasi JSON** | JSON-01 s.d. 04 | Pelanggaran schema dan perbaikan terhitung di metrik dan audit log |
-| **5. Rilis awal** | DIST-01 s.d. 03, DIST-05, EVAL-05, PG-03 s.d. PG-07 (tab Coba mode periksa saja), README dengan batas klaim, wawancara (memakai tampilan uji) | Rilis bertag; benchmark terbit; ringkasan wawancara tertulis menentukan prioritas berikutnya |
+| **1. Inti deteksi** (rilis α) | `omnirail-core` tanpa I/O dan bisa dikompilasi ke WASM: normalisasi, validator, PII-01 s.d. 07, PII-10, CRED-01 s.d. 03, POL-01 dan POL-02, CFG-03 s.d. 05, pack `id-general`, EVAL-01 s.d. 04, EVAL-06 (`inspect`), EVAL-07 dan EVAL-08 (`scan`) | Baseline per entitas tercatat; ambang CI ditetapkan; target bagian 9 direvisi tertulis |
+| **2. Rilis α** | DIST-06 (demo WASM, dengan PG-03, PG-06, PG-07), binary CLI (bagian dari DIST-01), README "coba sekarang", wawancara pertama memakai demo | Rilis α bertag; demo publik bisa dibuka; ≥ 3 wawancara tercatat |
+| **3. Kerangka proxy** (rilis β) | API-01, API-02, API-04, API-07, API-08, UP-01 (Ollama + satu provider cloud), UP-02 s.d. UP-07, CFG-01/02/06/07, kontrak error | SDK OpenAI (dengan dan tanpa `stream=True`) mendapat jawaban lewat proxy dari Ollama dan provider cloud yang dipilih; konfigurasi salah menghentikan start dengan pesan yang jelas |
+| **4. Alur proxy lengkap** (rilis β) | API-03, POL-03 s.d. 05, AUD-01 s.d. 03, REP-01, REP-02, PG-01, PG-02, CFG-10 | Test integrasi membuktikan request yang diblokir tidak pernah memanggil upstream; laporan paparan bisa dibuat dari audit log |
+| **5. Rilis β** (rilis publik pertama) | DIST-01 s.d. 03, DIST-05, EVAL-05, README dengan batas klaim, holdout, wawancara lanjutan | Rilis bertag; benchmark terbit; ringkasan wawancara tertulis menentukan prioritas berikutnya |
 
-Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: kirim ke provider dan tab Evaluasi di tampilan uji (PG-08 s.d. PG-12), entitas kustom (PII-08), streaming, NER, laporan bukti pendukung, dan marketplace pack (blueprint bagian 13).
+Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: validasi JSON (JSON-01 s.d. 06), adapter provider lain (UP-08), rute sensitivitas (7.16), angka terucap (PII-11), credentials lokal tambahan (CRED-05), metrik OpenTelemetry (AUD-04), benchmark terbuka (DIST-07), tampilan uji dari binary dan fiturnya (PG-04, PG-05, PG-08 s.d. PG-12), entitas kustom (PII-08), streaming sejati, NER, laporan untuk auditor (REP-03), dan marketplace pack (blueprint bagian 13).
 
 ## 12. Risiko
 
@@ -596,28 +732,32 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: kirim ke provider d
 | --- | --- | --- |
 | LiteLLM + Presidio sudah cukup untuk kebutuhan yang sama | Produk tidak punya alasan dipakai | Gerbang Tahap 0, dengan opsi pivot ke plugin |
 | False positive merusak jawaban | Pengguna mematikan guard | Validator struktur, konteks wajib untuk `bank_account`, mode shadow, entitas bisa dimatikan satu per satu |
-| Model mengubah atau menerjemahkan token (`<EMAIL_1>` jadi `EMAIL_1`) | Nilai asli tidak kembali | Metrik token hilang; instruksi sistem opsional yang meminta model mempertahankan token (P1); format token diuji ke tiap provider di Tahap 2 |
+| Model mengubah atau menerjemahkan token (`<EMAIL_1>` jadi `EMAIL_1`) | Nilai asli tidak kembali | Metrik token hilang; instruksi sistem opsional yang meminta model mempertahankan token (P1); format token diuji ke tiap provider di Tahap 3 dan lewat eksperimen Q14 |
 | Scope creep dari daftar fitur blueprint | MVP tidak pernah rilis | Tabel prioritas di bagian 7; fitur baru masuk hanya bila ada yang dikeluarkan |
 | Satu pembangun, Rust memperlambat iterasi awal | Tahap molor | Tahap kecil dengan kriteria selesai yang bisa diperiksa; P1 boleh dilepas tanpa menggeser rilis |
 | Klaim publik terbaca sebagai klaim kepatuhan | Risiko reputasi dan hukum | Batas klaim wajib di README; kata "bukti pendukung", bukan "patuh" |
+| Laporan paparan (7.15) terbaca sebagai penilaian kepatuhan | Keputusan salah berdasarkan kategori yang belum ditinjau | Kategori PDP ditandai draf sampai Q6 terjawab; kalimat batas klaim di setiap laporan |
+| Rilis α kurang menarik karena belum ada proxy | Sedikit yang mencoba | `scan` dan demo WASM punya nilai sendiri; rilis α juga dipakai sebagai alat wawancara, bukan peluncuran besar |
 
 ## 13. Pertanyaan terbuka
 
 | # | Pertanyaan | Penjawab | Menghalangi |
 | --- | --- | --- | --- |
-| Q1 | ~~Siapa yang menyusun dataset dan berapa baris minimum~~ **Terjawab:** dataset v0.5 (3.370 baris) punya ≥ 100 positif dan ≥ 100 negatif per entitas. Yang tersisa: tinjauan label oleh orang kedua (T-007) | Pembangun | Baseline Tahap 3 |
-| Q2 | Apa kriteria angka untuk keputusan "lanjut" di Tahap 0 (misalnya selisih recall ≥ 10 poin atau false positive setengahnya)? | Pembangun | Tahap 0 |
+| Q1 | ~~Siapa yang menyusun dataset dan berapa baris minimum~~ **Terjawab:** dataset v0.6 (3.578 baris) punya ≥ 100 positif dan ≥ 100 negatif per entitas. Yang tersisa: tinjauan label oleh orang kedua (T-007) | Pembangun | Baseline Tahap 1 |
+| Q2 | ~~Apa kriteria angka untuk keputusan "lanjut" di Tahap 0?~~ **Terjawab** 11 Nov 2026: kriteria di catatan keputusan [TASKS.md](TASKS.md) (T-003) | Pembangun | Tahap 0 |
 | Q3 | Apakah default `shadow.apply_transforms: true` diterima calon pengguna, atau mereka ingin shadow murni mengamati? | Calon pengguna (wawancara) | Tidak |
 | Q4 | ~~Aturan NPWP 16 digit~~ **Terjawab sebagian** (Lampiran A): NIK untuk orang pribadi, `0` + 15 digit untuk badan. Yang tersisa: adakah checksum resmi NPWP? | Pembangun, dicek ke sumber DJP | Tidak |
-| Q5 | Daftar prefix kartu GPN (tidak ditemukan sumber publik), dan konfirmasi kode provinsi 93 s.d. 96 dari Kepmendagri 100.1.1-6117/2022 | Pembangun | Tahap 3 |
-| Q6 | Teks resmi UU 27/2022 Pasal 36 s.d. 39 dan 56, serta PP 33/2026, sebelum dipakai di materi publik atau pack `id-fintech` | Penanggung jawab kepatuhan | Pack `id-fintech`, bukan MVP |
-| Q7 | Format Gemini API dicek ke dokumentasi resmi ai.google.dev | Pembangun | Adapter Gemini (Tahap 2) |
+| Q5 | Daftar prefix kartu GPN (tidak ditemukan sumber publik), dan konfirmasi kode provinsi 93 s.d. 96 dari Kepmendagri 100.1.1-6117/2022 | Pembangun | Tahap 1 |
+| Q6 | Teks resmi UU 27/2022 Pasal 4, 36 s.d. 39, dan 56, serta PP 33/2026, sebelum dipakai di materi publik, pack `id-fintech`, atau pemetaan `kategori_pdp` di laporan paparan (REP-02) | Penanggung jawab kepatuhan | Pack `id-fintech` dan label "belum ditinjau" di REP-02, bukan MVP |
+| Q7 | Format Gemini API dicek ke dokumentasi resmi ai.google.dev | Pembangun | Adapter Gemini (UP-08, setelah rilis β) |
 | Q8 | Retensi dan tujuan audit log: cukup stdout + file berotasi, atau perlu sink lain sejak awal? | Calon pengguna fintech | Tidak |
 | Q9 | Apakah Windows perlu didukung sejak rilis awal? | Wawancara | Tidak |
 | Q10 | ~~Struktur NIP~~ **Terjawab** untuk PNS (Perka BKN 22/2007). NI PPPK baru dari sumber sekunder; konfirmasi ke dokumen BKN | Pembangun | Tidak |
-| Q11 | Format resmi nomor paspor dari Ditjen Imigrasi (sekarang memakai definisi Microsoft Purview), dampak sistem paspor tunggal 2027, dan panjang resmi nomor BPJS Ketenagakerjaan (11 atau 16 digit) | Pembangun | Precision `passport_id` dan `bpjs` di Tahap 3 |
+| Q11 | Format resmi nomor paspor dari Ditjen Imigrasi (sekarang memakai definisi Microsoft Purview), dampak sistem paspor tunggal 2027, dan panjang resmi nomor BPJS Ketenagakerjaan (11 atau 16 digit) | Pembangun | Precision `passport_id` dan `bpjs` di Tahap 1 |
 | Q12 | Daftar kode plat dicek langsung ke teks Perpol 7/2021 (sekarang dari sumber sekunder), dan apakah plat termasuk data pribadi untuk pengguna sasaran | Pembangun, calon pengguna | `vehicle_plate` (P1) |
 | Q13 | Apakah nama bank (BCA, BRI, dan seterusnya) dijadikan kata konteks `bank_account`? | Pembangun | Tidak |
+| Q14 | Format token mana yang paling sering bertahan utuh di jawaban tiap provider: `<JENIS_n>`, variasinya, atau nilai pengganti sintetis yang tampak realistis? Hasilnya diterbitkan | Pembangun (eksperimen T-207) | Tidak; memengaruhi target pemulihan token |
+| Q15 | Lisensi dataset publik (DIST-07), misalnya CC BY 4.0, dan apakah tetap memakai nama `uji_pii_id` | Pembangun | DIST-07 |
 
 ## 14. Riwayat dokumen
 
@@ -629,6 +769,7 @@ Setelah Tahap 5, urutan ditentukan umpan balik. Kandidatnya: kirim ke provider d
 | 1.3 | 9 November 2026 | Keterbatasan verifikasi K1 s.d. K5 dicatat di Lampiran A. Format diverifikasi ke sumber publik (Lampiran A): NI PPPK, paspor 1–2 huruf + 6–7 digit, BPJS TK 16 digit, kode plat Perpol 7/2021, NPWP 16 digit, prefix Xendit/Midtrans/Telegram, `output_parse_pii` LiteLLM |
 | 1.4 | 9 November 2026 | Tampilan uji dirinci (bagian 7.13, PG-01 s.d. PG-13), EVAL-06 menjadi CLI `omnirail inspect` (P0), user stories 15 s.d. 18, kode error `omnirail_admin_required`, metrik dan ancaman terkait |
 | 1.5 | 9 November 2026 | Crosscheck kesiapan: API-07 (field yang didukung), CFG-10 (`omnirail validate` dan kontrol perubahan kebijakan), DIST-05 (`SECURITY.md`), referensi konfigurasi 7.14, Q1 terjawab |
+| 1.6 | 11 November 2026 | MVP dipecah menjadi rilis α (periksa) dan β (proxy); JSON-01 s.d. 04, AUD-04, PG-04, PG-05 turun ke P1; UP-01 cukup satu provider cloud (UP-08 untuk sisanya); baru: API-08 (pseudo-streaming), PII-10 (konteks lintas pesan), PII-11 (angka terucap, P1), CRED-05 (P1), EVAL-07 dan EVAL-08 (`scan`), DIST-06 (demo WASM), DIST-07 (P1), laporan paparan 7.15 (REP-01 s.d. 03), rute sensitivitas 7.16 (P1), PII-03 diperjelas (normalisasi kunci token), PII-12 dan PII-13 (P1), Q2 terjawab, Q14, Q15; dataset v0.6 |
 
 ## Lampiran A. Hasil verifikasi format (9 November 2026)
 

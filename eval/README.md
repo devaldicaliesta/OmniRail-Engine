@@ -2,36 +2,39 @@
 
 Set uji berlabel untuk Tahap 0 (perbandingan dengan LiteLLM + Presidio) dan untuk `omnirail eval` (PRD EVAL-01, EVAL-02).
 
-> **Status: v0.5.** Format NIP (termasuk NI PPPK), paspor, BPJS, dan kode plat sudah disesuaikan dengan hasil verifikasi di PRD Lampiran A. Setiap entitas (P0 dan P1) punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
+> **Status: v0.6.** Dibanding v0.5, ditambah baris percakapan multi-pesan untuk kata konteks lintas pesan (PRD PII-10) dan baris angka terucap (PRD PII-11). Format NIP (termasuk NI PPPK), paspor, BPJS, dan kode plat sudah disesuaikan dengan hasil verifikasi di PRD Lampiran A. Setiap entitas (P0 dan P1) punya ≥ 50 baris positif dan ≥ 50 baris negatif (PRD Q1), dan holdout sekitar 30% dari total. Isinya belum ditinjau orang kedua, jadi label bisa saja keliru. Laporkan atau perbaiki bila menemukan label yang salah.
 
 ## Isi
 
 | Berkas | Baris | Kegunaan |
 | --- | --- | --- |
-| `dev/uji_pii_id.csv` | 2.361 | Boleh dilihat dan dipakai saat menyetel aturan |
-| `holdout/uji_pii_id.csv` | 1.009 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
+| `dev/uji_pii_id.csv` | 2.506 | Boleh dilihat dan dipakai saat menyetel aturan |
+| `holdout/uji_pii_id.csv` | 1.072 | **Jangan dibuka saat menyetel aturan.** Hanya dijalankan sebelum rilis, agar aturan tidak sekadar disetel supaya lulus uji |
 
 ### Jumlah per entitas (dev + holdout)
 
 | Entitas | Prioritas | Positif | Negatif | Kasus di luar cakupan |
 | --- | --- | --- | --- | --- |
 | `email` | P0 | 168 | 111 | — |
-| `phone_id` | P0 | 157 | 112 | 5 (telepon kantor) |
+| `phone_id` | P0 | 157 | 120 | 36 (5 telepon kantor, 31 angka terucap) |
 | `credit_card` | P0 | 139 | 109 | — |
-| `nik` | P0 | 161 | 114 | 5 (NIK berpemisah) |
+| `nik` | P0 | 161 | 117 | 17 (5 NIK berpemisah, 12 angka terucap) |
 | `npwp` | P0 | 130 | 108 | — |
-| `bank_account` | P0 | 136 | 111 | 5 (tanpa kata konteks) |
+| `bank_account` | P0 | 162 | 129 | 17 (5 tanpa kata konteks, 12 angka terucap) |
 | `nip` | P0 | 118 | 104 | — |
-| `kk` | P0 | 118 | 104 | — |
-| `passport_id` | P0 | 124 | 104 | 6 (tanpa kata konteks) |
-| `bpjs` | P0 | 119 | 104 | 6 (tanpa kata konteks) |
-| `birth_date` | P0 | 122 | 104 | — |
+| `kk` | P0 | 134 | 106 | 7 (angka terucap) |
+| `passport_id` | P0 | 140 | 112 | 6 (tanpa kata konteks) |
+| `bpjs` | P0 | 135 | 109 | 6 (tanpa kata konteks) |
+| `birth_date` | P0 | 142 | 112 | — |
 | `vehicle_plate` | P1 | 114 | 104 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
 | `ip_address` | P1 | 114 | 104 | seluruh baris positif bertanda `cakupan_mvp = tidak` |
 
 Hitungan positif menghitung kemunculan entitas, sehingga baris campuran terhitung di beberapa entitas sekaligus. Baris positif entitas P1 bertanda `cakupan_mvp = tidak` karena detektornya mati secara default. Baris negatifnya tetap `ya`, karena tidak boleh memicu detektor MVP mana pun. Di luar itu ada 203 baris credentials (termasuk Midtrans, Xendit, dan token bot Telegram), 96 baris injeksi, serta 40 kemunculan nama dan alamat yang butuh NER.
 
 ### Variasi
+
+- **Percakapan multi-pesan (v0.6):** pertanyaan asisten berisi kata konteks ("Boleh minta nomor rekeningnya?"), lalu jawaban pengguna yang hanya berisi nilai. Baris positif (`cakupan_mvp = ya`) menguji PRD PII-10. Baris negatif menguji pertanyaan yang meminta hal lain (nomor pesanan, tanggal pengiriman, kode voucher) dan kata konteks yang terlalu jauh dari akhir pesan sebelumnya. Holdout memakai pertanyaan berbahasa Inggris dan formulir data diri.
+- **Angka terucap (v0.6):** nilai yang ditulis sebagai kata bilangan, seperti di transkrip panggilan atau hasil voice-to-text: `nol delapan satu dua …`, `kosong` untuk nol, dan campuran (`0812 tiga empat …`). Baris positif bertanda `cakupan_mvp = tidak` karena PII-11 adalah P1, dan nilai digitnya ditulis di `catatan`. Baris negatif (bilangan terucap yang bukan PII: jumlah barang, harga, jam, RT/RW, ukuran sepatu) bertanda `ya`.
 
 - **Bingkai teks (v0.5):** sekitar sepertiga baris dibungkus bentuk yang lazim sampai ke proxy LLM: instruksi tugas ("Ringkas percakapan berikut:", "Terjemahkan ke bahasa Inggris:", "Ekstrak informasi penting… dalam format JSON"), transkrip chat CS dengan atau tanpa jam, badan email formal, tabel Markdown, dan kalimat panjang dengan konteks tambahan. Holdout memakai bingkai yang tidak ada di dev: YAML, payload JSON, pesan terusan WhatsApp, dan catatan internal. Bingkai sengaja tidak memuat data pribadi.
 - **Gaya ketik (v0.5):** singkatan chat (`tlg`, `yg`, `udh`, `gak`, `sy`, `mhn`) dan gaya voice-to-text (huruf kecil tanpa tanda baca). Kata konteks ikut berubah huruf, sedangkan nilai entitas tetap utuh. Gaya voice-to-text hanya ada di dev.
@@ -52,10 +55,12 @@ Semua data adalah **data rekaan**: NIK, nomor kartu, nomor HP, email (domain `ex
 | --- | --- |
 | `id` | `D001…` untuk dev, `H001…` untuk holdout |
 | `kategori` | `positif`, `negatif`, `kredensial`, atau `injeksi` |
-| `teks` | Isi pesan pengguna. Bisa multi-baris (dikutip sesuai CSV) |
+| `teks` | Isi pesan pengguna. Bisa multi-baris (dikutip sesuai CSV). Bila diawali penanda peran, teks berisi beberapa pesan (lihat di bawah) |
 | `diharapkan` | Lihat aturan di bawah |
 | `cakupan_mvp` | `ya` bila MVP seharusnya menangani baris ini; `tidak` bila baris ini sengaja mendokumentasikan batas MVP |
 | `catatan` | Alasan baris ini ada atau apa yang diuji. Untuk baris `negatif`, diawali entitas yang dijebak, misalnya `[nik]` |
+
+**Percakapan multi-pesan.** Teks yang diawali `<<assistant>> `, `<<user>> `, atau `<<system>> ` di awal baris dipecah menjadi beberapa pesan oleh `omnirail eval`, dengan peran sesuai penandanya. Setiap penanda membuka pesan baru sampai penanda berikutnya. Teks seperti ini minimal memuat dua pesan, dan nilai di `diharapkan` tetap ditulis persis seperti di teks.
 
 Aturan kolom `diharapkan`:
 
@@ -88,6 +93,8 @@ python3 eval/tools/cek_dataset.py --ringkasan
 Pemeriksa (Python 3.9+, tanpa dependensi) memastikan header dan `id` benar, kolom `diharapkan` sesuai aturan per kategori, setiap nilai benar-benar muncul di `teks`, nilai berlabel lolos validator struktur PRD 7.10 (Luhn dan prefix kartu, struktur NIK, KK, dan NIP, panjang nomor, tanggal valid), baris `negatif` menandai entitas yang dijebak, teks dev tidak muncul di holdout, target jumlah terpenuhi, dan tabel jumlah di atas sama dengan isi berkas. Kegagalan validator di baris `cakupan_mvp = tidak` hanya menjadi peringatan. CI menjalankan pemeriksaan ini di setiap pull request, dan `python3 -m unittest discover -s eval/tools` menjalankan test unitnya.
 
 Pemeriksa hanya memvalidasi bentuk label, tidak menyetel aturan deteksi, sehingga aturan "jangan buka holdout" tidak dilanggar.
+
+Baris yang ditambahkan di v0.6 (D2362–D2506, H1010–H1072) dibangkitkan oleh `eval/tools/bangkitkan_v06.py`. Test unit memastikan baris itu identik dengan hasil pembangkit. Baris v0.1 s.d. v0.5 belum punya pembangkit di repo (T-008).
 
 ## Menambah baris
 

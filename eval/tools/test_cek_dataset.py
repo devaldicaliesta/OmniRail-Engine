@@ -72,6 +72,16 @@ class TestValidator(unittest.TestCase):
         self.gagal(c.cek_email, "git@github", "logo@2x.p")
 
 
+class TestAngkaTerucap(unittest.TestCase):
+    def test_kata_ke_digit(self):
+        self.assertEqual(c.kata_ke_digit("nol delapan satu dua"), "0812")
+        self.assertEqual(c.kata_ke_digit("kosong delapan lima tujuh"), "0857")
+        self.assertEqual(c.kata_ke_digit("0812 tiga empat"), "081234")
+        self.assertEqual(c.kata_ke_digit("plus enam dua delapan"), "+628")
+        self.assertIsNone(c.kata_ke_digit("0812-3456-7801"))
+        self.assertEqual(c.kata_ke_digit("dua belas"), "")
+
+
 class TestBaris(unittest.TestCase):
     def periksa(self, **r):
         baris = {"id": "D999", "kategori": "positif", "teks": "", "diharapkan": "-",
@@ -111,6 +121,24 @@ class TestBaris(unittest.TestCase):
                               cakupan_mvp="tidak")
         self.assertEqual((len(lap.error), len(lap.peringatan)), (0, 1))
 
+    def test_angka_terucap_divalidasi_sebagai_digit(self):
+        v = "nol delapan satu dua tiga empat lima enam tujuh delapan"
+        lap, _ = self.periksa(teks=f"nomor saya {v}", diharapkan=f"phone_id:{v}", cakupan_mvp="tidak")
+        self.assertEqual((lap.error, lap.peringatan), ([], []))
+        v = "nol delapan satu dua"
+        lap, _ = self.periksa(teks=f"nomor saya {v}", diharapkan=f"phone_id:{v}", cakupan_mvp="tidak")
+        self.assertTrue(any("dibaca sebagai 0812" in p for p in lap.peringatan))
+
+    def test_penanda_multi_pesan(self):
+        teks = "<<assistant>> Nomor rekeningnya?\n<<user>> 1234567890"
+        lap, _ = self.periksa(teks=teks, diharapkan="bank_account:1234567890")
+        self.assertEqual(lap.error, [])
+        lap, _ = self.periksa(teks="<<agen>> Nomor rekeningnya?\n<<user>> 1234567890",
+                              diharapkan="bank_account:1234567890")
+        self.assertTrue(any("tidak dikenal" in e for e in lap.error))
+        lap, _ = self.periksa(teks="<<user>> 1234567890", diharapkan="bank_account:1234567890")
+        self.assertTrue(any("minimal dua pesan" in e for e in lap.error))
+
     def test_kredensial_dan_injeksi(self):
         lap, _ = self.periksa(kategori="kredensial", teks="x", diharapkan="api_key")
         self.assertEqual(lap.error, [])
@@ -123,6 +151,13 @@ class TestBaris(unittest.TestCase):
 class TestDatasetRepo(unittest.TestCase):
     def test_dataset_di_repo_lolos(self):
         self.assertEqual(c.main([]), 0)
+
+
+class TestPembangkitV06(unittest.TestCase):
+    def test_baris_v06_identik_dengan_pembangkit(self):
+        import bangkitkan_v06
+
+        self.assertEqual(bangkitkan_v06.main([]), 0)
 
 
 if __name__ == "__main__":

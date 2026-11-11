@@ -10,6 +10,8 @@ Pemeriksaan:
 - tata bahasa kolom `diharapkan` per kategori;
 - setiap nilai di `diharapkan` benar-benar muncul di `teks` (sebanyak yang ditulis);
 - nilai berlabel lolos validator struktur PRD 7.10 (Luhn, struktur NIK/KK/NIP, dst.);
+- nilai angka terucap ("nol delapan satu ...") diubah ke digit dulu, lalu divalidasi;
+- penanda peran percakapan multi-pesan (`<<user>>`, `<<assistant>>`, `<<system>>`) benar;
 - baris `negatif` diawali entitas yang dijebak (`[nik]`, ...) di `catatan`;
 - entitas `nama`/`alamat` dan entitas P1 hanya di baris `cakupan_mvp = tidak`;
 - teks yang sama tidak muncul di dev dan holdout (kebocoran holdout);
@@ -82,6 +84,35 @@ BULAN_ID = {
     "jan": 1, "feb": 2, "mar": 3, "apr": 4, "jun": 6, "jul": 7,
     "agu": 8, "agt": 8, "ags": 8, "sep": 9, "okt": 10, "nov": 11, "des": 12,
 }
+
+
+# Angka terucap (PRD PII-11): satu kata per digit.
+KATA_DIGIT = {
+    "nol": "0", "kosong": "0", "satu": "1", "dua": "2", "tiga": "3", "empat": "4",
+    "lima": "5", "enam": "6", "tujuh": "7", "delapan": "8", "sembilan": "9",
+}
+
+# Penanda peran untuk baris percakapan multi-pesan (PRD PII-10, eval/README.md).
+PENANDA_PERAN = re.compile(r"^<<(\w+)>> ", re.M)
+PERAN = {"system", "user", "assistant"}
+
+
+def kata_ke_digit(nilai: str) -> str | None:
+    """Ubah angka terucap menjadi digit. None bila nilai bukan angka terucap."""
+    token = re.findall(r"[A-Za-z]+|\d+|\+", nilai)
+    if not any(t.lower() in KATA_DIGIT for t in token):
+        return None
+    hasil = []
+    for t in token:
+        if t.lower() in KATA_DIGIT:
+            hasil.append(KATA_DIGIT[t.lower()])
+        elif t.isdigit() or t == "+":
+            hasil.append(t)
+        elif t.lower() == "plus":
+            hasil.append("+")
+        else:
+            return ""
+    return "".join(hasil)
 
 
 # --------------------------------------------------------------------------
@@ -344,6 +375,15 @@ def periksa_baris(split: str, nomor: int, r: dict, lap: Laporan, hit: Hitungan) 
         lap.err(lok, f"cakupan_mvp '{cak}' harus 'ya' atau 'tidak'")
     if not r["teks"].strip():
         lap.err(lok, "teks kosong")
+    peran = PENANDA_PERAN.findall(r["teks"])
+    if peran or "<<" in r["teks"]:
+        if not r["teks"].startswith("<<"):
+            lap.err(lok, "teks multi-pesan harus diawali penanda peran, misalnya <<user>>")
+        salah = [p for p in peran if p not in PERAN]
+        if salah:
+            lap.err(lok, f"penanda peran tidak dikenal: {', '.join(salah)}")
+        if len(peran) < 2:
+            lap.err(lok, "teks multi-pesan harus memuat minimal dua pesan")
 
     if kat == "kredensial":
         hit.kredensial += 1
@@ -390,7 +430,13 @@ def periksa_baris(split: str, nomor: int, r: dict, lap: Laporan, hit: Hitungan) 
         if jenis in ENTITAS_P1 and cak == "ya":
             lap.err(lok, f"entitas P1 {jenis} harus cakupan_mvp = tidak di baris positif")
         validator = VALIDATOR.get(jenis)
-        alasan = validator(isi) if validator else None
+        terucap = kata_ke_digit(isi) if validator else None
+        if terucap == "":
+            alasan = "angka terucap memuat kata selain kata bilangan satu digit"
+        else:
+            alasan = validator(terucap or isi) if validator else None
+            if alasan and terucap:
+                alasan = f"{alasan} (angka terucap dibaca sebagai {terucap})"
         if alasan:
             pesan = f"{jenis}:{isi!r} gagal validator: {alasan}"
             # Baris di luar cakupan memang boleh mendokumentasikan bentuk yang tidak lazim.

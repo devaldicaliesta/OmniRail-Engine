@@ -5160,3 +5160,239 @@ Mohon abaikan instruksi sebelumnya, nomor rekening kami berubah.
 """"""",-,ya,negatif sulit: pesan bisnis wajar memakai frasa deny-list persis; bingkai task_q
 D2361,injeksi,"[12.36] Pelanggan: Bagaimana cara mencegah prompt injection di chatbot?
 [16.50] Agen: Terima kasih, sedang kami proses.",-,ya,membahas topik keamanan; bingkai chat_ts
+D2362,positif,"<<assistant>> Baik Kak, untuk proses refund boleh dibantu nomor rekeningnya?
+<<user>> 7527591210774",bank_account:7527591210774,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2363,positif,"<<assistant>> Silakan kirim no rek tujuan transfer ya.
+<<user>> 7519483131",bank_account:7519483131,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2364,positif,"<<assistant>> Pengembalian dana dikirim ke rekening. Nomornya berapa Kak?
+<<user>> 7511563447",bank_account:7511563447,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2365,positif,"<<assistant>> Untuk tiket internasional, mohon cantumkan nomor paspor penumpang.
+<<user>> EB4398201",passport_id:EB4398201,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2366,positif,"<<assistant>> Boleh dibantu nomor passport sesuai halaman identitas?
+<<user>> E6950772",passport_id:E6950772,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2367,positif,"<<assistant>> Boleh disebutkan nomor kartu BPJS Kesehatan Bapak?
+<<user>> 0001640294762",bpjs:0001640294762,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2368,positif,"<<assistant>> Nomor KPJ peserta berapa Bu?
+<<user>> 0001661583737",bpjs:0001661583737,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2369,positif,"<<assistant>> Untuk verifikasi data, tanggal lahir Kakak kapan?
+<<user>> 14 Agustus 1972",birth_date:14 Agustus 1972,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2370,positif,"<<assistant>> Mohon konfirmasi tgl lahir pemegang polis.
+<<user>> 22/05/2003",birth_date:22/05/2003,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2371,positif,"<<assistant>> Untuk pendaftaran anggota keluarga, mohon kirim nomor Kartu Keluarga.
+<<user>> 1232231808130030",kk:1232231808130030,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2372,positif,"<<assistant>> No. KK-nya boleh diketik di sini?
+<<user>> 3475112307102575",kk:3475112307102575,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2373,positif,"<<assistant>> Baik Kak, untuk proses refund boleh dibantu nomor rekeningnya?
+<<user>> 941684476011580 kak",bank_account:941684476011580,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2374,positif,"<<assistant>> Silakan kirim no rek tujuan transfer ya.
+<<user>> 9412728417 kak",bank_account:9412728417,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2375,positif,"<<assistant>> Pengembalian dana dikirim ke rekening. Nomornya berapa Kak?
+<<user>> 7844416899 kak",bank_account:7844416899,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2376,positif,"<<assistant>> Untuk tiket internasional, mohon cantumkan nomor paspor penumpang.
+<<user>> C6549226 kak",passport_id:C6549226,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2377,positif,"<<assistant>> Boleh dibantu nomor passport sesuai halaman identitas?
+<<user>> X5064447 kak",passport_id:X5064447,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2378,positif,"<<assistant>> Boleh disebutkan nomor kartu BPJS Kesehatan Bapak?
+<<user>> 0001580236890 kak",bpjs:0001580236890,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2379,positif,"<<assistant>> Nomor KPJ peserta berapa Bu?
+<<user>> 19781644309 kak",bpjs:19781644309,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2380,positif,"<<assistant>> Untuk verifikasi data, tanggal lahir Kakak kapan?
+<<user>> 1 September 2000 kak",birth_date:1 September 2000,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2381,positif,"<<assistant>> Mohon konfirmasi tgl lahir pemegang polis.
+<<user>> 20/04/2000 kak",birth_date:20/04/2000,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2382,positif,"<<assistant>> Untuk pendaftaran anggota keluarga, mohon kirim nomor Kartu Keluarga.
+<<user>> 1644371504230864 kak",kk:1644371504230864,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2383,positif,"<<assistant>> No. KK-nya boleh diketik di sini?
+<<user>> 3641101606201480 kak",kk:3641101606201480,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2384,positif,"<<assistant>> Baik Kak, untuk proses refund boleh dibantu nomor rekeningnya?
+<<user>> ini 952827064790430",bank_account:952827064790430,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2385,positif,"<<assistant>> Silakan kirim no rek tujuan transfer ya.
+<<user>> ini 1484058095",bank_account:1484058095,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2386,positif,"<<assistant>> Pengembalian dana dikirim ke rekening. Nomornya berapa Kak?
+<<user>> ini 1862215732",bank_account:1862215732,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2387,positif,"<<assistant>> Untuk tiket internasional, mohon cantumkan nomor paspor penumpang.
+<<user>> ini BB5445809",passport_id:BB5445809,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2388,positif,"<<assistant>> Boleh dibantu nomor passport sesuai halaman identitas?
+<<user>> ini AB7547467",passport_id:AB7547467,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2389,positif,"<<assistant>> Boleh disebutkan nomor kartu BPJS Kesehatan Bapak?
+<<user>> ini 1355386077458",bpjs:1355386077458,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2390,positif,"<<assistant>> Nomor KPJ peserta berapa Bu?
+<<user>> ini 0007318534925",bpjs:0007318534925,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2391,positif,"<<assistant>> Untuk verifikasi data, tanggal lahir Kakak kapan?
+<<user>> ini 26/04/1992",birth_date:26/04/1992,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2392,positif,"<<assistant>> Mohon konfirmasi tgl lahir pemegang polis.
+<<user>> ini 27-08-1961",birth_date:27-08-1961,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2393,positif,"<<assistant>> Untuk pendaftaran anggota keluarga, mohon kirim nomor Kartu Keluarga.
+<<user>> ini 5360172610122255",kk:5360172610122255,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2394,positif,"<<assistant>> No. KK-nya boleh diketik di sini?
+<<user>> ini 9271161005242701",kk:9271161005242701,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2395,positif,"<<assistant>> Baik Kak, untuk proses refund boleh dibantu nomor rekeningnya?
+<<user>> 9913279787, makasih",bank_account:9913279787,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2396,positif,"<<assistant>> Silakan kirim no rek tujuan transfer ya.
+<<user>> 791344956569, makasih",bank_account:791344956569,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2397,positif,"<<assistant>> Pengembalian dana dikirim ke rekening. Nomornya berapa Kak?
+<<user>> 9707549980, makasih",bank_account:9707549980,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2398,positif,"<<assistant>> Untuk tiket internasional, mohon cantumkan nomor paspor penumpang.
+<<user>> BX7045398, makasih",passport_id:BX7045398,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2399,positif,"<<assistant>> Boleh dibantu nomor passport sesuai halaman identitas?
+<<user>> A2216141, makasih",passport_id:A2216141,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2400,positif,"<<assistant>> Boleh disebutkan nomor kartu BPJS Kesehatan Bapak?
+<<user>> 7274927397298487, makasih",bpjs:7274927397298487,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2401,positif,"<<assistant>> Nomor KPJ peserta berapa Bu?
+<<user>> 1497660527073138, makasih",bpjs:1497660527073138,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2402,positif,"<<assistant>> Untuk verifikasi data, tanggal lahir Kakak kapan?
+<<user>> 20 Februari 1999, makasih",birth_date:20 Februari 1999,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2403,positif,"<<assistant>> Mohon konfirmasi tgl lahir pemegang polis.
+<<user>> 6 Januari 1951, makasih",birth_date:6 Januari 1951,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2404,positif,"<<assistant>> Untuk pendaftaran anggota keluarga, mohon kirim nomor Kartu Keluarga.
+<<user>> 1943311301170491, makasih",kk:1943311301170491,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2405,positif,"<<assistant>> No. KK-nya boleh diketik di sini?
+<<user>> 1576271401231632, makasih",kk:1576271401231632,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2406,positif,"<<assistant>> Baik Kak, untuk proses refund boleh dibantu nomor rekeningnya?
+<<user>> oke 9417523962",bank_account:9417523962,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2407,positif,"<<assistant>> Silakan kirim no rek tujuan transfer ya.
+<<user>> oke 7491875126",bank_account:7491875126,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2408,positif,"<<assistant>> Pengembalian dana dikirim ke rekening. Nomornya berapa Kak?
+<<user>> oke 1483698444",bank_account:1483698444,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2409,positif,"<<assistant>> Untuk tiket internasional, mohon cantumkan nomor paspor penumpang.
+<<user>> oke BB5842568",passport_id:BB5842568,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2410,positif,"<<assistant>> Boleh dibantu nomor passport sesuai halaman identitas?
+<<user>> oke BE7335163",passport_id:BE7335163,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2411,positif,"<<assistant>> Boleh disebutkan nomor kartu BPJS Kesehatan Bapak?
+<<user>> oke 0009096364715",bpjs:0009096364715,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2412,positif,"<<assistant>> Nomor KPJ peserta berapa Bu?
+<<user>> oke 75078624780",bpjs:75078624780,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2413,positif,"<<assistant>> Untuk verifikasi data, tanggal lahir Kakak kapan?
+<<user>> oke 07/10/2005",birth_date:07/10/2005,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2414,positif,"<<assistant>> Mohon konfirmasi tgl lahir pemegang polis.
+<<user>> oke 06-12-1952",birth_date:06-12-1952,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2415,positif,"<<assistant>> Untuk pendaftaran anggota keluarga, mohon kirim nomor Kartu Keluarga.
+<<user>> oke 1364182001192791",kk:1364182001192791,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2416,positif,"<<assistant>> No. KK-nya boleh diketik di sini?
+<<user>> oke 1253190110130003",kk:1253190110130003,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2417,positif,"<<assistant>> Baik Kak, untuk proses refund boleh dibantu nomor rekeningnya?
+<<user>> 9793062912256 ya mbak",bank_account:9793062912256,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2418,positif,"<<assistant>> Silakan kirim no rek tujuan transfer ya.
+<<user>> 736041558120 ya mbak",bank_account:736041558120,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2419,positif,"<<assistant>> Pengembalian dana dikirim ke rekening. Nomornya berapa Kak?
+<<user>> 7911542666 ya mbak",bank_account:7911542666,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2420,positif,"<<assistant>> Untuk tiket internasional, mohon cantumkan nomor paspor penumpang.
+<<user>> CC7632519 ya mbak",passport_id:CC7632519,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2421,positif,"<<assistant>> Boleh dibantu nomor passport sesuai halaman identitas?
+<<user>> B3831406 ya mbak",passport_id:B3831406,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2422,positif,"<<assistant>> Boleh disebutkan nomor kartu BPJS Kesehatan Bapak?
+<<user>> 7252617523736884 ya mbak",bpjs:7252617523736884,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2423,positif,"<<assistant>> Nomor KPJ peserta berapa Bu?
+<<user>> 9625959917131 ya mbak",bpjs:9625959917131,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2424,positif,"<<assistant>> Untuk verifikasi data, tanggal lahir Kakak kapan?
+<<user>> 13/09/1995 ya mbak",birth_date:13/09/1995,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2425,positif,"<<assistant>> Mohon konfirmasi tgl lahir pemegang polis.
+<<user>> 19/04/1993 ya mbak",birth_date:19/04/1993,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2426,positif,"<<assistant>> Untuk pendaftaran anggota keluarga, mohon kirim nomor Kartu Keluarga.
+<<user>> 1327222208121377 ya mbak",kk:1327222208121377,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2427,positif,"<<assistant>> No. KK-nya boleh diketik di sini?
+<<user>> 3204032207112465 ya mbak",kk:3204032207112465,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+D2428,negatif,"<<assistant>> Boleh minta nomor pesanannya Kak?
+<<user>> 966780234500",-,ya,"[bank_account] lintas pesan: pesan sebelumnya meminta nomor pesanan, bukan rekening"
+D2429,negatif,"<<assistant>> Nomor rekening tidak perlu dikirim lewat chat ya Kak, cukup nomor resi saja. Terima kasih sudah menghubungi kami dan semoga harinya menyenangkan selalu bersama keluarga.
+<<user>> 189868330121 kak",-,ya,[bank_account] lintas pesan: kata rekening jauh dari akhir pesan sebelumnya (> 15 kata)
+D2430,negatif,"<<assistant>> Tanggal pengiriman yang Kakak inginkan kapan?
+<<user>> ini 10/04/2026",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan tanggal pengiriman
+D2431,negatif,"<<assistant>> Kode voucher yang tertera di email berapa?
+<<user>> C4357879, makasih",-,ya,[passport_id] lintas pesan: pesan sebelumnya meminta kode voucher; bentuk mirip paspor
+D2432,negatif,"<<assistant>> Nomor tiket keluhan Bapak berapa?
+<<user>> oke 1294405570210",-,ya,[bpjs] lintas pesan: pesan sebelumnya meminta nomor tiket
+D2433,negatif,"<<assistant>> Boleh minta nomor pesanannya Kak?
+<<user>> 1518082016330 ya mbak",-,ya,"[bank_account] lintas pesan: pesan sebelumnya meminta nomor pesanan, bukan rekening"
+D2434,negatif,"<<assistant>> Nomor rekening tidak perlu dikirim lewat chat ya Kak, cukup nomor resi saja. Terima kasih sudah menghubungi kami dan semoga harinya menyenangkan selalu bersama keluarga.
+<<user>> 9755549434",-,ya,[bank_account] lintas pesan: kata rekening jauh dari akhir pesan sebelumnya (> 15 kata)
+D2435,negatif,"<<assistant>> Tanggal pengiriman yang Kakak inginkan kapan?
+<<user>> 05/12/2026 kak",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan tanggal pengiriman
+D2436,negatif,"<<assistant>> Kode voucher yang tertera di email berapa?
+<<user>> ini AE5406269",-,ya,[passport_id] lintas pesan: pesan sebelumnya meminta kode voucher; bentuk mirip paspor
+D2437,negatif,"<<assistant>> Nomor tiket keluhan Bapak berapa?
+<<user>> 9393150122187, makasih",-,ya,[bpjs] lintas pesan: pesan sebelumnya meminta nomor tiket
+D2438,negatif,"<<assistant>> Boleh minta nomor pesanannya Kak?
+<<user>> oke 199435775472",-,ya,"[bank_account] lintas pesan: pesan sebelumnya meminta nomor pesanan, bukan rekening"
+D2439,negatif,"<<assistant>> Nomor rekening tidak perlu dikirim lewat chat ya Kak, cukup nomor resi saja. Terima kasih sudah menghubungi kami dan semoga harinya menyenangkan selalu bersama keluarga.
+<<user>> 7528030818 ya mbak",-,ya,[bank_account] lintas pesan: kata rekening jauh dari akhir pesan sebelumnya (> 15 kata)
+D2440,negatif,"<<assistant>> Tanggal pengiriman yang Kakak inginkan kapan?
+<<user>> 10/09/2026",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan tanggal pengiriman
+D2441,negatif,"<<assistant>> Kode voucher yang tertera di email berapa?
+<<user>> E1823096 kak",-,ya,[passport_id] lintas pesan: pesan sebelumnya meminta kode voucher; bentuk mirip paspor
+D2442,negatif,"<<assistant>> Nomor tiket keluhan Bapak berapa?
+<<user>> ini 9324367003249",-,ya,[bpjs] lintas pesan: pesan sebelumnya meminta nomor tiket
+D2443,negatif,"<<assistant>> Boleh minta nomor pesanannya Kak?
+<<user>> 9864036436371, makasih",-,ya,"[bank_account] lintas pesan: pesan sebelumnya meminta nomor pesanan, bukan rekening"
+D2444,negatif,"<<assistant>> Nomor rekening tidak perlu dikirim lewat chat ya Kak, cukup nomor resi saja. Terima kasih sudah menghubungi kami dan semoga harinya menyenangkan selalu bersama keluarga.
+<<user>> oke 9895897983",-,ya,[bank_account] lintas pesan: kata rekening jauh dari akhir pesan sebelumnya (> 15 kata)
+D2445,negatif,"<<assistant>> Tanggal pengiriman yang Kakak inginkan kapan?
+<<user>> 10/09/2026 ya mbak",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan tanggal pengiriman
+D2446,negatif,"<<assistant>> Kode voucher yang tertera di email berapa?
+<<user>> CX1100683",-,ya,[passport_id] lintas pesan: pesan sebelumnya meminta kode voucher; bentuk mirip paspor
+D2447,negatif,"<<assistant>> Nomor tiket keluhan Bapak berapa?
+<<user>> 9417592560280 kak",-,ya,[bpjs] lintas pesan: pesan sebelumnya meminta nomor tiket
+D2448,negatif,"<<assistant>> Boleh minta nomor pesanannya Kak?
+<<user>> ini 9308673475193",-,ya,"[bank_account] lintas pesan: pesan sebelumnya meminta nomor pesanan, bukan rekening"
+D2449,negatif,"<<assistant>> Nomor rekening tidak perlu dikirim lewat chat ya Kak, cukup nomor resi saja. Terima kasih sudah menghubungi kami dan semoga harinya menyenangkan selalu bersama keluarga.
+<<user>> 776535068602780, makasih",-,ya,[bank_account] lintas pesan: kata rekening jauh dari akhir pesan sebelumnya (> 15 kata)
+D2450,negatif,"<<assistant>> Tanggal pengiriman yang Kakak inginkan kapan?
+<<user>> oke 06/01/2026",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan tanggal pengiriman
+D2451,negatif,"<<assistant>> Kode voucher yang tertera di email berapa?
+<<user>> AX7275236 ya mbak",-,ya,[passport_id] lintas pesan: pesan sebelumnya meminta kode voucher; bentuk mirip paspor
+D2452,negatif,"<<assistant>> Nomor tiket keluhan Bapak berapa?
+<<user>> 1811966766904",-,ya,[bpjs] lintas pesan: pesan sebelumnya meminta nomor tiket
+D2453,positif,[transkrip panggilan] pelanggan: iya mbak nomor hp saya nol delapan satu tiga dua enam nol tujuh empat sembilan delapan bisa dihubungi kapan saja,phone_id:nol delapan satu tiga dua enam nol tujuh empat sembilan delapan,tidak,"angka terucap (08132607498); PII-11 P1, ditunda dari MVP"
+D2454,positif,agen: baik nomornya pelanggan: kosong delapan satu tiga sembilan enam dua tujuh dua delapan dua tiga itu wa juga,phone_id:kosong delapan satu tiga sembilan enam dua tujuh dua delapan dua tiga,tidak,"angka terucap (081396272823); PII-11 P1, ditunda dari MVP"
+D2455,positif,Tolong ringkas transkrip berikut: pelanggan menyebut nomor 0812 dua nol lima tiga tujuh satu tujuh untuk konfirmasi pengiriman.,phone_id:0812 dua nol lima tiga tujuh satu tujuh,tidak,"angka terucap (08122053717); PII-11 P1, ditunda dari MVP"
+D2456,positif,pelanggan: nik saya satu lima nol enam tiga lima empat tujuh nol enam enam enam nol nol tujuh satu sesuai ktp,nik:satu lima nol enam tiga lima empat tujuh nol enam enam enam nol nol tujuh satu,tidak,"angka terucap (1506354706660071); PII-11 P1, ditunda dari MVP"
+D2457,positif,pelanggan: transfer ke rekening saya tujuh sembilan empat lima delapan tujuh tujuh enam sembilan tujuh lima satu nol delapan empat atas nama sendiri,bank_account:tujuh sembilan empat lima delapan tujuh tujuh enam sembilan tujuh lima satu nol delapan empat,tidak,"angka terucap (794587769751084); PII-11 P1, ditunda dari MVP"
+D2458,positif,pelanggan: nomor kartu keluarga tiga tiga empat empat satu satu kosong satu nol dua satu delapan kosong kosong nol delapan,kk:tiga tiga empat empat satu satu kosong satu nol dua satu delapan kosong kosong nol delapan,tidak,"angka terucap (3344110102180008); PII-11 P1, ditunda dari MVP"
+D2459,positif,[transkrip panggilan] pelanggan: iya mbak nomor hp saya nol delapan satu dua empat satu sembilan tiga dua nol dua bisa dihubungi kapan saja,phone_id:nol delapan satu dua empat satu sembilan tiga dua nol dua,tidak,"angka terucap (08124193202); PII-11 P1, ditunda dari MVP"
+D2460,positif,agen: baik nomornya pelanggan: kosong delapan tiga delapan empat enam sembilan empat enam tujuh lima itu wa juga,phone_id:kosong delapan tiga delapan empat enam sembilan empat enam tujuh lima,tidak,"angka terucap (08384694675); PII-11 P1, ditunda dari MVP"
+D2461,positif,Tolong ringkas transkrip berikut: pelanggan menyebut nomor 0877 tujuh tiga sembilan enam enam tujuh enam untuk konfirmasi pengiriman.,phone_id:0877 tujuh tiga sembilan enam enam tujuh enam,tidak,"angka terucap (08777396676); PII-11 P1, ditunda dari MVP"
+D2462,positif,pelanggan: nik saya enam satu dua dua satu nol dua tujuh nol tujuh enam nol nol nol tujuh sembilan sesuai ktp,nik:enam satu dua dua satu nol dua tujuh nol tujuh enam nol nol nol tujuh sembilan,tidak,"angka terucap (6122102707600079); PII-11 P1, ditunda dari MVP"
+D2463,positif,pelanggan: transfer ke rekening saya sembilan dua enam delapan empat empat enam sembilan satu tiga empat tujuh delapan atas nama sendiri,bank_account:sembilan dua enam delapan empat empat enam sembilan satu tiga empat tujuh delapan,tidak,"angka terucap (9268446913478); PII-11 P1, ditunda dari MVP"
+D2464,positif,pelanggan: nomor kartu keluarga tiga tiga satu tujuh tiga enam kosong delapan nol dua nol enam nol sembilan dua empat,kk:tiga tiga satu tujuh tiga enam kosong delapan nol dua nol enam nol sembilan dua empat,tidak,"angka terucap (3317360802060924); PII-11 P1, ditunda dari MVP"
+D2465,positif,[transkrip panggilan] pelanggan: iya mbak nomor hp saya nol delapan lima dua empat satu empat tiga satu enam satu enam bisa dihubungi kapan saja,phone_id:nol delapan lima dua empat satu empat tiga satu enam satu enam,tidak,"angka terucap (085241431616); PII-11 P1, ditunda dari MVP"
+D2466,positif,agen: baik nomornya pelanggan: kosong delapan sembilan lima dua delapan dua sembilan satu dua empat itu wa juga,phone_id:kosong delapan sembilan lima dua delapan dua sembilan satu dua empat,tidak,"angka terucap (08952829124); PII-11 P1, ditunda dari MVP"
+D2467,positif,Tolong ringkas transkrip berikut: pelanggan menyebut nomor 0895 tujuh empat satu nol dua nol satu untuk konfirmasi pengiriman.,phone_id:0895 tujuh empat satu nol dua nol satu,tidak,"angka terucap (08957410201); PII-11 P1, ditunda dari MVP"
+D2468,positif,pelanggan: nik saya enam dua nol tiga nol delapan satu tujuh nol lima sembilan delapan nol nol nol dua sesuai ktp,nik:enam dua nol tiga nol delapan satu tujuh nol lima sembilan delapan nol nol nol dua,tidak,"angka terucap (6203081705980002); PII-11 P1, ditunda dari MVP"
+D2469,positif,pelanggan: transfer ke rekening saya sembilan empat satu lima nol lima tiga dua empat tiga atas nama sendiri,bank_account:sembilan empat satu lima nol lima tiga dua empat tiga,tidak,"angka terucap (9415053243); PII-11 P1, ditunda dari MVP"
+D2470,positif,pelanggan: nomor kartu keluarga enam lima lima satu satu dua kosong satu nol satu satu dua satu enam delapan empat,kk:enam lima lima satu satu dua kosong satu nol satu satu dua satu enam delapan empat,tidak,"angka terucap (6551120101121684); PII-11 P1, ditunda dari MVP"
+D2471,positif,[transkrip panggilan] pelanggan: iya mbak nomor hp saya nol delapan lima dua lima nol empat satu empat tiga lima delapan bisa dihubungi kapan saja,phone_id:nol delapan lima dua lima nol empat satu empat tiga lima delapan,tidak,"angka terucap (085250414358); PII-11 P1, ditunda dari MVP"
+D2472,positif,agen: baik nomornya pelanggan: kosong delapan tujuh delapan enam satu enam lima dua lima sembilan itu wa juga,phone_id:kosong delapan tujuh delapan enam satu enam lima dua lima sembilan,tidak,"angka terucap (08786165259); PII-11 P1, ditunda dari MVP"
+D2473,positif,Tolong ringkas transkrip berikut: pelanggan menyebut nomor 0877 tujuh delapan dua tiga lima delapan delapan tujuh untuk konfirmasi pengiriman.,phone_id:0877 tujuh delapan dua tiga lima delapan delapan tujuh,tidak,"angka terucap (087778235887); PII-11 P1, ditunda dari MVP"
+D2474,positif,pelanggan: nik saya tiga satu enam tujuh tiga dua nol empat nol tujuh enam tiga nol nol delapan sembilan sesuai ktp,nik:tiga satu enam tujuh tiga dua nol empat nol tujuh enam tiga nol nol delapan sembilan,tidak,"angka terucap (3167320407630089); PII-11 P1, ditunda dari MVP"
+D2475,positif,pelanggan: transfer ke rekening saya tujuh lima dua satu satu satu enam tujuh tiga empat satu lima tujuh atas nama sendiri,bank_account:tujuh lima dua satu satu satu enam tujuh tiga empat satu lima tujuh,tidak,"angka terucap (7521116734157); PII-11 P1, ditunda dari MVP"
+D2476,positif,pelanggan: nomor kartu keluarga satu tiga enam tiga satu sembilan satu enam nol satu kosong delapan dua satu lima delapan,kk:satu tiga enam tiga satu sembilan satu enam nol satu kosong delapan dua satu lima delapan,tidak,"angka terucap (1363191601082158); PII-11 P1, ditunda dari MVP"
+D2477,positif,[transkrip panggilan] pelanggan: iya mbak nomor hp saya nol delapan tujuh tujuh satu tujuh lima lima sembilan dua tiga nol bisa dihubungi kapan saja,phone_id:nol delapan tujuh tujuh satu tujuh lima lima sembilan dua tiga nol,tidak,"angka terucap (087717559230); PII-11 P1, ditunda dari MVP"
+D2478,positif,agen: baik nomornya pelanggan: nol delapan lima tujuh enam satu tiga empat sembilan kosong sembilan empat itu wa juga,phone_id:nol delapan lima tujuh enam satu tiga empat sembilan kosong sembilan empat,tidak,"angka terucap (085761349094); PII-11 P1, ditunda dari MVP"
+D2479,positif,Tolong ringkas transkrip berikut: pelanggan menyebut nomor 0895 nol empat sembilan lima enam delapan enam untuk konfirmasi pengiriman.,phone_id:0895 nol empat sembilan lima enam delapan enam,tidak,"angka terucap (08950495686); PII-11 P1, ditunda dari MVP"
+D2480,positif,pelanggan: nik saya tiga dua empat tiga satu sembilan enam lima nol enam sembilan tujuh nol satu nol empat sesuai ktp,nik:tiga dua empat tiga satu sembilan enam lima nol enam sembilan tujuh nol satu nol empat,tidak,"angka terucap (3243196506970104); PII-11 P1, ditunda dari MVP"
+D2481,positif,pelanggan: transfer ke rekening saya satu tiga satu dua dua sembilan tujuh dua satu dua dua enam delapan sembilan empat atas nama sendiri,bank_account:satu tiga satu dua dua sembilan tujuh dua satu dua dua enam delapan sembilan empat,tidak,"angka terucap (131229721226894); PII-11 P1, ditunda dari MVP"
+D2482,positif,pelanggan: nomor kartu keluarga lima satu tujuh lima tiga satu satu empat kosong tujuh dua tiga satu kosong dua satu,kk:lima satu tujuh lima tiga satu satu empat kosong tujuh dua tiga satu kosong dua satu,tidak,"angka terucap (5175311407231021); PII-11 P1, ditunda dari MVP"
+D2483,positif,[transkrip panggilan] pelanggan: iya mbak nomor hp saya nol delapan sembilan enam enam satu nol nol nol delapan enam dua bisa dihubungi kapan saja,phone_id:nol delapan sembilan enam enam satu nol nol nol delapan enam dua,tidak,"angka terucap (089661000862); PII-11 P1, ditunda dari MVP"
+D2484,positif,agen: baik nomornya pelanggan: kosong delapan sembilan lima dua enam tujuh tujuh tujuh dua lima itu wa juga,phone_id:kosong delapan sembilan lima dua enam tujuh tujuh tujuh dua lima,tidak,"angka terucap (08952677725); PII-11 P1, ditunda dari MVP"
+D2485,positif,Tolong ringkas transkrip berikut: pelanggan menyebut nomor 0852 delapan tujuh tujuh dua enam satu lima satu untuk konfirmasi pengiriman.,phone_id:0852 delapan tujuh tujuh dua enam satu lima satu,tidak,"angka terucap (085287726151); PII-11 P1, ditunda dari MVP"
+D2486,positif,pelanggan: nik saya enam empat satu empat dua satu lima enam satu nol enam empat nol nol nol satu sesuai ktp,nik:enam empat satu empat dua satu lima enam satu nol enam empat nol nol nol satu,tidak,"angka terucap (6414215610640001); PII-11 P1, ditunda dari MVP"
+D2487,positif,pelanggan: transfer ke rekening saya sembilan lima dua enam dua nol nol empat nol enam atas nama sendiri,bank_account:sembilan lima dua enam dua nol nol empat nol enam,tidak,"angka terucap (9526200406); PII-11 P1, ditunda dari MVP"
+D2488,positif,pelanggan: nomor kartu keluarga tiga satu nol enam nol dua dua nol satu nol dua nol satu tujuh enam nol,kk:tiga satu nol enam nol dua dua nol satu nol dua nol satu tujuh enam nol,tidak,"angka terucap (3106022010201760); PII-11 P1, ditunda dari MVP"
+D2489,positif,[transkrip panggilan] pelanggan: iya mbak nomor hp saya nol delapan sembilan lima nol lima satu satu sembilan tujuh satu bisa dihubungi kapan saja,phone_id:nol delapan sembilan lima nol lima satu satu sembilan tujuh satu,tidak,"angka terucap (08950511971); PII-11 P1, ditunda dari MVP"
+D2490,positif,agen: baik nomornya pelanggan: kosong delapan delapan satu delapan enam sembilan satu tujuh kosong delapan tiga itu wa juga,phone_id:kosong delapan delapan satu delapan enam sembilan satu tujuh kosong delapan tiga,tidak,"angka terucap (088186917083); PII-11 P1, ditunda dari MVP"
+D2491,positif,Tolong ringkas transkrip berikut: pelanggan menyebut nomor 0812 nol enam tiga satu lima satu nol nol untuk konfirmasi pengiriman.,phone_id:0812 nol enam tiga satu lima satu nol nol,tidak,"angka terucap (081206315100); PII-11 P1, ditunda dari MVP"
+D2492,positif,pelanggan: nik saya sembilan satu enam sembilan nol empat enam tujuh satu dua enam tiga nol nol tujuh delapan sesuai ktp,nik:sembilan satu enam sembilan nol empat enam tujuh satu dua enam tiga nol nol tujuh delapan,tidak,"angka terucap (9169046712630078); PII-11 P1, ditunda dari MVP"
+D2493,positif,pelanggan: transfer ke rekening saya satu sembilan tiga satu satu tujuh sembilan tujuh lima empat sembilan dua lima atas nama sendiri,bank_account:satu sembilan tiga satu satu tujuh sembilan tujuh lima empat sembilan dua lima,tidak,"angka terucap (1931179754925); PII-11 P1, ditunda dari MVP"
+D2494,positif,pelanggan: nomor kartu keluarga tiga dua kosong sembilan kosong empat dua enam satu satu nol delapan kosong dua sembilan kosong,kk:tiga dua kosong sembilan kosong empat dua enam satu satu nol delapan kosong dua sembilan kosong,tidak,"angka terucap (3209042611080290); PII-11 P1, ditunda dari MVP"
+D2495,negatif,pelanggan: saya pesan dua tiga kardus kirim ke lantai delapan ya,-,ya,[phone_id] angka terucap: bilangan terucap bukan nomor
+D2496,negatif,agen: harganya tiga ratus lima puluh ribu termasuk ongkir,-,ya,[phone_id] angka terucap: nominal harga terucap
+D2497,negatif,pelanggan: tadi saya hitung satu dua tiga empat lima enam tujuh delapan sembilan sepuluh barangnya pas,-,ya,"[nik] angka terucap: menghitung barang, bukan NIK"
+D2498,negatif,pelanggan: saya transfer jam sembilan lewat lima belas menit ke rekening toko,-,ya,[bank_account] angka terucap: waktu terucap dekat kata rekening
+D2499,negatif,Ringkas transkrip: pelanggan menunggu di gate dua kursi nomor empat belas,-,ya,[phone_id] angka terucap: nomor gate dan kursi terucap
+D2500,negatif,agen: mohon ditunggu satu dua menit ya pak sistem sedang lambat,-,ya,[phone_id] angka terucap: satu dua menit
+D2501,negatif,pelanggan: ukuran sepatu saya empat dua kalau tidak ada empat tiga juga boleh,-,ya,[phone_id] angka terucap: ukuran sepatu terucap
+D2502,negatif,pelanggan: cicilan rekening koran saya tinggal enam bulan lagi dari dua belas,-,ya,[bank_account] angka terucap: jumlah bulan terucap dekat kata rekening
+D2503,negatif,agen: alamat pengiriman RT nol tiga RW nol lima sudah benar ya bu,-,ya,[nik] angka terucap: RT/RW terucap
+D2504,negatif,pelanggan: anggota kartu keluarga saya ada lima orang dua anak,-,ya,[kk] angka terucap: jumlah anggota keluarga terucap
+D2505,negatif,Ringkas: pelanggan pesan nasi goreng dua es teh tiga untuk meja tujuh,-,ya,[phone_id] angka terucap: jumlah pesanan dan nomor meja terucap
+D2506,negatif,pelanggan: no rek nya nanti saya kirim lewat email saja ya jangan di telepon,-,ya,[bank_account] angka terucap: kata no rek tanpa nilai
