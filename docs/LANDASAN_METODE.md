@@ -2,13 +2,15 @@
 
 Dokumen ini memetakan setiap bagian OmniRail ke metode yang sudah dipublikasikan atau distandarkan. Tujuannya agar setiap klaim ("deteksi lebih baik", "log bisa diaudit", "rilis bisa dipercaya") punya dasar yang bisa diperiksa orang lain, bukan sekadar pernyataan pembangun.
 
+**Batas rujukan:** hanya terbitan **lima tahun terakhir**, yaitu sejak akhir 2021 sampai 2026. Metode klasik (misalnya interval Wilson atau algoritma Luhn) tetap dipakai, tetapi rujukannya adalah karya terbaru yang menerapkan atau menganjurkan metode itu. Satu pengecualian dijelaskan di bagian [Spesifikasi yang tetap berlaku](#spesifikasi-yang-tetap-berlaku).
+
 Status di setiap tabel:
 
 - **Diadopsi**: sudah ada di repo.
 - **Requirement**: sudah masuk PRD dan punya task.
 - **Kandidat**: dipertimbangkan, belum diputuskan.
 
-Rujukan lengkap ada di bagian akhir. Bila rujukan berbeda dengan PRD, PRD yang berlaku; dokumen ini menjelaskan **alasannya**.
+Bila dokumen ini berbeda dengan PRD, PRD yang berlaku; dokumen ini menjelaskan **alasannya**.
 
 ---
 
@@ -18,18 +20,18 @@ Angka evaluasi adalah inti klaim OmniRail. Bagian ini memastikan angka itu jujur
 
 | Metode | Dipakai untuk | Status |
 | --- | --- | --- |
-| Interval skor Wilson [1] | Setiap recall, precision, dan false positive rate dilaporkan dengan interval kepercayaan 95% | Diadopsi (`eval/tools/statistik.py`), requirement EVAL-09 |
-| Uji McNemar eksak [2] | Membandingkan dua sistem pada baris uji yang sama (OmniRail lawan Presidio di Tahap 0, versi baru lawan baseline di CI) | Diadopsi (`statistik.py`), requirement EVAL-09 |
-| Kappa Cohen [3] | Kesepakatan dua penilai pada tinjauan label (T-007), target κ ≥ 0,8 | Diadopsi (`statistik.py`) |
-| *Reusable holdout* [4] | Holdout yang dipakai berulang secara adaptif menghasilkan angka yang terlalu optimistis. Setiap run holdout dicatat, dan jumlahnya dibatasi | Requirement EVAL-13 |
+| Interval kepercayaan per metrik dan analisis daya [1] | Setiap recall, precision, dan false positive rate dilaporkan dengan interval 95% (rumus skor Wilson, cocok untuk proporsi dekat 0 atau 1), dan jumlah baris uji direncanakan agar selisih yang dicari bisa terdeteksi | Diadopsi (`eval/tools/statistik.py`), requirement EVAL-09 |
+| Perbandingan berpasangan per butir uji [1], [2] | Dua sistem pada baris yang sama dibandingkan per baris (uji McNemar eksak), bukan dengan membandingkan angka ringkasan. Dipakai untuk OmniRail lawan Presidio di Tahap 0 dan versi baru lawan baseline di CI | Diadopsi (`statistik.py`), requirement EVAL-09 |
+| Manajemen mutu anotasi [3] | Tinjauan label oleh orang kedua (T-007): kesepakatan dihitung dengan kappa Cohen (target κ ≥ 0,8), tingkat kesalahan dihitung dari sampel yang dinilai ulang, dan perbedaan diselesaikan lewat adjudikasi | Diadopsi (`statistik.py`), requirement T-007 |
+| Perlindungan set uji dari kontaminasi [4] | Holdout tidak dibuka saat menyetel aturan, tidak diterbitkan, dan setiap run dicatat. Set uji yang sudah "terlihat" tidak lagi memberi angka yang jujur | Requirement EVAL-13 |
 | *Datasheets for Datasets* [5] | Dokumentasi asal-usul, batas, dan cara pakai dataset | Diadopsi (`eval/DATASHEET.md`) |
-| CheckList [6] | Uji perilaku: tes fungsi minimum per entitas, dan tes invarian (pemisah, huruf, bingkai, dan gaya ketik tidak boleh mengubah temuan) | Requirement EVAL-10 |
+| Uji fungsional berbasis templat [6] | Tes fungsi minimum per entitas dan tes kontras (kalimat mirip yang tidak boleh terdeteksi), dibangkitkan dari templat dan divalidasi. Tes invarian: pemisah, huruf, bingkai, dan gaya ketik tidak boleh mengubah temuan | Requirement EVAL-10 |
 | Text Anonymization Benchmark (TAB) [7] | Membedakan identifier langsung (NIK, nomor kartu) dan identifier kuasi (tanggal lahir, plat) saat melaporkan recall | Requirement (catatan di EVAL-09) |
-| Uji silang / *differential testing* [8] | Prototipe Python (T-011) menjadi acuan; implementasi Rust harus memberi temuan yang sama pada dataset dev | Requirement EVAL-12 |
-| *Property-based testing* [9] dan fuzzing | Invarian tokenisasi: `pulihkan(samarkan(x)) = x`, teks bertoken tidak memuat nilai entitas, normalisasi idempoten; fuzzing pada normalisasi Unicode dan parser | Requirement EVAL-11 |
-| *Model Cards* [10] | "Kartu pack": setiap policy pack menyertakan metrik, dataset uji, dan batasnya | Kandidat (bersama CFG-09) |
+| *Property-based testing* dan uji silang (*differential testing*) [8] | Invarian tokenisasi: `pulihkan(samarkan(x)) = x`, teks bertoken tidak memuat nilai entitas, normalisasi idempoten. Uji silang: implementasi Rust harus memberi temuan yang sama dengan prototipe Python (T-011) | Requirement EVAL-11, EVAL-12 |
+| Fuzzing [9] | Mencari panic dan pelanggaran invarian pada normalisasi Unicode dan parser request | Requirement EVAL-11 (P1) |
+| Dokumentasi model dan komponen [10] | "Kartu pack": setiap policy pack menyertakan metrik, dataset uji, dan batasnya. Studi atas 32 ribu model card menunjukkan bagian batasan dan evaluasi paling sering dikosongkan, jadi keduanya dibuat wajib | Kandidat (bersama CFG-09) |
 
-### Temuan dari menerapkan interval Wilson ke dataset sekarang
+### Temuan dari menerapkan interval kepercayaan ke dataset sekarang
 
 `python3 eval/tools/statistik.py` menghasilkan setengah lebar interval 95% berikut:
 
@@ -44,7 +46,7 @@ Angka evaluasi adalah inti klaim OmniRail. Bagian ini memastikan angka itu jujur
 Akibatnya:
 
 1. **Target false positive ≤ 2% per entitas belum bisa dibuktikan.** Dengan ± 110 baris negatif per entitas dan nol false positive, batas atas intervalnya masih 3,4%. Butuh ≥ 190 baris negatif per entitas, atau penilaian pada gabungan entitas (± 1.300 baris, batas atas 0,3%). PRD bagian 9 kini menilai target ini pada gabungan.
-2. **Recall per entitas punya ketelitian sekitar ±5 poin.** Selisih 3 poin antara dua versi belum tentu nyata. Karena itu, CI memakai McNemar (apakah baris yang berubah hasilnya lebih banyak memburuk daripada membaik), bukan selisih angka mentah.
+2. **Recall per entitas punya ketelitian sekitar ±5 poin.** Selisih 3 poin antara dua versi belum tentu nyata. Karena itu, CI memakai uji berpasangan per baris (apakah baris yang berubah hasilnya lebih banyak memburuk daripada membaik), bukan selisih angka mentah [1].
 3. **Kriteria Tahap 0 ("unggul ≥ 10 poin") masuk akal pada gabungan lima entitas** (± 600 kemunculan, interval sekitar ±2,5 poin), tetapi tidak per entitas.
 
 ## 2. Deteksi
@@ -52,30 +54,30 @@ Akibatnya:
 | Metode | Dipakai untuk | Status |
 | --- | --- | --- |
 | Pola + validator + kata konteks, seperti arsitektur recognizer Presidio [11] | Kerangka deteksi entitas. Bedanya: OmniRail mewajibkan kata konteks untuk entitas berisiko tinggi, dan validatornya memeriksa struktur dokumen Indonesia | Requirement PII-01, PII-07 |
-| Algoritma Luhn (ISO/IEC 7812-1) | Validasi nomor kartu, digabung dengan prefix jaringan | Diadopsi (validator di pemeriksa dataset), requirement PII-01 |
-| Regex tanpa backtracking (crate Rust `regex`, berbasis automata hingga) [12] | Waktu pencocokan terbatas (`O(m × n)`), sehingga pola di policy pack tidak bisa dipakai untuk ReDoS. Fitur look-around dan backreference ditolak | Requirement POL-06 |
-| Aho–Corasick [13] | Pencocokan banyak kata kunci dan kata konteks sekaligus dalam satu lintasan teks | Kandidat (detail implementasi) |
-| Normalisasi Unicode NFKC (UAX #15) | Menutup penghindaran deny-list dengan huruf lebar penuh | Requirement POL-02 |
+| Algoritma Luhn | Validasi nomor kartu, digabung dengan prefix jaringan | Diadopsi (validator di pemeriksa dataset), requirement PII-01 |
+| Regex tanpa backtracking [12] | ReDoS masih ditemukan di layanan produksi besar [13]. Crate Rust `regex` berbasis automata hingga menjamin waktu pencocokan `O(m × n)`, sehingga pola di policy pack tidak bisa dipakai untuk ReDoS. Fitur look-around dan backreference ditolak | Requirement POL-06 |
+| Pencocokan banyak kata sekaligus (crate `aho-corasick`) [12] | Mencocokkan banyak kata kunci dan kata konteks dalam satu lintasan teks | Kandidat (detail implementasi) |
+| Normalisasi Unicode NFKC (UAX #15) [14] | Menutup penghindaran deny-list dengan huruf lebar penuh | Requirement POL-02 |
 | *Skeleton* confusables (UTS #39) [14] | Menutup penghindaran dengan huruf mirip lintas aksara (misalnya huruf Kiril yang tampak seperti huruf Latin), yang tidak ditangani NFKC | Requirement POL-07 (P1) |
-| Studi kebocoran secret di GitHub [15] | Dasar pendekatan prefix untuk credentials berformat khas, dan bukti bahwa secret yang sudah dihapus tetap tersimpan di riwayat git (alasan `omnirail scan` di pre-commit) | Requirement CRED-01, EVAL-07 |
+| Perbandingan alat deteksi secret [15] | Dasar pendekatan prefix khusus per layanan: studi ini menemukan bahwa sebagian besar false positive alat deteksi secret berasal dari regex generik dan perhitungan entropi yang tidak efektif. Deteksi entropi (CRED-04) karenanya tetap P1 dan wajib diukur dulu | Requirement CRED-01 |
 | SecretBench [16] | Set uji eksternal untuk mengukur false positive detektor credentials (akses diminta ke penyusunnya) | Kandidat (pelengkap T-305) |
-| GLiNER [17] dan data NER Indonesia IndoNLU (NERGrit, NERP) [18] | Jalur NER lokal untuk nama, alamat, dan instansi (PII-09, P2). Perhatikan lisensi: sebagian model PII turunan GLiNER berlisensi non-komersial | Kandidat |
+| GLiNER [17] dan sumber data NLP Indonesia NusaCrowd [18] | Jalur NER lokal untuk nama, alamat, dan instansi (PII-09, P2). Perhatikan lisensi: sebagian model PII turunan GLiNER berlisensi non-komersial | Kandidat |
 
 ## 3. Penyamaran dan pemulihan
 
 | Metode | Dipakai untuk | Status |
 | --- | --- | --- |
-| Terminologi de-identifikasi ISO/IEC 20889:2018 dan NIST SP 800-188 [19] | Istilah yang tepat: tokenisasi OmniRail adalah **pseudonimisasi reversibel**. Teks bertoken tetap data pribadi bagi pihak yang memegang tabel token, jadi dokumen publik tidak boleh menyebutnya "anonimisasi" | Requirement (bagian 10, kata yang dipakai di materi publik) |
+| Kerangka de-identifikasi ISO/IEC 27559:2022 dan NIST SP 800-188 [19] | Istilah yang tepat: tokenisasi OmniRail adalah **pseudonimisasi reversibel**. Teks bertoken tetap data pribadi bagi pihak yang memegang tabel token, jadi dokumen publik tidak boleh menyebutnya "anonimisasi" | Requirement (bagian 10, kata yang dipakai di materi publik) |
 | Hide and Seek (HaS) [20] | Pembanding desain: HaS memakai model lokal untuk menyamarkan dan memulihkan; OmniRail memakai tabel token deterministik. Dipakai sebagai prior art di eksperimen format token | Kandidat (Q14, T-207) |
-| *Format-preserving encryption* FF1 (NIST SP 800-38G) [21] | Opsi nilai pengganti yang tampak realistis dan konsisten tanpa menyimpan tabel, untuk dibandingkan di eksperimen Q14 | Kandidat |
+| *Format-preserving encryption* FF1 [21] | Opsi nilai pengganti yang tampak realistis dan konsisten tanpa menyimpan tabel, untuk dibandingkan di eksperimen Q14. Draf revisi NIST 2025 menghapus FF3, jadi hanya FF1 yang dipertimbangkan | Kandidat |
 | Penghapusan memori eksplisit (crate `zeroize`) | Tabel token dihapus dari memori begitu request selesai, bukan hanya dibebaskan | Requirement PII-05 |
 
 ## 4. Audit log dan kebijakan
 
 | Metode | Dipakai untuk | Status |
 | --- | --- | --- |
-| JSON Canonicalization Scheme, RFC 8785 [22] | Serialisasi kanonik kebijakan efektif sebelum dihitung `policy_hash`, sehingga hash yang sama bisa dihitung ulang oleh pihak lain dengan pustaka apa pun | Requirement AUD-02 |
-| Log berantai hash [23] dan struktur *tamper-evident* berbasis pohon [24], seperti Certificate Transparency (RFC 9162) | Setiap baris audit log memuat hash baris sebelumnya, dengan *checkpoint* bertanda tangan berkala. Penghapusan atau pengubahan baris bisa dideteksi oleh `omnirail audit verify` | Requirement AUD-06 (P1) |
+| Serialisasi JSON kanonik (RFC 8785, lihat [pengecualian](#spesifikasi-yang-tetap-berlaku)) | Kebijakan efektif diserialisasi secara kanonik sebelum dihitung `policy_hash`, sehingga hash yang sama bisa dihitung ulang oleh pihak lain dengan pustaka apa pun | Requirement AUD-02 |
+| Log transparansi berbasis pohon Merkle: Certificate Transparency 2.0 [22] dan log transparansi Sigstore [23] | Setiap baris audit log memuat hash baris sebelumnya, dengan *checkpoint* bertanda tangan berkala. Penghapusan atau pengubahan baris bisa dideteksi oleh `omnirail audit verify` | Requirement AUD-06 (P1) |
 | Perbandingan *constant-time* (crate `subtle`) | Perbandingan kunci OmniRail tanpa kebocoran lewat waktu | Requirement CFG-07 |
 
 ## 5. Rantai pasok dan rilis
@@ -84,7 +86,7 @@ Proxy yang memegang kunci provider dan melihat data pribadi harus bisa dibuktika
 
 | Metode | Dipakai untuk | Status |
 | --- | --- | --- |
-| Sigstore [25] atau GitHub artifact attestations, dengan provenance SLSA | Setiap binary dan image rilis ditandatangani tanpa kunci jangka panjang dan bisa diverifikasi asal build-nya | Requirement DIST-08 |
+| Sigstore [23] atau GitHub artifact attestations, dengan provenance SLSA | Setiap binary dan image rilis ditandatangani tanpa kunci jangka panjang dan bisa diverifikasi asal build-nya | Requirement DIST-08 |
 | SBOM (SPDX atau CycloneDX) | Daftar dependensi setiap rilis | Requirement DIST-08 |
 | `cargo audit` (RustSec) dan `cargo deny` | CI gagal bila ada dependensi dengan advisori keamanan atau lisensi yang tidak diizinkan | Requirement DIST-08 |
 | `#![forbid(unsafe_code)]` di `omnirail-core` | Menutup kelas bug memori di bagian yang memproses data pribadi | Requirement DIST-08 |
@@ -95,16 +97,16 @@ Proxy yang memegang kunci provider dan melihat data pribadi harus bisa dibuktika
 
 | Metode | Dipakai untuk | Status |
 | --- | --- | --- |
-| Menghindari *coordinated omission* [26] | Beban dikirim pada laju tetap (open-loop, seperti wrk2), dan latensi dihitung dari jadwal kirim, bukan dari saat request benar-benar terkirim. Tanpa ini, p99 terlihat jauh lebih baik dari kenyataannya | Requirement EVAL-05 |
-| HdrHistogram | Menyimpan distribusi latensi dengan presisi tetap sampai persentil tinggi | Requirement EVAL-05 |
+| Beban *open-loop* dan menghindari *coordinated omission* [24] | Beban dikirim pada laju tetap, dan latensi dihitung dari jadwal kirim, bukan dari saat request benar-benar terkirim. Benchmark *closed-loop* bisa meremehkan p99 berkali-kali lipat | Requirement EVAL-05 |
+| HdrHistogram (dipakai `wrk2`) [24] | Menyimpan distribusi latensi dengan presisi tetap sampai persentil tinggi | Requirement EVAL-05 |
 
 ## 7. Model ancaman dan kerangka risiko
 
 | Kerangka | Dipakai untuk | Status |
 | --- | --- | --- |
-| STRIDE dan LINDDUN [27] | Model ancaman keamanan (STRIDE) dan privasi (LINDDUN: *linkability*, *identifiability*, dan seterusnya). LINDDUN relevan karena audit log dan laporan paparan sendiri bisa menjadi sumber *linkability* | Requirement (T-342) |
-| OWASP Top 10 for LLM Applications, edisi 2025 [28] | Kosakata risiko yang dikenal pembeli dan auditor. Edisi yang lebih baru mungkin sudah terbit; cek sebelum dipakai di materi publik | Requirement (T-342) |
-| NIST AI RMF dan profil Generative AI (NIST AI 600-1) [29] | Bahasa untuk laporan "bukti pendukung": risiko privasi data dan keamanan informasi. Kerangka sukarela, bukan sertifikasi | Kandidat (REP-03) |
+| STRIDE dan LINDDUN, termasuk perluasan LINDDUN untuk sistem GenAI [25] | Model ancaman keamanan (STRIDE) dan privasi (LINDDUN: *linkability*, *identifiability*, dan seterusnya). LINDDUN relevan karena audit log dan laporan paparan sendiri bisa menjadi sumber *linkability*. Perluasan GenAI-nya menambah contoh ancaman khusus sistem LLM | Requirement (T-342) |
+| OWASP Top 10 for LLM Applications, edisi 2025 [26] | Kosakata risiko yang dikenal pembeli dan auditor. Edisi yang lebih baru mungkin sudah terbit; cek sebelum dipakai di materi publik | Requirement (T-342) |
+| NIST AI RMF 1.0 dan profil Generative AI (NIST AI 600-1) [27] | Bahasa untuk laporan "bukti pendukung": risiko privasi data dan keamanan informasi. Kerangka sukarela, bukan sertifikasi | Kandidat (REP-03) |
 
 Pemetaan awal ke OWASP Top 10 for LLM Applications 2025:
 
@@ -120,34 +122,39 @@ Pemetaan awal ke OWASP Top 10 for LLM Applications 2025:
 
 ## Rujukan
 
-1. E. B. Wilson. "Probable Inference, the Law of Succession, and Statistical Inference." *Journal of the American Statistical Association* 22(158), 1927.
-2. Q. McNemar. "Note on the sampling error of the difference between correlated proportions or percentages." *Psychometrika* 12(2), 1947.
-3. J. Cohen. "A Coefficient of Agreement for Nominal Scales." *Educational and Psychological Measurement* 20(1), 1960.
-4. C. Dwork, V. Feldman, M. Hardt, T. Pitassi, O. Reingold, A. Roth. "The reusable holdout: Preserving validity in adaptive data analysis." *Science* 349(6248), 2015. [Ringkasan Google Research](https://research.google/blog/the-reusable-holdout-preserving-validity-in-adaptive-data-analysis/), [arXiv:1506.02629](https://arxiv.org/abs/1506.02629).
-5. T. Gebru dkk. "Datasheets for Datasets." *Communications of the ACM* 64(12), 2021.
-6. M. T. Ribeiro, T. Wu, C. Guestrin, S. Singh. "Beyond Accuracy: Behavioral Testing of NLP Models with CheckList." ACL 2020. [ACL Anthology](https://aclanthology.org/2020.acl-main.442).
+Semua terbit akhir 2021 sampai 2026. Dokumentasi perangkat lunak dan standar yang terus diperbarui dikutip pada versi terbarunya.
+
+1. E. Miller. "Adding Error Bars to Evals: A Statistical Approach to Language Model Evaluations." [arXiv:2411.00640](https://arxiv.org/abs/2411.00640), 2024.
+2. D. Ulmer, C. Hardmeier, J. Frellsen. "deep-significance: Easy and Meaningful Statistical Significance Testing in the Age of Neural Networks." [arXiv:2204.06815](https://arxiv.org/abs/2204.06815), 2022.
+3. J.-C. Klie, R. Eckart de Castilho, I. Gurevych. "Analyzing Dataset Annotation Quality Management in the Wild." *Computational Linguistics* 50(3), 2024. [ACL Anthology](https://aclanthology.org/2024.cl-3.1).
+4. O. Sainz dkk. "NLP Evaluation in trouble: On the Need to Measure LLM Data Contamination for each Benchmark." Findings of EMNLP 2023. [ACL Anthology](https://aclanthology.org/2023.findings-emnlp.722).
+5. T. Gebru dkk. "Datasheets for Datasets." *Communications of the ACM* 64(12), Desember 2021.
+6. P. Röttger, H. Seelawi, D. Nozza, Z. Talat, B. Vidgen. "Multilingual HateCheck: Functional Tests for Multilingual Hate Speech Detection Models." WOAH 2022. [ACL Anthology](https://aclanthology.org/2022.woah-1.15).
 7. I. Pilán, P. Lison, L. Øvrelid, A. Papadopoulou, D. Sánchez, M. Batet. "The Text Anonymization Benchmark (TAB): A Dedicated Corpus and Evaluation Framework for Text Anonymization." *Computational Linguistics* 48(4), 2022. [ACL Anthology](https://aclanthology.org/2022.cl-4.19), [kode evaluasi](https://github.com/NorskRegnesentral/text-anonymization-benchmark).
-8. W. M. McKeeman. "Differential Testing for Software." *Digital Technical Journal* 10(1), 1998.
-9. K. Claessen, J. Hughes. "QuickCheck: A Lightweight Tool for Random Testing of Haskell Programs." ICFP 2000. Implementasi Rust: `proptest`; fuzzing: `cargo-fuzz` (libFuzzer).
-10. M. Mitchell dkk. "Model Cards for Model Reporting." FAT* 2019.
-11. Microsoft Presidio: [analyzer](https://microsoft.github.io/presidio/analyzer) dan [peningkatan skor dengan kata konteks](https://microsoft.github.io/presidio/tutorial/06_context).
-12. Crate Rust `regex`: [README dan jaminan kompleksitas](https://docs.rs/crate/regex/1.12.3/source/README.md). Dasar teori: K. Thompson, "Regular Expression Search Algorithm," *CACM* 11(6), 1968.
-13. A. V. Aho, M. J. Corasick. "Efficient String Matching: An Aid to Bibliographic Search." *CACM* 18(6), 1975.
-14. Unicode Technical Standard #39, *Unicode Security Mechanisms*. [unicode.org/reports/tr39](https://unicode.org/reports/tr39/). Normalisasi: UAX #15.
-15. M. Meli, M. R. McNiece, B. Reaves. "How Bad Can It Git? Characterizing Secret Leakage in Public GitHub Repositories." NDSS 2019. [NDSS](https://www.ndss-symposium.org/ndss-paper/how-bad-can-it-git-characterizing-secret-leakage-in-public-github-repositories/).
-16. S. K. Basak, L. Neil, B. Reaves, L. Williams. "SecretBench: A Dataset of Software Secrets." MSR 2023 Data and Tool Showcase. [arXiv:2303.06729](https://arxiv.org/abs/2303.06729).
-17. U. Zaratiana dkk. "GLiNER: Generalist Model for Named Entity Recognition using Bidirectional Transformer." NAACL 2024. Varian PII: [GLiNER2-PII, arXiv:2605.09973](https://arxiv.org/abs/2605.09973).
-18. B. Wilie dkk. "IndoNLU: Benchmark and Resources for Evaluating Indonesian Natural Language Understanding." [arXiv:2009.05387](https://arxiv.org/abs/2009.05387), [dataset](https://huggingface.co/datasets/indonlp/indonlu).
-19. ISO/IEC 20889:2018, *Privacy enhancing data de-identification terminology and classification of techniques*; NIST SP 800-188, *De-Identifying Government Datasets* (2023).
+8. H. Goldstein, J. W. Cutler, D. Dickstein, B. C. Pierce, A. Head. "Property-Based Testing in Practice." ICSE 2024. [Halaman ICSE](https://conf.researchr.org/details/icse-2024/icse-2024-research-track/90/Property-Based-Testing-in-Practice). Implementasi Rust: `proptest`.
+9. X. Zhu, S. Wen, S. Camtepe, Y. Xiang. "Fuzzing: A Survey for Roadmap." *ACM Computing Surveys*, 2022. DOI 10.1145/3512345. Implementasi Rust: `cargo-fuzz` (libFuzzer).
+10. W. Liang dkk. "Systematic analysis of 32,111 AI model cards characterizes documentation practice in AI." *Nature Machine Intelligence*, 2024. Pracetak: [arXiv:2402.05160](https://arxiv.org/abs/2402.05160).
+11. Microsoft Presidio, dokumentasi [analyzer](https://microsoft.github.io/presidio/analyzer) dan [peningkatan skor dengan kata konteks](https://microsoft.github.io/presidio/tutorial/06_context) (diakses November 2026).
+12. Dokumentasi crate Rust [`regex`](https://docs.rs/crate/regex/1.12.3/source/README.md) (versi 1.12) dan `aho-corasick`.
+13. E. Barlas, X. Du, J. C. Davis. "Exploiting Input Sanitization for Regex Denial of Service." ICSE 2022. [arXiv:2303.01996](https://arxiv.org/abs/2303.01996).
+14. Unicode Technical Standard #39, *Unicode Security Mechanisms*, versi 17.0 (2025), [unicode.org/reports/tr39](https://unicode.org/reports/tr39/); dan UAX #15, *Unicode Normalization Forms*, versi terbaru.
+15. S. K. Basak, J. Cox, B. Reaves, L. Williams. "A Comparative Study of Software Secrets Reporting by Secret Detection Tools." ESEM 2023. [arXiv:2307.00714](https://arxiv.org/abs/2307.00714).
+16. S. K. Basak, L. Neil, B. Reaves, L. Williams. "SecretBench: A Dataset of Software Secrets." MSR 2023. [arXiv:2303.06729](https://arxiv.org/abs/2303.06729).
+17. U. Zaratiana dkk. "GLiNER: Generalist Model for Named Entity Recognition using Bidirectional Transformer." NAACL 2024. Varian PII: "GLiNER2-PII: A Multilingual Model for Personally Identifiable Information Extraction," [arXiv:2605.09973](https://arxiv.org/abs/2605.09973), 2026.
+18. S. Cahyawijaya dkk. "NusaCrowd: Open Source Initiative for Indonesian NLP Resources." Findings of ACL 2023. [ACL Anthology](https://aclanthology.org/2023.findings-acl.868).
+19. ISO/IEC 27559:2022, *Privacy enhancing data de-identification framework*; NIST SP 800-188, *De-Identifying Government Datasets: Techniques and Governance* (2023).
 20. Y. Chen, T. Li, H. Liu, Y. Yu. "Hide and Seek (HaS): A Lightweight Framework for Prompt Privacy Protection." [arXiv:2309.03057](https://arxiv.org/abs/2309.03057), 2023.
-21. NIST SP 800-38G, *Recommendation for Block Cipher Modes of Operation: Methods for Format-Preserving Encryption* (FF1).
-22. A. Rundgren, B. Jordan, S. Erdtman. RFC 8785, *JSON Canonicalization Scheme (JCS)*, 2020. [rfc-editor.org](https://www.rfc-editor.org/rfc/rfc8785).
-23. B. Schneier, J. Kelsey. "Secure Audit Logs to Support Computer Forensics." *ACM TISSEC* 2(2), 1999.
-24. S. A. Crosby, D. S. Wallach. "Efficient Data Structures for Tamper-Evident Logging." USENIX Security 2009. [USENIX](https://www.usenix.org/conference/usenixsecurity09/technical-sessions/presentation/efficient-data-structures-tamper-evident). Lihat juga RFC 9162 (Certificate Transparency 2.0).
-25. Z. Newman, J. S. Meyers, S. Torres-Arias. "Sigstore: Software Signing for Everybody." ACM CCS 2022. [Pengumuman Sigstore](https://blog.sigstore.dev/sigstore-software-signing-for-everybody-has-been-published-in-the-proceedings-of-the-acm-bb7e7d679a73/).
-26. G. Tene, tentang *coordinated omission*; alat `wrk2` dan HdrHistogram. [wrk2](https://github.com/giltene/wrk2).
-27. LINDDUN privacy threat modeling, KU Leuven. [linddun.org](https://linddun.org). STRIDE: Microsoft Threat Modeling.
-28. OWASP Top 10 for LLM Applications 2025. [genai.owasp.org](https://genai.owasp.org/llm-top-10/).
-29. NIST AI 100-1, *AI Risk Management Framework 1.0* (2023); NIST AI 600-1, *Generative Artificial Intelligence Profile* (2024). [doi.org/10.6028/NIST.AI.600-1](https://doi.org/10.6028/NIST.AI.600-1).
+21. NIST SP 800-38G Revision 1, Second Public Draft, *Recommendation for Block Cipher Modes of Operation: Methods for Format-Preserving Encryption*, Februari 2025. [csrc.nist.gov](https://csrc.nist.gov/pubs/sp/800/38/g/r1/2pd).
+22. B. Laurie, E. Messeri, R. Stradling. RFC 9162, *Certificate Transparency Version 2.0*, Desember 2021.
+23. Z. Newman, J. S. Meyers, S. Torres-Arias. "Sigstore: Software Signing for Everybody." ACM CCS 2022. [Pengumuman Sigstore](https://blog.sigstore.dev/sigstore-software-signing-for-everybody-has-been-published-in-the-proceedings-of-the-acm-bb7e7d679a73/).
+24. M. Brooker. Tulisan teknis tentang beban *open-loop* dan *closed-loop*, Mei 2023. [brooker.co.za](https://brooker.co.za/blog/2023/05/10/open-closed.html). Alat: [wrk2](https://github.com/giltene/wrk2) dan HdrHistogram. Bukan paper peer-review; belum ditemukan paper 2021–2026 yang setara.
+25. Q. Liao, J. Bellemans, L. Sion dkk. "A LINDDUN-based Privacy Threat Modeling Framework for GenAI." [arXiv:2603.06051](https://arxiv.org/abs/2603.06051), 2026. Metodologi: [linddun.org](https://linddun.org).
+26. OWASP Top 10 for LLM Applications 2025. [genai.owasp.org](https://genai.owasp.org/llm-top-10/).
+27. NIST AI 100-1, *AI Risk Management Framework 1.0* (2023); NIST AI 600-1, *Generative Artificial Intelligence Profile* (2024). [doi.org/10.6028/NIST.AI.600-1](https://doi.org/10.6028/NIST.AI.600-1).
+
+### Spesifikasi yang tetap berlaku
+
+- **RFC 8785, *JSON Canonicalization Scheme* (Juni 2020).** Sedikit di luar batas lima tahun, tetapi belum ada versi pengganti dan masih menjadi satu-satunya spesifikasi IETF untuk JSON kanonik. Dipakai sebagai spesifikasi teknis untuk `policy_hash` (AUD-02), bukan sebagai rujukan ilmiah. Bila batas lima tahun harus diterapkan ketat, alternatifnya adalah mendefinisikan serialisasi kanonik sendiri di PRD, dengan konsekuensi pihak lain harus mengikuti definisi OmniRail.
+- Algoritma Luhn, uji McNemar, kappa Cohen, dan rumus interval Wilson adalah metode baku yang tercantum di buku teks. Dokumen ini tidak mengutip makalah aslinya; rujukan [1] s.d. [3] menjelaskan pemakaiannya dalam evaluasi modern.
 
 Catatan verifikasi: rujukan di atas dicek lewat pencarian web pada 11 November 2026. Beberapa hanya terverifikasi sampai abstrak atau halaman konferensi, belum dari teks lengkap; detail angka di paper perlu dibaca langsung sebelum dikutip di materi publik.

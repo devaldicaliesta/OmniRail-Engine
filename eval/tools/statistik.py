@@ -1,14 +1,17 @@
 #!/usr/bin/env python3
 """Statistik untuk evaluasi OmniRail (PRD EVAL-09). Hanya pustaka standar Python.
 
-- `wilson(k, n)`: interval kepercayaan skor Wilson (Wilson, 1927) untuk proporsi
-  seperti recall, precision, dan false positive rate. Lebih andal daripada
-  interval normal (Wald) untuk n kecil dan proporsi dekat 0 atau 1.
-- `mcnemar_eksak(b, c)`: uji McNemar eksak (McNemar, 1947; versi binomial) untuk
-  membandingkan dua sistem pada baris uji yang sama. `b` = baris yang hanya
-  benar di sistem A, `c` = baris yang hanya benar di sistem B.
-- `cohen_kappa(label_a, label_b)`: kesepakatan dua penilai di luar kebetulan
-  (Cohen, 1960), dipakai untuk tinjauan label T-007.
+- `wilson(k, n)`: interval kepercayaan skor Wilson untuk proporsi seperti
+  recall, precision, dan false positive rate. Lebih andal daripada interval
+  normal (Wald) untuk n kecil dan proporsi dekat 0 atau 1.
+- `mcnemar_eksak(b, c)`: uji McNemar eksak (versi binomial) untuk membandingkan
+  dua sistem pada baris uji yang sama. `b` = baris yang hanya benar di sistem A,
+  `c` = baris yang hanya benar di sistem B.
+- `cohen_kappa(label_a, label_b)`: kesepakatan dua penilai di luar kebetulan,
+  dipakai untuk tinjauan label T-007.
+
+Rujukan pemakaian dalam evaluasi modern ada di docs/LANDASAN_METODE.md
+bagian 1 (Miller 2024; Ulmer dkk. 2022; Klie dkk. 2024).
 
 Jalankan langsung untuk melihat lebar interval pada ukuran dataset sekarang:
 
