@@ -5,7 +5,7 @@
 # Python (alat eval)
 __pycache__/
 *.py[cod]
-.venv/
+.venv*/
 
 # Rahasia dan konfigurasi lokal. Jangan commit kunci provider.
 .env

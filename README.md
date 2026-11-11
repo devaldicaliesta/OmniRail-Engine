@@ -4,7 +4,7 @@
 
 Proxy open-source yang berdiri di depan LLM. OmniRail menyamarkan data pribadi, menegakkan kebijakan, dan memvalidasi output, dalam satu binary tanpa GPU.
 
-> **Status: tahap desain.** Belum ada kode produk. Repo ini berisi [PRD MVP v1.7](docs/PRD.md), dataset uji, dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
+> **Status: tahap desain.** Belum ada kode produk. Repo ini berisi [PRD MVP v1.7.2](docs/PRD.md), dataset uji, dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
 
 ## Apa itu OmniRail
 
@@ -95,6 +95,7 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 
 - [PRD MVP](docs/PRD.md): acuan scope, requirements, kriteria terima, dan tahapan MVP. Bila berbeda dengan blueprint, PRD yang berlaku.
 - [Rincian task](docs/TASKS.md): task per tahap dengan kriteria selesai.
+- [Hasil evaluasi Tahap 0](eval/results/README.md): prototipe referensi OmniRail dibandingkan dengan Presidio pada split dev, beserta batas kesimpulannya.
 - [Landasan metode](docs/LANDASAN_METODE.md): paper dan standar yang mendasari evaluasi, deteksi, audit log, dan rilis, beserta status penerapannya.
 - [Dataset uji](eval/README.md): set uji PII dan credentials berbahasa Indonesia (draf, v0.6), diperiksa otomatis di CI oleh `eval/tools/cek_dataset.py`, dengan [datasheet](eval/DATASHEET.md) yang menjelaskan asal-usul dan batasnya.
 - [Panduan kontribusi](CONTRIBUTING.md) dan [kebijakan keamanan](SECURITY.md) (laporkan kerentanan secara privat, bukan lewat issue).
