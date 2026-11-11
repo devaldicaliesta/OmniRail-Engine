@@ -35,7 +35,7 @@ Disusun mengikuti kerangka *Datasheets for Datasets* (Gebru dkk., Communications
 - **Tidak dianjurkan.**
   - Mengklaim tingkat deteksi di trafik produksi. Distribusi dataset ini berbeda dari trafik nyata.
   - Melatih model lalu menguji pada split yang sama.
-  - Menyetel aturan sambil melihat holdout. Setiap run holdout dicatat (PRD EVAL-13), karena pemakaian holdout berulang yang adaptif membuat angkanya terlalu optimistis (Dwork dkk., *Science*, 2015).
+  - Menyetel aturan sambil melihat holdout. Setiap run holdout dicatat (PRD EVAL-13), karena pemakaian holdout berulang yang adaptif membuat angkanya terlalu optimistis. Set uji yang sudah terlihat saat menyetel aturan sama bermasalahnya dengan set uji yang terkontaminasi (Sainz dkk., Findings of EMNLP 2023).
 - **Ketelitian angka.** Dengan ± 110 sampai 160 kemunculan per entitas, interval Wilson 95% untuk recall 0,90 masih sekitar ±5 poin. Dengan ± 110 baris negatif per entitas dan **nol** false positive, batas atasnya masih sekitar 3,4%. Jadi target false positive ≤ 2% (PRD bagian 9) hanya bisa dibuktikan pada gabungan entitas, atau bila suatu entitas punya ≥ 190 baris negatif. Jalankan `python3 eval/tools/statistik.py` untuk tabel lengkapnya.
 
 ## Distribusi
