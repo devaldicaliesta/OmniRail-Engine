@@ -1,6 +1,6 @@
 # OmniRail Engine — Rincian task MVP
 
-Turunan dari [PRD MVP v1.0](PRD.md). Satu task berarti satu PR dengan kriteria selesai yang bisa diperiksa. Kode requirement (misalnya `PII-04`) merujuk ke PRD bagian 7.
+Turunan dari [PRD MVP v1.5](PRD.md). Satu task berarti satu PR dengan kriteria selesai yang bisa diperiksa. Kode requirement (misalnya `PII-04`) merujuk ke PRD bagian 7.
 
 **Cara memakai:** kerjakan berurutan per tahap, centang task yang selesai, dan tulis keputusan baru di bagian "Catatan keputusan" di bawah. Task di satu tahap boleh dikerjakan paralel bila kolom "Butuh" sudah terpenuhi.
 
@@ -16,6 +16,7 @@ Turunan dari [PRD MVP v1.0](PRD.md). Satu task berarti satu PR dengan kriteria s
 | [ ] | T-004 | Jalankan dataset (dev) terhadap Presidio dengan recognizer Indonesia sederhana (regex tanpa validator) | Tahap 0 | Recall, precision, dan false positive per entitas tercatat di `eval/results/` | T-002, T-003 |
 | [ ] | T-005 | Uji LiteLLM + guardrail Presidio sebagai proxy: pemulihan token (`output_parse_pii`), blokir credentials, dan overhead latensi. Cek juga status bug pemulihan di jalur Anthropic ([BerriAI/litellm#22821](https://github.com/BerriAI/litellm/issues/22821)) | Tahap 0 | Laporan singkat: fitur yang benar-benar ada, celahnya, dan cara memasangnya | — |
 | [ ] | T-007 | Tinjau sampel label dataset oleh orang kedua: 5 sampai 10 baris per entitas dan kategori (± 120 baris), dev saja | EVAL-01, Q1 | Label keliru diperbaiki; tingkat kesalahan sampel tercatat. Bila > 5%, tinjau ulang entitas yang bermasalah | T-002 |
+| [x] | T-009 | Pemeriksa konsistensi dataset `eval/tools/cek_dataset.py` dan CI | EVAL-01 | Format, label, validator struktur PRD 7.10, kebocoran dev ke holdout, target jumlah, dan tabel `eval/README.md` dicek di setiap pull request | T-002 |
 | [ ] | T-008 | (Opsional) Simpan pembangkit dataset di `eval/tools/` agar dataset bisa diperbanyak ulang secara konsisten | EVAL-01 | Menjalankan pembangkit menghasilkan berkas yang identik dengan yang di repo | — |
 | [ ] | T-006 | Keputusan Tahap 0 | Tahap 0 | Catatan keputusan berisi angka T-004 dan T-005 dibandingkan dengan kriteria T-003 | T-004, T-005 |
 
@@ -99,7 +100,7 @@ Tindak lanjut keterbatasan K1 s.d. K5 di PRD Lampiran A. T-302 boleh dimulai den
 | [ ] | T-506 | Konfigurasi `playground` (enabled, admin_keys, allowed_routes, datasets), kunci admin terpisah, dan penyajian berkas statis tertanam dengan CSP | PG-04, PG-05 | Default 404; bukan loopback tanpa `admin_keys` gagal start; kunci aplikasi mendapat 403 `omnirail_admin_required`; ukuran berkas ≤ 200 KB | T-316 |
 | [ ] | T-507 | Tab Coba mode periksa saja: input, pilihan pack dan mode, sorotan entitas berlabel, tabel temuan tersamarkan, teks bertoken, keputusan, waktu, versi dan hash kebijakan | PG-03, PG-06, PG-07 | Hasil identik dengan audit log jalur proxy; tidak ada teks di `localStorage`/`sessionStorage`; berfungsi tanpa internet | T-506 |
 | [ ] | T-508 | Aksesibilitas dan uji E2E tab Coba | PG-03, kriteria 7.13 | Bisa dipakai penuh dengan keyboard; kontras WCAG 2.1 AA; satu uji E2E (Playwright) untuk alur tempel teks → periksa → lihat temuan | T-507 |
-| [ ] | T-509 | `SECURITY.md`, `CONTRIBUTING.md`, dan `CODEOWNERS` untuk repo OmniRail | DIST-05 | Ada jalur pelaporan kerentanan privat; folder `policy-packs/` wajib ditinjau pemilik | — |
+| [x] | T-509 | `SECURITY.md`, `CONTRIBUTING.md`, dan `CODEOWNERS` untuk repo OmniRail | DIST-05 | Ada jalur pelaporan kerentanan privat; folder `policy-packs/` wajib ditinjau pemilik | — |
 | [ ] | T-505 | 5 sampai 10 wawancara calon pengguna | G5 | Ringkasan tertulis menentukan prioritas setelah MVP, dan Q3, Q8, Q9 terjawab; tugas "coba pack lalu jelaskan satu temuan" diukur di tampilan uji (target bagian 9) | T-507 |
 
 ---
@@ -129,3 +130,4 @@ Tindak lanjut keterbatasan K1 s.d. K5 di PRD Lampiran A. T-302 boleh dimulai den
 | 9 Nov 2026 | Tampilan uji (PRD 7.13): endpoint `inspect` dan CLI di Tahap 3, tab Coba mode periksa saja di Tahap 5, fitur lain setelah rilis. Tampilan uji dipakai dalam wawancara Tahap 5 |
 | 9 Nov 2026 | Dataset v0.5: 2.361 baris dev dan 1.009 holdout. Ditambah bingkai teks (prompt LLM, chat, email, tabel, YAML, JSON, pesan terusan) dan gaya ketik (singkatan, voice-to-text). Jenis nomor BPJS kini dicocokkan dengan kalimatnya (Kesehatan 13 digit, Ketenagakerjaan 11 atau 16 digit), sehingga baris v0.3/v0.4 hasil template untuk entitas baru dibangkitkan ulang. Baris v0.1/v0.2 tidak berubah |
 | 9 Nov 2026 | Pola plat mewajibkan huruf akhiran, dan IP ≥ 224 dikecualikan. Keduanya ditemukan saat pemeriksaan silang dataset ("gate A1", "Vitamin B 12", subnet mask) |
+| 11 Nov 2026 | Pemeriksa dataset (T-009) dijalankan di CI: 3.370 baris, 0 error. Lima peringatan adalah nomor telepon kantor `(021) …` yang sengaja ditandai `cakupan_mvp = tidak`. Pemeriksa hanya memvalidasi bentuk label, bukan menyetel aturan, sehingga boleh membaca holdout. T-509 selesai: `SECURITY.md` (pelaporan privat lewat GitHub), `CONTRIBUTING.md`, `.github/CODEOWNERS` (termasuk `policy-packs/` dan `eval/`) |

@@ -1,5 +1,7 @@
 # OmniRail Engine
 
+[![CI](https://github.com/devaldicaliesta/OmniRail-Engine/actions/workflows/ci.yml/badge.svg)](https://github.com/devaldicaliesta/OmniRail-Engine/actions/workflows/ci.yml)
+
 Proxy open-source yang berdiri di depan LLM. OmniRail menyamarkan data pribadi, menegakkan kebijakan, dan memvalidasi output, dalam satu binary tanpa GPU.
 
 > **Status: tahap desain.** Belum ada kode. Repo ini berisi [PRD MVP](docs/PRD.md) dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
@@ -90,7 +92,8 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 
 - [PRD MVP](docs/PRD.md): acuan scope, requirements, kriteria terima, dan tahapan MVP. Bila berbeda dengan blueprint, PRD yang berlaku.
 - [Rincian task](docs/TASKS.md): task per tahap dengan kriteria selesai.
-- [Dataset uji](eval/README.md): set uji PII dan credentials berbahasa Indonesia (draf).
+- [Dataset uji](eval/README.md): set uji PII dan credentials berbahasa Indonesia (draf), diperiksa otomatis di CI oleh `eval/tools/cek_dataset.py`.
+- [Panduan kontribusi](CONTRIBUTING.md) dan [kebijakan keamanan](SECURITY.md) (laporkan kerentanan secara privat, bukan lewat issue).
 
 Blueprint v1.1 (latar belakang, pemetaan regulasi, dan arah setelah MVP) tersedia dalam tiga format:
 
