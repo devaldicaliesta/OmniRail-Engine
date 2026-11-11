@@ -4,7 +4,7 @@
 
 Proxy open-source yang berdiri di depan LLM. OmniRail menyamarkan data pribadi, menegakkan kebijakan, dan memvalidasi output, dalam satu binary tanpa GPU.
 
-> **Status: Tahap 0 selesai, keputusan lanjut.** Kerangka workspace Rust sudah ada, tetapi belum ada fungsi produk. Repo ini berisi [PRD MVP v1.7.2](docs/PRD.md), dataset uji, dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
+> **Status: Tahap 0 selesai, keputusan lanjut.** Kerangka workspace Rust sudah ada, tetapi belum ada fungsi produk. Repo ini berisi [PRD MVP v1.7.3](docs/PRD.md), dataset uji, dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
 
 ## Apa itu OmniRail
 
@@ -84,7 +84,7 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 
 ## Roadmap
 
-0. **Validasi.** Bandingkan dengan LiteLLM + Presidio pada set uji berbahasa Indonesia, lalu putuskan lanjut, pivot, atau berhenti.
+0. **Validasi.** Bandingkan dengan LiteLLM + Presidio pada set uji berbahasa Indonesia, lalu putuskan lanjut, pivot, atau berhenti. *Selesai: lanjut.* Disusul **validasi lanjutan (Tahap 0.5)**: set uji dari penulis lain, pembanding Presidio yang adil, tinjauan label, dan tiga wawancara singkat sebelum Tahap 1 dikerjakan penuh.
 1. **Inti deteksi (α).** `omnirail-core`, entitas Indonesia, credentials, pack bertes, `inspect`, `eval`, `scan`, dan baseline recall/precision.
 2. **Rilis α.** Demo web WASM, binary CLI, dan wawancara pertama memakai demo.
 3. **Kerangka proxy (β).** Endpoint format OpenAI dengan pseudo-streaming, adapter Ollama dan satu provider cloud.

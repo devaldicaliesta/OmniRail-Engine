@@ -1,9 +1,9 @@
-# OmniRail Engine — PRD MVP v1.7.2
+# OmniRail Engine — PRD MVP v1.7.3
 
 | | |
 | --- | --- |
 | **Status** | Draf, menunggu tinjauan pemilik produk |
-| **Tanggal** | 11 November 2026 (v1.7.2) |
+| **Tanggal** | 11 November 2026 (v1.7.3) |
 | **Pemilik** | devaldi caliesta |
 | **Sumber** | [Blueprint v1.1](OmniRail_Engine_Blueprint_v1.1.md) |
 | **Lingkup** | MVP sampai rilis publik pertama, dalam dua rilis: α (periksa, tanpa proxy) dan β (proxy). Tahap 0 s.d. 5 |
@@ -734,6 +734,7 @@ Belum ada tanggal. Kecepatan kerja ditetapkan setelah Tahap 1. Satu-satunya tang
 | Tahap | Isi | Selesai bila |
 | --- | --- | --- |
 | **0. Validasi** (maks. 2 minggu) | Susun `uji_pii_id.csv` (dev + holdout). Jalankan terhadap LiteLLM + Presidio dengan recognizer Indonesia sederhana. Konfirmasi fitur pemulihan token LiteLLM | Catatan keputusan tertulis: **lanjut** (celah recall/precision atau ergonomi cukup besar), **pivot** ke plugin untuk LiteLLM atau Presidio (blueprint lapis 3), atau **berhenti** |
+| **0.5. Validasi lanjutan** (1 s.d. 2 minggu) | Set uji independen dari penulis lain, pembanding Presidio dengan validator setara, tinjauan label (T-007), dan tiga wawancara singkat | Catatan keputusan T-020: lanjut penuh, lanjut dengan positioning paket keamanan, atau pivot ke paket recognizer; aturan keputusannya di `TASKS.md`. T-301 dan T-302 boleh berjalan paralel |
 | **1. Inti deteksi** (rilis α) | `omnirail-core` tanpa I/O dan bisa dikompilasi ke WASM: normalisasi, validator, PII-01 s.d. 07, PII-10, CRED-01 s.d. 03, POL-01 dan POL-02, CFG-03 s.d. 05, pack `id-general`, EVAL-01 s.d. 04, EVAL-06 (`inspect`), EVAL-07 dan EVAL-08 (`scan`), EVAL-09 s.d. 12, POL-06, PII-05 | Baseline per entitas tercatat; ambang CI ditetapkan; target bagian 9 direvisi tertulis |
 | **2. Rilis α** | DIST-06 (demo WASM, dengan PG-03, PG-06, PG-07), binary CLI (bagian dari DIST-01) dengan DIST-08, README "coba sekarang", wawancara pertama memakai demo | Rilis α bertag; demo publik bisa dibuka; ≥ 3 wawancara tercatat |
 | **3. Kerangka proxy** (rilis β) | API-01, API-02, API-04, API-07, API-08, UP-01 (Ollama + satu provider cloud), UP-02 s.d. UP-07, CFG-01/02/06/07, kontrak error | SDK OpenAI (dengan dan tanpa `stream=True`) mendapat jawaban lewat proxy dari Ollama dan provider cloud yang dipilih; konfigurasi salah menghentikan start dengan pesan yang jelas |
@@ -789,6 +790,7 @@ Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: audit log tahan ub
 | 1.7 | 11 November 2026 | Landasan metode dan rujukan ([LANDASAN_METODE.md](LANDASAN_METODE.md)). Baru: EVAL-09 s.d. 13 (interval Wilson dan McNemar, uji perilaku, *property-based testing*, uji silang, catatan holdout), POL-06 (regex tanpa backtracking), POL-07 (P1, UTS #39), AUD-06 (P1, audit log tahan ubah), DIST-08 (rilis bertanda tangan, SBOM, audit dependensi). Diperjelas: PII-05 (`zeroize`), AUD-02 (RFC 8785), EVAL-05 (*coordinated omission*), cara membaca target di bagian 9, istilah pseudonimisasi di bagian 10 |
 | 1.7.1 | 11 November 2026 | Rujukan di [Landasan metode](LANDASAN_METODE.md) dibatasi pada terbitan lima tahun terakhir (akhir 2021 s.d. 2026); ISO/IEC 20889 diganti ISO/IEC 27559:2022; RFC 8785 dipertahankan sebagai spesifikasi teknis tanpa pengganti |
 | 1.7.2 | 11 November 2026 | Dari prototipe referensi (T-011): PII-07 menetapkan bahwa kata konteks sebelum nilai menang bila jaraknya sama, dan kata konteks cocok dengan akhiran `-nya`/`-ku`/`-mu`; `phone_id` mendapat kata konteks tidak wajib untuk menentukan jenis |
+| 1.7.3 | 11 November 2026 | Tahap 0.5 (validasi lanjutan) ditambahkan di bagian 11, sebelum Tahap 1 dikerjakan penuh |
 
 ## Lampiran A. Hasil verifikasi format (9 November 2026)
 

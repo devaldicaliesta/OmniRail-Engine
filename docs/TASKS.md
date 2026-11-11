@@ -1,6 +1,6 @@
 # OmniRail Engine — Rincian task MVP
 
-Turunan dari [PRD MVP v1.7.2](PRD.md). Dasar metode tiap task ada di [Landasan metode](LANDASAN_METODE.md). Satu task berarti satu PR dengan kriteria selesai yang bisa diperiksa. Kode requirement (misalnya `PII-04`) merujuk ke PRD bagian 7.
+Turunan dari [PRD MVP v1.7.3](PRD.md). Dasar metode tiap task ada di [Landasan metode](LANDASAN_METODE.md). Satu task berarti satu PR dengan kriteria selesai yang bisa diperiksa. Kode requirement (misalnya `PII-04`) merujuk ke PRD bagian 7.
 
 **Cara memakai:** kerjakan berurutan per tahap, centang task yang selesai (`[-]` berarti ditutup tanpa dikerjakan penuh, dengan alasan di catatan keputusan), dan tulis keputusan baru di bagian "Catatan keputusan" di bawah. Task di satu tahap boleh dikerjakan paralel bila kolom "Butuh" sudah terpenuhi.
 
@@ -9,6 +9,7 @@ Turunan dari [PRD MVP v1.7.2](PRD.md). Dasar metode tiap task ada di [Landasan m
 | Rilis | Tahap | Isi singkat |
 | --- | --- | --- |
 | — | 0 | Validasi dan keputusan lanjut, pivot, atau berhenti |
+| — | 0.5 | Validasi lanjutan: set uji independen, pembanding yang adil, wawancara |
 | α (periksa) | 1, 2 | `omnirail-core`, CLI `inspect`/`eval`/`scan`, demo web WASM, wawancara pertama |
 | β (proxy, rilis publik pertama) | 3, 4, 5 | Proxy dengan pseudo-streaming, Ollama + satu provider cloud, mode shadow, audit log, laporan paparan |
 
@@ -33,6 +34,33 @@ Turunan dari [PRD MVP v1.7.2](PRD.md). Dasar metode tiap task ada di [Landasan m
 | [x] | T-006 | Keputusan Tahap 0 | Tahap 0 | Catatan keputusan berisi angka T-004, T-005, dan T-011 dibandingkan dengan kriteria T-003 | T-004, T-005, T-011 |
 
 Bila keputusannya **pivot**, Tahap 3 dan 4 (proxy) diganti dengan plugin untuk LiteLLM atau Presidio, sedangkan Tahap 1 dan 2 (inti deteksi, pack, eval, `scan`, dan demo) tetap dipakai.
+
+## Tahap 0.5 — Validasi lanjutan (1 s.d. 2 minggu)
+
+Tahap 0 memutuskan **lanjut**, tetapi menyisakan dua titik lemah (`eval/results/README.md`): angka deteksi prototipe berasal dari dataset dan aturan yang ditulis dari spesifikasi yang sama, dan permintaan pasar belum diuji. Tahap ini menguji keduanya dengan biaya kecil, sebelum Tahap 1 dikerjakan penuh.
+
+Kolom "Pelaksana" menunjukkan siapa yang bisa mengerjakan task: **asisten** (bisa dikerjakan tanpa orang lain) atau **manusia** (butuh orang selain penyusun dataset).
+
+| | ID | Task | Pelaksana | Selesai bila | Butuh |
+| --- | --- | --- | --- | --- | --- |
+| [ ] | T-014 | Pembanding Presidio yang adil: recognizer Presidio dengan validator setara prototipe (struktur NIK, KK, NIP; Luhn dan prefix kartu; kata konteks wajib; aturan prioritas PII-07), dijalankan di split dev dan dibandingkan dengan prototipe | Asisten | Hasil di `eval/results/` dengan interval Wilson dan uji McNemar; selisih yang tersisa antara prototipe dan Presidio adil dijelaskan per penyebab | — |
+| [ ] | T-015 | Panduan dan format set uji independen: instruksi untuk penulis yang belum membaca PRD 7.10, templat CSV, bank nilai rekaan yang lolos validator (agar penulis fokus pada gaya teks, bukan membuat nomor), dan alur pelabelan | Asisten | `eval/independen/README.md` dan templat siap dipakai; pemeriksa dataset menerima format ini | — |
+| [ ] | T-016 | Tulis set uji independen ± 100 baris bergaya pesan CS, email, dan prompt LLM sehari-hari: ≥ 50 baris memuat data pribadi atau credentials, ≥ 30 baris yang menurut penulis "mirip tetapi bukan" data pribadi | Manusia | Berkas lolos pemeriksa format; label diperiksa bersama pemilik dataset. Set ini diperlakukan seperti holdout: tidak dipakai menyetel aturan | T-015 |
+| [ ] | T-017 | Jalankan prototipe dan Presidio adil pada set uji independen, **sekali** | Asisten | Metrik per entitas dan gabungan dengan interval Wilson, uji McNemar, dan daftar kasus gagal tercatat di `eval/results/`; penurunan dibanding dev dijelaskan | T-014, T-016 |
+| [ ] | T-018 | Panduan wawancara singkat (30 menit): skrip berbasis blueprint bagian 15, pertanyaan Q3, Q8, Q9, SDK dan provider yang dipakai, kebutuhan blokir credentials, mode shadow, dan laporan paparan, serta demo memakai notebook Colab | Asisten | `docs/WAWANCARA.md` berisi skrip, daftar pertanyaan, dan templat ringkasan | — |
+| [ ] | T-019 | Tiga wawancara singkat dengan calon pengguna (tim yang memakai LLM API dengan data pelanggan, utamakan fintech atau e-commerce) | Manusia | Tiga ringkasan tertulis memakai templat T-018, tanpa data pribadi narasumber | T-018 |
+| [ ] | T-020 | Keputusan Tahap 0.5 | Manusia (pemilik produk) | Catatan keputusan membandingkan hasil T-007, T-017, dan T-019 dengan aturan keputusan di bawah | T-007, T-017, T-019 |
+
+**Aturan keputusan T-020:**
+
+| Hasil | Langkah |
+| --- | --- |
+| Pada set uji independen, prototipe masih unggul ≥ 10 poin precision atas Presidio adil (bermakna menurut McNemar), **dan** minimal dua dari tiga narasumber membutuhkan blokir credentials, mode shadow, atau laporan paparan | Lanjut penuh ke rilis α dan β sesuai rencana |
+| Keunggulan deteksi < 10 poin, tetapi kebutuhan blokir credentials atau audit jelas | Lanjut, dengan positioning pada paket keamanan (credentials, tokenisasi yang benar, shadow, audit, overhead), bukan pada angka deteksi |
+| Keunggulan deteksi < 10 poin, **dan** narasumber hanya butuh deteksi di gateway yang sudah mereka pakai | Pivot: Tahap 3 dan 4 (proxy) diganti paket recognizer untuk Presidio atau LiteLLM; Tahap 1 dan 2 tetap |
+| Recall prototipe di set independen turun lebih dari 15 poin dibanding dev | Perbaiki aturan dan dataset lebih dulu (dengan contoh baru di dev, bukan dari set independen), lalu ulangi T-017 dengan set independen baru |
+
+**Paralel dan aman dikerjakan sekarang:** T-301 (normalisasi) dan T-302 (validator) di Tahap 1 tetap terpakai di jalur lanjut maupun pivot, jadi boleh dikerjakan selama Tahap 0.5 berjalan. Task Tahap 1 lainnya menunggu T-020.
 
 ## Verifikasi format (sebelum atau paralel dengan T-302)
 
@@ -181,3 +209,4 @@ Tindak lanjut keterbatasan K1 s.d. K5 di PRD Lampiran A. T-302 boleh dimulai den
 | 11 Nov 2026 | **T-007: perangkat dan pra-tinjauan siap, menunggu penilai manusia.** Sampel 120 baris dev dan formulir buta ada di `eval/tinjauan/`, dengan penghitung kesepakatan dan kappa di `eval/tools/tinjau_label.py`. Pra-tinjauan oleh asisten AI memberi κ = 0,989; satu-satunya perbedaan (D1234) adalah soal konvensi, bukan label keliru. Konvensi itu kini dipertegas di panduan penilai. Pra-tinjauan ini **tidak** memenuhi T-007, karena penilainya memakai spesifikasi yang sama dengan penyusun dataset |
 | 11 Nov 2026 | **T-008 ditutup tanpa dikerjakan penuh.** Pembangkit asli v0.1 s.d. v0.5 tidak tersedia. Membangkitkan ulang dataset akan mengubah isinya dan membatalkan hasil T-004 dan T-005. Sebagai gantinya, baris v0.6 sudah punya pembangkit yang dicek di test, dan setiap tambahan baris ke depan wajib disertai pembangkitnya (`eval/README.md`, bagian "Menambah baris") |
 | 11 Nov 2026 | **Tahap 0 selesai, kecuali T-007** yang hanya bisa diselesaikan oleh orang kedua. T-007 tidak menghalangi Tahap 1, tetapi wajib selesai sebelum baseline dan ambang CI ditetapkan (T-314) dan sebelum benchmark diterbitkan (T-511) |
+| 11 Nov 2026 | **Tahap 0.5 ditambahkan** atas persetujuan pemilik produk: validasi lanjutan 1 s.d. 2 minggu (T-014 s.d. T-020) sebelum Tahap 1 dikerjakan penuh. Alasannya, angka deteksi prototipe belum diuji pada teks dari penulis lain maupun terhadap Presidio dengan validator setara, dan permintaan pasar baru didukung satu wawancara. T-301 dan T-302 boleh berjalan paralel karena terpakai di semua jalur |
