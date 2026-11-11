@@ -9,6 +9,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
+import shutil
 import statistics
 import subprocess
 import sys
@@ -139,7 +140,9 @@ model_list:
                PRESIDIO_ANONYMIZER_API_BASE=f"http://127.0.0.1:{PORT_PRESIDIO}",
                NO_PROXY="127.0.0.1,localhost", no_proxy="127.0.0.1,localhost")
     log = open(folder / "litellm.log", "w")
-    proses = subprocess.Popen([str(Path(sys.executable).parent / "litellm"), "--config", str(konfig),
+    perintah = Path(sys.executable).parent / "litellm"
+    perintah = str(perintah) if perintah.exists() else shutil.which("litellm")
+    proses = subprocess.Popen([perintah, "--config", str(konfig),
                                "--port", str(PORT_LITELLM), "--num_workers", "1"],
                               env=env, stdout=log, stderr=subprocess.STDOUT)
     for _ in range(120):
