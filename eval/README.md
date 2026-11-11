@@ -103,7 +103,7 @@ Baris yang ditambahkan di v0.6 (D2362–D2506, H1010–H1072) dibangkitkan oleh 
 ## Menambah baris
 
 1. Tambahkan baris di `dev`, kecuali Anda sedang menyusun holdout baru sebelum rilis.
-2. Pakai data rekaan. Untuk NIK dan nomor kartu, pastikan lolos validator (PRD bagian 7.10), kecuali baris itu memang contoh negatif.
+2. Pakai data rekaan. Untuk NIK dan nomor kartu, pastikan lolos validator (PRD bagian 7.10), kecuali baris itu memang contoh negatif. Baris hasil templat dibangkitkan oleh skrip di `eval/tools/` yang ikut di-commit, dan test memastikan hasilnya identik dengan isi berkas (contoh: `bangkitkan_v06.py`).
 3. Isi `catatan` dengan apa yang diuji.
 4. Perbarui tabel jumlah di atas bila berubah, lalu jalankan `python3 eval/tools/cek_dataset.py`.
 5. Jangan memindahkan baris dari holdout ke dev setelah holdout pernah dijalankan.

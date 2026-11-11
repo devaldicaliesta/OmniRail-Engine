@@ -1,0 +1,39 @@
+{
+ "berkas": "eval/tinjauan/t007-formulir-pra-ai.csv",
+ "n": 120,
+ "kesepakatan": 0.9917,
+ "kappa": 0.989,
+ "ketidaksepakatan": {
+  "k": 1,
+  "nilai": 0.0083,
+  "ci95": [
+   0.0015,
+   0.0457
+  ]
+ },
+ "per_label": {
+  "passport_id": 1
+ },
+ "beda_label": [
+  {
+   "id": "D1234",
+   "label_dataset": "passport_id",
+   "label_penilai": "-",
+   "komentar": "A560109 berbentuk paspor tanpa konteks; ada nama"
+  }
+ ],
+ "beda_cakupan": [
+  {
+   "id": "D691",
+   "dataset": "tidak",
+   "penilai": "ya",
+   "komentar": ""
+  },
+  {
+   "id": "D1234",
+   "dataset": "tidak",
+   "penilai": "ya",
+   "komentar": "A560109 berbentuk paspor tanpa konteks; ada nama"
+  }
+ ]
+}

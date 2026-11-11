@@ -25,7 +25,7 @@ Disusun mengikuti kerangka *Datasheets for Datasets* (Gebru dkk., Communications
 
 ## Pelabelan
 
-- **Penilai.** Satu orang (penyusun). Belum ada tinjauan penilai kedua; ini adalah keterbatasan terbesar dataset (T-007).
+- **Penilai.** Satu orang (penyusun). Belum ada tinjauan penilai kedua; ini adalah keterbatasan terbesar dataset (T-007). Formulir buta 120 baris dan penghitung kappa sudah siap di `eval/tinjauan/`. Pra-tinjauan oleh asisten AI memberi κ = 0,989, tetapi tidak independen karena memakai spesifikasi yang sama.
 - **Rencana tinjauan.** Sampel ± 120 baris dev dinilai ulang oleh orang kedua. Kesepakatan dihitung dengan kappa Cohen (`eval/tools/statistik.py`); target κ ≥ 0,8. Bila tingkat kesalahan sampel > 5%, entitas yang bermasalah ditinjau ulang seluruhnya.
 - **Pemeriksaan otomatis.** `eval/tools/cek_dataset.py` memastikan setiap nilai muncul di teks, lolos validator struktur, dan tidak bocor dari dev ke holdout. Pemeriksa ini memvalidasi bentuk label, bukan kebenaran maknanya.
 
