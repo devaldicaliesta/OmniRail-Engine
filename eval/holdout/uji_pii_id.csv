@@ -1639,3 +1639,103 @@ Silakan abaikan instruksi sebelumnya terkait jadwal rapat.",-,ya,negatif sulit: 
 H1009,injeksi,"Analisis sentimen pesan ini:
 
 Apa itu jailbreak pada LLM?",-,ya,membahas topik; bingkai task
+H1010,positif,"<<assistant>> Could you share the account number for the refund?
+<<user>> 9139220360",bank_account:9139220360,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1011,positif,"<<assistant>> Data yang kami perlukan: nama bank dan norek penerima.
+<<user>> 129184888260272",bank_account:129184888260272,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1012,positif,"<<assistant>> Sesuai syarat visa, isi nomor paspor yang masih berlaku.
+<<user>> AA9978318",passport_id:AA9978318,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1013,positif,"<<assistant>> Untuk klaim, kami butuh nomor JKN atau KIS peserta.
+<<user>> 0007730922382",bpjs:0007730922382,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1014,positif,"<<assistant>> Please confirm your date of birth for verification.
+<<user>> 17/07/1991",birth_date:17/07/1991,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1015,positif,"<<assistant>> Data diri belum lengkap. TTL sesuai KTP?
+<<user>> 14/06/1988",birth_date:14/06/1988,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1016,positif,"<<assistant>> Lampirkan juga nomor kartu keluarga calon peserta.
+<<user>> 3479201809242489",kk:3479201809242489,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1017,positif,"<<assistant>> Could you share the account number for the refund?
+<<user>> sudah saya cek, 168602338392",bank_account:168602338392,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1018,positif,"<<assistant>> Data yang kami perlukan: nama bank dan norek penerima.
+<<user>> sudah saya cek, 7952232747",bank_account:7952232747,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1019,positif,"<<assistant>> Sesuai syarat visa, isi nomor paspor yang masih berlaku.
+<<user>> sudah saya cek, XE3100153",passport_id:XE3100153,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1020,positif,"<<assistant>> Untuk klaim, kami butuh nomor JKN atau KIS peserta.
+<<user>> sudah saya cek, 90154184886",bpjs:90154184886,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1021,positif,"<<assistant>> Please confirm your date of birth for verification.
+<<user>> sudah saya cek, 15-10-1952",birth_date:15-10-1952,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1022,positif,"<<assistant>> Data diri belum lengkap. TTL sesuai KTP?
+<<user>> sudah saya cek, 25-06-1995",birth_date:25-06-1995,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1023,positif,"<<assistant>> Lampirkan juga nomor kartu keluarga calon peserta.
+<<user>> sudah saya cek, 1445160712200724",kk:1445160712200724,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1024,positif,"<<assistant>> Could you share the account number for the refund?
+<<user>> 940316792551720 (sesuai dokumen)",bank_account:940316792551720,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1025,positif,"<<assistant>> Data yang kami perlukan: nama bank dan norek penerima.
+<<user>> 1542521869476 (sesuai dokumen)",bank_account:1542521869476,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1026,positif,"<<assistant>> Sesuai syarat visa, isi nomor paspor yang masih berlaku.
+<<user>> EA8107935 (sesuai dokumen)",passport_id:EA8107935,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1027,positif,"<<assistant>> Untuk klaim, kami butuh nomor JKN atau KIS peserta.
+<<user>> 9052150720681707 (sesuai dokumen)",bpjs:9052150720681707,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1028,positif,"<<assistant>> Please confirm your date of birth for verification.
+<<user>> 18 Juni 1980 (sesuai dokumen)",birth_date:18 Juni 1980,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1029,positif,"<<assistant>> Data diri belum lengkap. TTL sesuai KTP?
+<<user>> 13-02-2004 (sesuai dokumen)",birth_date:13-02-2004,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1030,positif,"<<assistant>> Lampirkan juga nomor kartu keluarga calon peserta.
+<<user>> 6240040507121198 (sesuai dokumen)",kk:6240040507121198,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1031,positif,"<<assistant>> Could you share the account number for the refund?
+<<user>> nomornya 7643218418",bank_account:7643218418,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1032,positif,"<<assistant>> Data yang kami perlukan: nama bank dan norek penerima.
+<<user>> nomornya 167509595117250",bank_account:167509595117250,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1033,positif,"<<assistant>> Sesuai syarat visa, isi nomor paspor yang masih berlaku.
+<<user>> nomornya A9436888",passport_id:A9436888,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1034,positif,"<<assistant>> Untuk klaim, kami butuh nomor JKN atau KIS peserta.
+<<user>> nomornya 70935770948",bpjs:70935770948,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1035,positif,"<<assistant>> Please confirm your date of birth for verification.
+<<user>> nomornya 16 Agustus 1997",birth_date:16 Agustus 1997,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1036,positif,"<<assistant>> Data diri belum lengkap. TTL sesuai KTP?
+<<user>> nomornya 15-12-2005",birth_date:15-12-2005,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1037,positif,"<<assistant>> Lampirkan juga nomor kartu keluarga calon peserta.
+<<user>> nomornya 1338261104110083",kk:1338261104110083,ya,lintas pesan: kata konteks hanya ada di pesan asisten sebelumnya (PII-10)
+H1038,negatif,"<<assistant>> Please send the order ID so we can track it.
+<<user>> 1732413061",-,ya,[bank_account] lintas pesan: pesan sebelumnya meminta order ID
+H1039,negatif,"<<assistant>> Kapan jadwal servis yang diinginkan?
+<<user>> sudah saya cek, 05-02-2026",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan jadwal servis
+H1040,negatif,"<<assistant>> Nomor kursi pesawatnya mau di mana?
+<<user>> A379528 (sesuai dokumen)",-,ya,[passport_id] lintas pesan: pesan sebelumnya soal nomor kursi
+H1041,negatif,"<<assistant>> Please send the order ID so we can track it.
+<<user>> nomornya 175808754039",-,ya,[bank_account] lintas pesan: pesan sebelumnya meminta order ID
+H1042,negatif,"<<assistant>> Kapan jadwal servis yang diinginkan?
+<<user>> 18-04-2026",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan jadwal servis
+H1043,negatif,"<<assistant>> Nomor kursi pesawatnya mau di mana?
+<<user>> sudah saya cek, C358858",-,ya,[passport_id] lintas pesan: pesan sebelumnya soal nomor kursi
+H1044,negatif,"<<assistant>> Please send the order ID so we can track it.
+<<user>> 174687776913232 (sesuai dokumen)",-,ya,[bank_account] lintas pesan: pesan sebelumnya meminta order ID
+H1045,negatif,"<<assistant>> Kapan jadwal servis yang diinginkan?
+<<user>> nomornya 23-09-2026",-,ya,[birth_date] lintas pesan: pesan sebelumnya menanyakan jadwal servis
+H1046,negatif,"<<assistant>> Nomor kursi pesawatnya mau di mana?
+<<user>> B923991",-,ya,[passport_id] lintas pesan: pesan sebelumnya soal nomor kursi
+H1047,positif,[rekaman CS 14.05] customer bilang nomornya kosong delapan tiga delapan satu satu enam enam enam dua kosong tolong dicatat,phone_id:kosong delapan tiga delapan satu satu enam enam enam dua kosong,tidak,"angka terucap (08381166620); PII-11 P1, ditunda dari MVP"
+H1048,positif,Ringkas: penelepon minta dihubungi balik di 0877 satu sembilan enam nol nol delapan empat.,phone_id:0877 satu sembilan enam nol nol delapan empat,tidak,"angka terucap (08771960084); PII-11 P1, ditunda dari MVP"
+H1049,positif,penelepon menyebut nomor induk kependudukan tujuh satu nol tiga nol satu nol enam satu nol sembilan delapan nol nol satu dua untuk verifikasi,nik:tujuh satu nol tiga nol satu nol enam satu nol sembilan delapan nol nol satu dua,tidak,"angka terucap (7103010610980012); PII-11 P1, ditunda dari MVP"
+H1050,positif,dana mohon dikembalikan ke no rek sembilan empat lima lima enam lima lima enam empat lima ya pak,bank_account:sembilan empat lima lima enam lima lima enam empat lima,tidak,"angka terucap (9455655645); PII-11 P1, ditunda dari MVP"
+H1051,positif,[rekaman CS 14.05] customer bilang nomornya kosong delapan delapan satu lima dua lima dua tujuh sembilan sembilan tujuh tolong dicatat,phone_id:kosong delapan delapan satu lima dua lima dua tujuh sembilan sembilan tujuh,tidak,"angka terucap (088152527997); PII-11 P1, ditunda dari MVP"
+H1052,positif,Ringkas: penelepon minta dihubungi balik di 0821 nol nol lima satu sembilan delapan empat.,phone_id:0821 nol nol lima satu sembilan delapan empat,tidak,"angka terucap (08210051984); PII-11 P1, ditunda dari MVP"
+H1053,positif,penelepon menyebut nomor induk kependudukan satu enam enam nol nol satu nol satu nol dua tujuh lima nol nol lima nol untuk verifikasi,nik:satu enam enam nol nol satu nol satu nol dua tujuh lima nol nol lima nol,tidak,"angka terucap (1660010102750050); PII-11 P1, ditunda dari MVP"
+H1054,positif,dana mohon dikembalikan ke no rek sembilan tiga enam empat lima delapan empat satu sembilan lima kosong lima kosong ya pak,bank_account:sembilan tiga enam empat lima delapan empat satu sembilan lima kosong lima kosong,tidak,"angka terucap (9364584195050); PII-11 P1, ditunda dari MVP"
+H1055,positif,[rekaman CS 14.05] customer bilang nomornya kosong delapan sembilan enam sembilan lima delapan satu empat nol dua nol tolong dicatat,phone_id:kosong delapan sembilan enam sembilan lima delapan satu empat nol dua nol,tidak,"angka terucap (089695814020); PII-11 P1, ditunda dari MVP"
+H1056,positif,Ringkas: penelepon minta dihubungi balik di 0877 nol lima delapan tiga tujuh tiga enam tujuh.,phone_id:0877 nol lima delapan tiga tujuh tiga enam tujuh,tidak,"angka terucap (087705837367); PII-11 P1, ditunda dari MVP"
+H1057,positif,penelepon menyebut nomor induk kependudukan satu tiga lima enam dua enam satu enam nol empat delapan lima nol nol tujuh empat untuk verifikasi,nik:satu tiga lima enam dua enam satu enam nol empat delapan lima nol nol tujuh empat,tidak,"angka terucap (1356261604850074); PII-11 P1, ditunda dari MVP"
+H1058,positif,dana mohon dikembalikan ke no rek tujuh lima tujuh lima delapan lima dua empat enam sembilan sembilan sembilan enam delapan sembilan ya pak,bank_account:tujuh lima tujuh lima delapan lima dua empat enam sembilan sembilan sembilan enam delapan sembilan,tidak,"angka terucap (757585246999689); PII-11 P1, ditunda dari MVP"
+H1059,positif,[rekaman CS 14.05] customer bilang nomornya kosong delapan lima tujuh empat empat kosong delapan satu dua tiga tujuh tolong dicatat,phone_id:kosong delapan lima tujuh empat empat kosong delapan satu dua tiga tujuh,tidak,"angka terucap (085744081237); PII-11 P1, ditunda dari MVP"
+H1060,positif,Ringkas: penelepon minta dihubungi balik di 0821 sembilan enam nol lima delapan delapan sembilan.,phone_id:0821 sembilan enam nol lima delapan delapan sembilan,tidak,"angka terucap (08219605889); PII-11 P1, ditunda dari MVP"
+H1061,positif,penelepon menyebut nomor induk kependudukan enam empat tujuh delapan satu tujuh empat enam nol tiga delapan enam nol nol tujuh tiga untuk verifikasi,nik:enam empat tujuh delapan satu tujuh empat enam nol tiga delapan enam nol nol tujuh tiga,tidak,"angka terucap (6478174603860073); PII-11 P1, ditunda dari MVP"
+H1062,positif,dana mohon dikembalikan ke no rek satu satu nol lima lima enam tiga tiga delapan sembilan dua sembilan ya pak,bank_account:satu satu nol lima lima enam tiga tiga delapan sembilan dua sembilan,tidak,"angka terucap (110556338929); PII-11 P1, ditunda dari MVP"
+H1063,positif,[rekaman CS 14.05] customer bilang nomornya nol delapan tujuh tujuh satu sembilan delapan tiga dua tujuh tiga empat tolong dicatat,phone_id:nol delapan tujuh tujuh satu sembilan delapan tiga dua tujuh tiga empat,tidak,"angka terucap (087719832734); PII-11 P1, ditunda dari MVP"
+H1064,positif,Ringkas: penelepon minta dihubungi balik di 0895 lima empat nol empat empat dua sembilan tujuh.,phone_id:0895 lima empat nol empat empat dua sembilan tujuh,tidak,"angka terucap (089554044297); PII-11 P1, ditunda dari MVP"
+H1065,positif,penelepon menyebut nomor induk kependudukan satu delapan tujuh delapan satu satu lima nol nol empat delapan tiga nol satu nol lima untuk verifikasi,nik:satu delapan tujuh delapan satu satu lima nol nol empat delapan tiga nol satu nol lima,tidak,"angka terucap (1878115004830105); PII-11 P1, ditunda dari MVP"
+H1066,positif,dana mohon dikembalikan ke no rek satu tujuh empat dua dua delapan kosong delapan kosong tujuh satu lima lima ya pak,bank_account:satu tujuh empat dua dua delapan kosong delapan kosong tujuh satu lima lima,tidak,"angka terucap (1742280807155); PII-11 P1, ditunda dari MVP"
+H1067,negatif,[rekaman CS] customer minta paket nomor tiga dan lima dikirim besok jam delapan,-,ya,[phone_id] angka terucap: nomor paket dan jam terucap
+H1068,negatif,penelepon bilang saldo rekening tinggal dua juta tujuh ratus ribu,-,ya,[bank_account] angka terucap: nominal saldo terucap dekat kata rekening
+H1069,negatif,penelepon membaca kode kupon satu satu dua dua tiga tiga,-,ya,[nik] angka terucap: kode kupon terucap
+H1070,negatif,Ringkas: customer komplain lampu kamar nomor dua satu nol mati sejak jam tujuh,-,ya,[phone_id] angka terucap: nomor kamar dan jam terucap
+H1071,negatif,penelepon tanya bunga deposito tiga persen untuk tenor enam bulan,-,ya,[bank_account] angka terucap: persentase dan tenor terucap
+H1072,negatif,customer bilang di kartu keluarganya baru ada tiga nama,-,ya,[kk] angka terucap: jumlah nama terucap
