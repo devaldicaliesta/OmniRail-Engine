@@ -1,0 +1,17 @@
+# Pemilik kode OmniRail Engine (PRD DIST-05).
+# Perubahan pada jalur di bawah ini wajib ditinjau pemilik sebelum digabung.
+# Aktifkan "Require review from Code Owners" di aturan proteksi branch `main`.
+
+*                       @devaldicaliesta
+
+# Kebijakan dan pola deteksi: perubahan di sini mengubah perilaku keamanan.
+/policy-packs/          @devaldicaliesta
+
+# Dataset uji: holdout tidak boleh diubah setelah pernah dijalankan.
+/eval/                  @devaldicaliesta
+/eval/holdout/          @devaldicaliesta
+
+# Dokumen acuan dan tata kelola
+/docs/PRD.md            @devaldicaliesta
+/SECURITY.md            @devaldicaliesta
+/.github/               @devaldicaliesta

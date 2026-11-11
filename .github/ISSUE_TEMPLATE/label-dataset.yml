@@ -1,0 +1,28 @@
+name: Label dataset keliru
+description: Laporkan baris di eval/*/uji_pii_id.csv yang labelnya salah atau meragukan.
+title: "eval: label keliru di "
+labels: ["dataset"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Dataset hanya berisi **data rekaan**. Jangan menempelkan data pribadi asli di issue ini.
+  - type: input
+    id: id_baris
+    attributes:
+      label: ID baris
+      description: Contoh D050 atau H101. Beberapa ID boleh dipisah koma.
+    validations:
+      required: true
+  - type: textarea
+    id: masalah
+    attributes:
+      label: Apa yang keliru
+      description: Kolom mana (kategori, diharapkan, cakupan_mvp, catatan) dan seharusnya bagaimana.
+    validations:
+      required: true
+  - type: textarea
+    id: alasan
+    attributes:
+      label: Alasan atau sumber
+      description: Misalnya aturan di PRD 7.10, eval/README.md, atau sumber resmi format entitas.

@@ -1,0 +1,36 @@
+name: Deteksi meleset (false negative / false positive)
+description: Pola PII atau credentials yang seharusnya terdeteksi tetapi lolos, atau sebaliknya.
+title: "deteksi: "
+labels: ["deteksi"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Pakai **data rekaan** saja. Celah yang membuat data pribadi bocor ke provider dilaporkan
+        secara privat lewat SECURITY.md, bukan di sini.
+  - type: dropdown
+    id: jenis
+    attributes:
+      label: Jenis
+      options: ["False negative (lolos)", "False positive (salah tangkap)"]
+    validations:
+      required: true
+  - type: input
+    id: entitas
+    attributes:
+      label: Entitas atau detektor
+      description: Contoh nik, phone_id, api_key.
+    validations:
+      required: true
+  - type: textarea
+    id: contoh
+    attributes:
+      label: Contoh teks (data rekaan)
+      render: text
+    validations:
+      required: true
+  - type: textarea
+    id: harapan
+    attributes:
+      label: Hasil yang diharapkan
+      description: Bila bisa, tulis dalam format kolom `diharapkan` di eval/README.md.
