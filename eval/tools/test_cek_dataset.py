@@ -1,5 +1,3 @@
-"""Test unit untuk `cek_dataset.py`. Jalankan: python3 -m unittest discover eval/tools"""
-
 import unittest
 
 import cek_dataset as c
@@ -17,7 +15,6 @@ class TestValidator(unittest.TestCase):
                 self.assertIsNotNone(fungsi(v))
 
     def test_luhn_dan_prefix_kartu(self):
-        # D050/D051: nilai yang lolos struktur NIK sekaligus Luhn Mastercard.
         self.lolos(c.cek_credit_card, "5171041203944539", "4207492652071376",
                    "373525425663999", "2221-7821-3003-1109", "5464 3489 2897 6704")
         self.gagal(c.cek_credit_card, "5171041203944538", "1234567890123452", "4207-4926-52O7-1376")
@@ -26,11 +23,11 @@ class TestValidator(unittest.TestCase):
         self.lolos(c.cek_nik, "5171041203944539", "3374054901950002", "3273011503900001")
         self.gagal(
             c.cek_nik,
-            "3273013203900001",  # tanggal 32
-            "3273011513900001",  # bulan 13
-            "3273011503900000",  # nomor urut 0000
-            "2073011503900001",  # kode provinsi 20
-            "327301150390001",   # 15 digit
+            "3273013203900001",
+            "3273011513900001",
+            "3273011503900000",
+            "2073011503900001",
+            "327301150390001",
         )
 
     def test_kk_tidak_menerima_tanggal_perempuan(self):
@@ -41,10 +38,10 @@ class TestValidator(unittest.TestCase):
         self.lolos(c.cek_nip, "19580818 198404 1 001", "199002192019211001")
         self.gagal(
             c.cek_nip,
-            "19580818 197004 1 001",  # diangkat sebelum umur 18
-            "19580818 198413 1 001",  # bulan TMT 13
-            "19580818 198404 3 001",  # jenis kelamin 3
-            "19580818 198404 1 000",  # nomor urut 000
+            "19580818 197004 1 001",
+            "19580818 198413 1 001",
+            "19580818 198404 3 001",
+            "19580818 198404 1 000",
         )
 
     def test_phone_id(self):

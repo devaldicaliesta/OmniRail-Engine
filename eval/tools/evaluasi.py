@@ -1,17 +1,8 @@
 #!/usr/bin/env python3
-"""Evaluasi detektor PII pada dataset dev (T-004, T-011; PRD EVAL-02, EVAL-09).
+"""Evaluasi detektor PII pada split dev.
 
-Menghitung recall, precision, dan false positive per entitas P0 sesuai aturan
-`eval/README.md`, dengan interval Wilson 95%, lalu menyimpan hasil JSON
-bernomor versi dan ringkasan Markdown di `eval/results/`. Holdout tidak
-pernah dibaca oleh skrip ini.
-
-    python3 eval/tools/evaluasi.py jalan prototipe
-    python3 eval/tools/evaluasi.py jalan presidio          # butuh presidio-analyzer
+    python3 eval/tools/evaluasi.py jalan prototipe|presidio
     python3 eval/tools/evaluasi.py banding prototipe presidio
-
-Perbandingan memakai uji McNemar eksak per butir: setiap kemunculan entitas
-positif (terdeteksi atau tidak) dan setiap baris negatif (bersih atau tidak).
 """
 
 from __future__ import annotations
@@ -33,7 +24,6 @@ AKAR = Path(__file__).resolve().parents[2]
 DEV = AKAR / "eval" / "dev" / "uji_pii_id.csv"
 HASIL = AKAR / "eval" / "results"
 ENTITAS = v.ENTITAS_P0
-# Entitas untuk kriteria keputusan Tahap 0 (catatan keputusan T-003).
 ENTITAS_T003 = ["nik", "kk", "credit_card", "bpjs", "bank_account"]
 LANGSUNG = ["nik", "kk", "nip", "npwp", "passport_id", "bpjs", "credit_card",
             "bank_account", "email", "phone_id"]
@@ -43,7 +33,6 @@ Detektor = Callable[[list[tuple[str, str]]], list[tuple[str, str]]]
 
 
 def pesan_dari_teks(teks: str) -> list[tuple[str, str]]:
-    """Pecah baris multi-pesan (`<<peran>> `) menjadi daftar (peran, teks)."""
     if not teks.startswith("<<"):
         return [("user", teks)]
     bagian = re.split(r"^<<(\w+)>> ", teks, flags=re.M)[1:]

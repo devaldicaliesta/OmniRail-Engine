@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Prototipe detektor referensi OmniRail (T-011). **Bukan kode produk.**
-
-Menerapkan PRD 7.10 (pola, validator, kata konteks), PII-07 (penentuan jenis dan
-prioritas), dan PII-10 (kata konteks lintas pesan) untuk entitas P0, dengan
-Python standar. Gunanya dua: memberi angka pembanding pendekatan OmniRail di
-Tahap 0 (T-006), dan menjadi acuan uji silang untuk implementasi Rust (EVAL-12).
-
-Credentials, deny-list, angka terucap (PII-11), dan entitas P1 belum dicakup.
+"""Prototipe detektor referensi.
 
     python3 eval/tools/prototipe_detektor.py "NIK saya 3273011503900001"
 """
@@ -21,14 +14,12 @@ import cek_dataset as v
 
 ENTITAS_P0 = v.ENTITAS_P0
 
-# Urutan prioritas PII-07 (credentials tidak dicakup prototipe).
 PRIORITAS = [
     "credit_card", "nip", "nik", "npwp", "bpjs", "bank_account",
     "phone_id", "passport_id", "birth_date", "email",
 ]
 KONTEKS_WAJIB = {"kk", "passport_id", "bpjs", "birth_date", "bank_account"}
 
-# Kata konteks PRD 7.10, sebagai urutan kata huruf kecil.
 KONTEKS: dict[str, list[tuple[str, ...]]] = {
     "nik": [("nik",), ("ktp",), ("no", "induk"), ("nomor", "induk"), ("induk", "kependudukan")],
     "npwp": [("npwp",), ("nomor", "pokok", "wajib", "pajak")],
@@ -41,14 +32,12 @@ KONTEKS: dict[str, list[tuple[str, ...]]] = {
                    ("birth",), ("kelahiran",)],
     "credit_card": [("kartu",), ("card",), ("cc",), ("kredit",), ("debit",), ("visa",),
                     ("mastercard",)],
-    # Tidak wajib (PRD 7.10); hanya dipakai untuk menentukan jenis di PII-07.
-    # Usulan tambahan untuk PRD, lihat catatan keputusan T-011.
     "phone_id": [("hp",), ("telp",), ("telepon",), ("wa",), ("whatsapp",), ("sms",),
                  ("ponsel",), ("handphone",)],
 }
-JARAK_KONTEKS = 5          # kata, dalam pesan yang sama (PRD 7.10)
-LINTAS_AWAL = 10           # nilai harus di 10 token pertama pesan (PII-10)
-LINTAS_EKOR = 15           # kata konteks di 15 token terakhir pesan sebelumnya (PII-10)
+JARAK_KONTEKS = 5
+LINTAS_AWAL = 10
+LINTAS_EKOR = 15
 
 BULAN = "|".join(sorted(v.BULAN_ID, key=len, reverse=True))
 EKSTENSI_BERKAS = {"png", "jpg", "jpeg", "gif", "svg", "webp", "pdf", "ico", "bmp"}
@@ -93,7 +82,6 @@ class _Token:
 
 
 def _dasar(kata: str) -> str:
-    """Lepas akhiran kepemilikan (-nya, -ku, -mu): "rekeningnya" -> "rekening"."""
     for akhiran in ("nya", "ku", "mu"):
         if kata.endswith(akhiran) and len(kata) - len(akhiran) >= 3:
             return kata[: -len(akhiran)]
@@ -105,7 +93,6 @@ def _token(teks: str) -> list[_Token]:
 
 
 def _posisi_konteks(token: list[_Token], jenis: str) -> list[tuple[int, int]]:
-    """Daftar (indeks token awal, indeks token akhir) setiap frasa konteks."""
     hasil = []
     kata = [t.teks for t in token]
     for frasa in KONTEKS.get(jenis, []):
@@ -132,11 +119,6 @@ def _indeks_token(token: list[_Token], mulai: int, akhir: int) -> tuple[int, int
 
 def _jarak_konteks(jenis: str, token: list[_Token], awal: int, ujung: int,
                    token_lalu: list[_Token] | None) -> float | None:
-    """Jarak (dalam token) ke kata konteks terdekat, atau None bila tidak ada.
-
-    Bila jaraknya sama, kata konteks **sebelum** nilai menang atas kata konteks
-    sesudahnya ("No. KK 7250..., NIK ..."), sehingga sesudah nilai diberi +0,5.
-    """
     terbaik = None
     for a, b in _posisi_konteks(token, jenis):
         if b < awal:
@@ -151,24 +133,23 @@ def _jarak_konteks(jenis: str, token: list[_Token], awal: int, ujung: int,
         n = len(token_lalu)
         for a, b in _posisi_konteks(token_lalu, jenis):
             if b >= n - LINTAS_EKOR:
-                jarak = (n - 1 - b) + awal + JARAK_KONTEKS + 1  # selalu kalah dari konteks sepesan
+                jarak = (n - 1 - b) + awal + JARAK_KONTEKS + 1
                 if terbaik is None or jarak < terbaik:
                     terbaik = jarak
     return terbaik
 
 
 def _lolos_tambahan(jenis: str, teks: str, mulai: int, akhir: int, nilai: str) -> bool:
-    """Aturan pengecualian di luar validator struktur."""
     if jenis == "email":
         if re.match(r":[^\s]", teks[akhir:akhir + 2]):
-            return False  # git@github.com:org/repo
+            return False
         if nilai.rsplit(".", 1)[-1].lower() in EKSTENSI_BERKAS:
-            return False  # logo@2x.png
+            return False
     if jenis in {"bank_account", "credit_card", "nik", "kk", "bpjs", "npwp"}:
         if re.search(r"rp\.?\s*$", teks[max(0, mulai - 4):mulai], re.IGNORECASE):
-            return False  # nominal rupiah
+            return False
     if jenis == "npwp" and not re.fullmatch(r"\d{2}\.\d{3}\.\d{3}\.\d-\d{3}\.\d{3}", nilai):
-        return True  # 15/16 digit polos: konteks dicek terpisah
+        return True
     return True
 
 
@@ -188,7 +169,6 @@ def deteksi_pesan(teks: str, teks_lalu: str | None = None) -> list[Temuan]:
                 continue
             kandidat.setdefault((mulai, akhir), []).append((jenis, jarak))
 
-    # Satu rentang, banyak jenis: konteks terdekat menang; tanpa konteks, urutan prioritas.
     pilihan = []
     for (mulai, akhir), daftar in kandidat.items():
         berkonteks = [(j, d) for j, d in daftar if d is not None]
@@ -198,7 +178,6 @@ def deteksi_pesan(teks: str, teks_lalu: str | None = None) -> list[Temuan]:
             jenis = min((j for j, _ in daftar), key=_urutan)
         pilihan.append(Temuan(jenis, teks[mulai:akhir], mulai, akhir))
 
-    # Rentang yang tumpang tindih: yang terpanjang menang.
     pilihan.sort(key=lambda t: (-(t.akhir - t.mulai), t.mulai))
     hasil: list[Temuan] = []
     for t in pilihan:
@@ -212,7 +191,6 @@ def _urutan(jenis: str) -> int:
 
 
 def deteksi(pesan: list[tuple[str, str]]) -> list[list[Temuan]]:
-    """Deteksi per pesan `(peran, teks)`; pesan sebelumnya dipakai untuk PII-10."""
     hasil = []
     for i, (_, teks) in enumerate(pesan):
         lalu = pesan[i - 1][1] if i > 0 else None

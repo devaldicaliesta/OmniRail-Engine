@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
-"""Statistik untuk evaluasi OmniRail (PRD EVAL-09). Hanya pustaka standar Python.
-
-- `wilson(k, n)`: interval kepercayaan skor Wilson untuk proporsi seperti
-  recall, precision, dan false positive rate. Lebih andal daripada interval
-  normal (Wald) untuk n kecil dan proporsi dekat 0 atau 1.
-- `mcnemar_eksak(b, c)`: uji McNemar eksak (versi binomial) untuk membandingkan
-  dua sistem pada baris uji yang sama. `b` = baris yang hanya benar di sistem A,
-  `c` = baris yang hanya benar di sistem B.
-- `cohen_kappa(label_a, label_b)`: kesepakatan dua penilai di luar kebetulan,
-  dipakai untuk tinjauan label T-007.
-
-Rujukan pemakaian dalam evaluasi modern ada di docs/LANDASAN_METODE.md
-bagian 1 (Miller 2024; Ulmer dkk. 2022; Klie dkk. 2024).
-
-Jalankan langsung untuk melihat lebar interval pada ukuran dataset sekarang:
+"""Interval Wilson, uji McNemar eksak, dan kappa Cohen.
 
     python3 eval/tools/statistik.py
 """
@@ -28,7 +14,6 @@ Z_95 = 1.959963984540054
 
 
 def wilson(k: int, n: int, z: float = Z_95) -> tuple[float, float]:
-    """Interval skor Wilson untuk k keberhasilan dari n percobaan."""
     if n <= 0:
         raise ValueError("n harus > 0")
     if not 0 <= k <= n:
@@ -41,7 +26,6 @@ def wilson(k: int, n: int, z: float = Z_95) -> tuple[float, float]:
 
 
 def mcnemar_eksak(b: int, c: int) -> float:
-    """Nilai p dua sisi uji McNemar eksak (binomial, p = 0,5) untuk b dan c."""
     if b < 0 or c < 0:
         raise ValueError("b dan c tidak boleh negatif")
     n = b + c
@@ -53,7 +37,6 @@ def mcnemar_eksak(b: int, c: int) -> float:
 
 
 def cohen_kappa(label_a: Sequence[Hashable], label_b: Sequence[Hashable]) -> float:
-    """Kappa Cohen untuk dua penilai yang memberi label pada butir yang sama."""
     if len(label_a) != len(label_b) or not label_a:
         raise ValueError("kedua daftar label harus sama panjang dan tidak kosong")
     n = len(label_a)

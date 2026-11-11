@@ -1,24 +1,5 @@
 #!/usr/bin/env python3
-"""Baseline Presidio untuk Tahap 0 (T-004). Bukan bagian dari CI.
-
-Butuh `pip install presidio-analyzer` (diuji dengan presidio-analyzer 2.2.366
-dan spaCy 3.8). Tidak butuh model spaCy terunduh: dipakai pipeline kosong
-bahasa Indonesia dengan lemma = huruf kecil, agar peningkatan skor kata
-konteks Presidio (LemmaContextAwareEnhancer) bisa bekerja.
-
-Konfigurasi, sesuai definisi T-004 "recognizer Indonesia sederhana (regex
-tanpa validator)":
-
-- recognizer bawaan Presidio untuk email, kartu kredit (dengan Luhn bawaan
-  Presidio), dan nomor telepon (pustaka phonenumbers, region ID);
-- PatternRecognizer regex sederhana tanpa validator untuk NIK, KK, NPWP, NIP,
-  rekening, paspor, BPJS, dan tanggal lahir, dengan kata konteks PRD 7.10;
-- skor pola 0,5 untuk entitas yang di PRD tidak mewajibkan konteks, 0,3 untuk
-  yang mewajibkan; ambang 0,4; konteks menambah skor 0,35 (default Presidio);
-- setiap pesan dianalisis terpisah, seperti guardrail Presidio di LiteLLM;
-- rentang yang tumpang tindih: skor tertinggi menang, lalu yang terpanjang,
-  lalu urutan prioritas PII-07 (sama dengan prototipe, agar adil).
-"""
+"""Baseline Presidio dengan regex Indonesia sederhana."""
 
 from __future__ import annotations
 
@@ -50,8 +31,6 @@ def _mesin():
     import spacy
     import tldextract
 
-    # EmailRecognizer memakai tldextract. Pakai daftar sufiks bawaan paket,
-    # tanpa mengunduh dari internet, agar hasil bisa diulang tanpa jaringan.
     tldextract.extract = tldextract.TLDExtract(suffix_list_urls=())
     from presidio_analyzer import AnalyzerEngine, Pattern, PatternRecognizer, RecognizerRegistry
     from presidio_analyzer.nlp_engine import SpacyNlpEngine

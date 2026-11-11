@@ -1,5 +1,3 @@
-"""Test prototipe detektor (T-011) dan alat evaluasi. Tanpa dependensi luar."""
-
 import unittest
 
 import evaluasi as e
@@ -11,8 +9,6 @@ def jenis_nilai(teks, lalu=None):
 
 
 class TestKriteriaPRD(unittest.TestCase):
-    """Kriteria terima PRD 7.4 yang bisa diuji tanpa proxy."""
-
     def test_konteks_menentukan_nik_atau_kartu(self):
         self.assertEqual(jenis_nilai("NIK saya 5171041203944539"), [("nik", "5171041203944539")])
         self.assertEqual(jenis_nilai("Pembayaran dengan kartu 5171041203944539 berhasil"),
@@ -53,7 +49,6 @@ class TestEvaluasi(unittest.TestCase):
         self.assertEqual(e.pesan_dari_teks("biasa"), [("user", "biasa")])
 
     def test_regresi_prototipe_di_dev(self):
-        # Ambang regresi, bukan klaim mutu: angka dev optimistis (lihat eval/results/README.md).
         hasil = e.evaluasi(e.muat_detektor("prototipe")[0])
         semua = hasil["gabungan"]["semua_p0"]
         self.assertGreaterEqual(semua["recall"]["nilai"], 0.99)
