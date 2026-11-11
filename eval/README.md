@@ -79,9 +79,20 @@ Aturan kolom `diharapkan`:
 - **Placeholder credentials:** `${VAR}`, `********`, `<password>`, dan `xxx` yang tidak boleh diblokir (PRD CRED-03).
 - **Penghindaran deny-list:** huruf lebar penuh, karakter lebar-nol, dan spasi ganda (PRD POL-02).
 
+## Memeriksa dataset
+
+```bash
+python3 eval/tools/cek_dataset.py --ringkasan
+```
+
+Pemeriksa (Python 3.9+, tanpa dependensi) memastikan header dan `id` benar, kolom `diharapkan` sesuai aturan per kategori, setiap nilai benar-benar muncul di `teks`, nilai berlabel lolos validator struktur PRD 7.10 (Luhn dan prefix kartu, struktur NIK, KK, dan NIP, panjang nomor, tanggal valid), baris `negatif` menandai entitas yang dijebak, teks dev tidak muncul di holdout, target jumlah terpenuhi, dan tabel jumlah di atas sama dengan isi berkas. Kegagalan validator di baris `cakupan_mvp = tidak` hanya menjadi peringatan. CI menjalankan pemeriksaan ini di setiap pull request, dan `python3 -m unittest discover -s eval/tools` menjalankan test unitnya.
+
+Pemeriksa hanya memvalidasi bentuk label, tidak menyetel aturan deteksi, sehingga aturan "jangan buka holdout" tidak dilanggar.
+
 ## Menambah baris
 
 1. Tambahkan baris di `dev`, kecuali Anda sedang menyusun holdout baru sebelum rilis.
 2. Pakai data rekaan. Untuk NIK dan nomor kartu, pastikan lolos validator (PRD bagian 7.10), kecuali baris itu memang contoh negatif.
 3. Isi `catatan` dengan apa yang diuji.
-4. Jangan memindahkan baris dari holdout ke dev setelah holdout pernah dijalankan.
+4. Perbarui tabel jumlah di atas bila berubah, lalu jalankan `python3 eval/tools/cek_dataset.py`.
+5. Jangan memindahkan baris dari holdout ke dev setelah holdout pernah dijalankan.
