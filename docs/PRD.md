@@ -1,14 +1,14 @@
-# OmniRail Engine — PRD MVP v1.6
+# OmniRail Engine — PRD MVP v1.7
 
 | | |
 | --- | --- |
 | **Status** | Draf, menunggu tinjauan pemilik produk |
-| **Tanggal** | 11 November 2026 |
+| **Tanggal** | 11 November 2026 (v1.7) |
 | **Pemilik** | devaldi caliesta |
 | **Sumber** | [Blueprint v1.1](OmniRail_Engine_Blueprint_v1.1.md) |
 | **Lingkup** | MVP sampai rilis publik pertama, dalam dua rilis: α (periksa, tanpa proxy) dan β (proxy). Tahap 0 s.d. 5 |
 
-PRD ini menjadi acuan **apa yang dibangun dan kapan dianggap selesai** untuk MVP. Blueprint v1.1 tetap menjadi acuan latar belakang, pemetaan regulasi (bagian 6 dan 7), dan arah setelah MVP (bagian 13). Bila keduanya berbeda, PRD ini yang berlaku. Daftar perbedaannya ada di bagian 1.
+PRD ini menjadi acuan **apa yang dibangun dan kapan dianggap selesai** untuk MVP. Dasar metode dan rujukan paper atau standar untuk setiap bagian ada di [Landasan metode](LANDASAN_METODE.md). Blueprint v1.1 tetap menjadi acuan latar belakang, pemetaan regulasi (bagian 6 dan 7), dan arah setelah MVP (bagian 13). Bila keduanya berbeda, PRD ini yang berlaku. Daftar perbedaannya ada di bagian 1.
 
 ---
 
@@ -43,6 +43,7 @@ Blueprint sudah kuat dari sisi posisi produk, batas klaim, dan konteks regulasi.
 | 23 | **Rute berdasarkan sensitivitas** (bagian 7.16, P1) | Bukan sekadar menyamarkan, tetapi mengarahkan request berisi data pribadi spesifik ke model lokal. Ini menjawab kekhawatiran transfer data ke luar negeri dan berbeda dari fallback antar-provider (non-goal) |
 | 24 | **`omnirail scan`** untuk berkas, repo, dan CI (EVAL-07, EVAL-08), **benchmark terbuka** (DIST-07), **credentials ekosistem lokal tambahan** (CRED-05), dan **eksperimen format token** (Q14) | Jalur adopsi developer tanpa mengubah arsitektur aplikasi, dan bukti terukur yang memperkuat posisi "konteks Indonesia" |
 | 25 | **Kunci token dinormalisasi** (PII-03), aksi `mask` dan `block` per entitas (PII-12, P1), dan **pemulihan toleran** (PII-13, P1). Kriteria keputusan Tahap 0 ditetapkan (Q2) | Nomor yang sama dengan penulisan berbeda harus dikenali model sebagai orang yang sama. `mask` berguna untuk jawaban yang dibaca operator, `block` untuk kebutuhan PCI DSS. Model sering menulis ulang token, dan ini langsung menurunkan pemulihan token (G3) |
+| 26 | **Metode dari paper dan standar** ([Landasan metode](LANDASAN_METODE.md)): interval Wilson dan uji McNemar untuk semua metrik (EVAL-09), uji perilaku gaya CheckList (EVAL-10), *property-based testing* dan fuzzing (EVAL-11), uji silang Rust lawan prototipe Python (EVAL-12), catatan run holdout (EVAL-13), regex tanpa backtracking (POL-06), *skeleton* UTS #39 (POL-07, P1), JCS RFC 8785 untuk `policy_hash` (AUD-02), audit log berantai hash (AUD-06, P1), rilis bertanda tangan dengan SBOM dan provenance (DIST-08), dan benchmark tanpa *coordinated omission* (EVAL-05) | Klaim produk ini adalah angka deteksi dan jejak audit. Keduanya hanya dipercaya bila metodenya bisa diperiksa orang lain. Dengan ± 110 baris negatif per entitas, target false positive ≤ 2% per entitas bahkan belum bisa dibuktikan secara statistik (bagian 9) |
 
 ---
 
@@ -215,7 +216,7 @@ Kriteria terima:
 | PII-02 | P0 | Aksi per entitas: `tokenize` (dipulihkan di jawaban) atau `redact` (diganti `[NIK]` dan tidak dipulihkan) |
 | PII-03 | P0 | Nilai yang sama dalam satu request selalu mendapat token yang sama; nilai berbeda mendapat token berbeda. "Sama" dinilai **setelah normalisasi per jenis**: hapus spasi, titik, dan tanda hubung; `+62` dan `62` di depan `phone_id` menjadi `0`; `email` dibandingkan dalam huruf kecil. Pemulihan memakai bentuk yang pertama kali muncul di request |
 | PII-04 | P0 | Format token `<JENIS_n>`. Bila input sudah memuat teks berbentuk token (misalnya pengguna menulis `<EMAIL_1>`), penomoran melompati nomor itu, dan hanya token yang diterbitkan OmniRail yang dipulihkan |
-| PII-05 | P0 | Tabel token hanya hidup di memori selama satu request dan tidak pernah ditulis ke log, disk, atau metrik |
+| PII-05 | P0 | Tabel token hanya hidup di memori selama satu request dan tidak pernah ditulis ke log, disk, atau metrik. Isinya dihapus eksplisit dari memori (misalnya dengan crate `zeroize`) begitu request selesai |
 | PII-06 | P0 | Pemulihan hanya untuk kecocokan persis. Token tak dikenal dibiarkan apa adanya. Token yang diterbitkan tetapi tidak kembali dihitung sebagai metrik, bukan error |
 | PII-07 | P0 | Bila satu rentang teks lolos validator lebih dari satu entitas, kata konteks yang paling dekat menentukan jenisnya (misalnya `NIK` atau `kartu`). Tanpa kata konteks, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nip` > `nik` (struktur valid) > `npwp` > `bpjs` > `bank_account` > `phone_id` > `passport_id` > `birth_date` > `email` > `ip_address` > `vehicle_plate`. Entitas yang mewajibkan kata konteks (`kk`, `passport_id`, `bpjs`, `birth_date`, `bank_account`) tidak pernah menang tanpa konteks; nilai 16 digit tanpa kata `KK` diperlakukan sebagai `nik`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang |
 | PII-08 | P1 | Entitas kustom di `omnirail.yaml` (customisasi tingkat 2) dengan validator bawaan yang bisa dipilih |
@@ -259,10 +260,12 @@ Kriteria terima:
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
 | POL-01 | P0 | `max_input_chars` (total semua pesan) dan `server.max_body_bytes` (default 1 MiB) |
-| POL-02 | P0 | `deny_patterns` (regex, tidak peka huruf besar) dan `blocked_keywords` (cocok per kata utuh), keduanya pada teks yang dinormalisasi |
+| POL-02 | P0 | `deny_patterns` (regex, tidak peka huruf besar) dan `blocked_keywords` (cocok per kata utuh), keduanya pada teks yang dinormalisasi (NFKC, UAX #15) |
 | POL-03 | P0 | `allowed_providers` |
 | POL-04 | P0 | `mode: enforce \| shadow`, global dan bisa ditimpa per rute |
 | POL-05 | P0 | `fail_mode.ingress` dan `fail_mode.egress` (`open \| closed`), global dan bisa ditimpa per rute |
+| POL-06 | P0 | Semua regex (pola entitas, `deny_patterns`, entitas kustom) dikompilasi dengan mesin tanpa backtracking yang menjamin waktu pencocokan linear terhadap panjang teks (crate Rust `regex`). Pola yang memakai look-around atau backreference ditolak saat pack dimuat, dengan pesan yang menyebut polanya. Ukuran regex hasil kompilasi dibatasi |
+| POL-07 | P1 | Pencocokan deny-list dan kata kunci juga memakai *skeleton* confusables UTS #39, sehingga huruf mirip lintas aksara (misalnya huruf Kiril yang tampak seperti Latin) tidak bisa dipakai untuk menghindar |
 
 **Semantik mode shadow**
 
@@ -291,10 +294,11 @@ Kriteria terima:
 | ID | Prioritas | Requirement |
 | --- | --- | --- |
 | AUD-01 | P0 | Satu baris JSON per request ke stdout (atau file), dengan field di bawah |
-| AUD-02 | P0 | `policy_hash` = SHA-256 dari kebijakan efektif (default + pack + override `omnirail.yaml`) yang diserialisasi sebagai JSON kanonik (kunci terurut), **tanpa** nilai rahasia. `policy_version` = versi `omnirail.yaml` + nama dan versi setiap pack |
+| AUD-02 | P0 | `policy_hash` = SHA-256 dari kebijakan efektif (default + pack + override `omnirail.yaml`) yang diserialisasi dengan JSON Canonicalization Scheme (RFC 8785), **tanpa** nilai rahasia, sehingga pihak lain bisa menghitung ulang hash yang sama. `policy_version` = versi `omnirail.yaml` + nama dan versi setiap pack |
 | AUD-03 | P0 | `store_raw_prompts: false` secara default. Bila `true`, start mencetak peringatan dan field ini ikut tercatat di audit log |
 | AUD-04 | P1 | Metrik OpenTelemetry (OTLP): jumlah request per keputusan, temuan per jenis entitas, latensi proxy dan upstream (histogram), hasil JSON, dan statistik pemulihan token. Turun dari P0 di v1.6; selama MVP, audit log dan `omnirail report` (7.15) menjadi sumber angka |
 | AUD-05 | P1 | Ekspor ringkasan audit untuk auditor (cikal bakal "laporan bukti pendukung") |
+| AUD-06 | P1 | **Audit log tahan ubah.** Setiap baris memuat `prev_hash` (SHA-256 baris sebelumnya), dan secara berkala ditulis *checkpoint* bertanda tangan berisi hash terakhir dan jumlah baris. `omnirail audit verify <file>` mendeteksi baris yang dihapus, disisipkan, atau diubah. Dasar: log berantai hash dan struktur *tamper-evident* (Landasan metode bagian 4) |
 
 Field audit log:
 
@@ -373,10 +377,15 @@ Kriteria terima:
 | EVAL-02 | P0 | `omnirail eval` menghasilkan recall, precision, dan false positive per entitas; tingkat blokir credentials; deteksi deny-list; dan pemulihan token. Hasilnya disimpan sebagai JSON bernomor versi (kode, pack, dataset, waktu) plus ringkasan Markdown |
 | EVAL-03 | P0 | `omnirail test --pack <dir>` gagal bila satu baris `should_detect` tidak terdeteksi, atau satu baris `should_ignore` terdeteksi |
 | EVAL-04 | P0 | CI menjalankan `omnirail test` untuk semua pack dan `omnirail eval` pada `dev`. CI gagal bila recall turun atau false positive naik melewati ambang yang ditetapkan dari baseline |
-| EVAL-05 | P0 | Benchmark latensi: mock upstream dengan waktu tetap, input 1 rb, 5 rb, dan 20 rb karakter, mengukur selisih p50 dan p99 dengan dan tanpa proxy |
+| EVAL-05 | P0 | Benchmark latensi: mock upstream dengan waktu tetap, input 1 rb, 5 rb, dan 20 rb karakter, mengukur selisih p50 dan p99 dengan dan tanpa proxy. Beban dikirim pada laju tetap (open-loop), latensi dihitung dari jadwal kirim untuk menghindari *coordinated omission*, dan distribusi disimpan dengan HdrHistogram. Hasil mencantumkan perangkat keras, laju, dan durasi |
 | EVAL-06 | P0 | CLI `omnirail inspect "<teks>"` (atau `--file`) menampilkan keputusan, temuan, dan teks bertoken tanpa memanggil provider. Memakai fungsi yang sama dengan endpoint PG-01 |
 | EVAL-07 | P0 | `omnirail scan <path>...` memindai berkas teks (log, CSV, JSON, Markdown, kode) dengan pack yang sama dengan jalur proxy. Keluaran per temuan: `path:baris:kolom`, jenis, dan nilai yang **disamarkan** (`3273••••••••0001`); format `text` dan `json` (SARIF P1). Kode keluar 1 bila ada temuan. Berkas biner dan berkas di atas batas ukuran dilewati. Pengecualian lewat `.omnirailignore` dan komentar `omnirail:ignore` di baris yang sama |
 | EVAL-08 | P0 | Contoh pemasangan `omnirail scan` sebagai hook pre-commit dan sebagai langkah CI, di dokumentasi rilis α |
+| EVAL-09 | P0 | **Ketidakpastian dilaporkan.** Setiap recall, precision, dan false positive rate dari `omnirail eval` disertai interval kepercayaan Wilson 95% dan jumlah sampelnya. Perbandingan dua sistem atau dua versi pada baris yang sama memakai uji McNemar eksak per baris. Recall juga dilaporkan per kelompok identifier langsung (`nik`, `kk`, `credit_card`, dan seterusnya) dan kuasi (`birth_date`, `vehicle_plate`, `ip_address`), mengikuti TAB. Implementasi rujukan: `eval/tools/statistik.py` |
+| EVAL-10 | P0 | **Uji perilaku** gaya CheckList, dibangkitkan dari templat dan dijalankan di CI: tes fungsi minimum per entitas, dan tes invarian (mengubah pemisah, huruf besar-kecil, bingkai teks, atau gaya ketik tidak boleh mengubah temuan, kecuali perubahan itu memang membuat nilai tidak valid) |
+| EVAL-11 | P0 | ***Property-based testing*** untuk invarian inti: `pulihkan(samarkan(x)) = x` untuk teks tanpa token buatan pengguna, teks bertoken tidak memuat nilai entitas yang terdeteksi, normalisasi idempoten, dan peta posisi normalisasi selalu menunjuk ke rentang teks asli yang sah. Fuzzing (P1) untuk normalisasi Unicode dan parser request |
+| EVAL-12 | P0 | **Uji silang**: temuan implementasi Rust sama dengan prototipe referensi Python (T-011) pada seluruh dataset dev. Setiap perbedaan diselesaikan dengan memperbaiki salah satunya, atau dicatat sebagai keputusan |
+| EVAL-13 | P0 | **Catatan run holdout.** Setiap kali holdout dijalankan, tanggal, commit, versi pack, dan hasilnya dicatat di `eval/results/holdout.md`. Holdout dijalankan sekali per rilis. Bila aturan disetel ulang setelah melihat hasil holdout, holdout itu dianggap terpakai dan holdout baru disusun sebelum rilis berikutnya |
 
 Kriteria terima `omnirail scan`:
 
@@ -395,6 +404,7 @@ Kriteria terima `omnirail scan`:
 | DIST-05 | P0 | `SECURITY.md` (cara melaporkan kerentanan secara privat, versi yang didukung), `CONTRIBUTING.md`, dan `CODEOWNERS` untuk repo OmniRail sendiri, termasuk folder `policy-packs/` |
 | DIST-06 | P0 | **Demo web WASM.** `omnirail-core` dikompilasi ke WebAssembly dan disajikan sebagai halaman statis (misalnya GitHub Pages) berisi tab Coba mode periksa saja (PG-03, PG-06, PG-07 berlaku). Halaman tidak mengirim permintaan jaringan apa pun setelah dimuat (`Content-Security-Policy: connect-src 'none'`), sehingga teks tidak pernah meninggalkan browser. Hasil identik dengan `omnirail inspect` versi yang sama |
 | DIST-07 | P1 | **Benchmark terbuka.** Split `dev` diterbitkan sebagai dataset publik berbahasa Indonesia, dengan kartu dataset, lisensi (Q15), dan tabel skor alat lain dari Tahap 0. Holdout tidak diterbitkan |
+| DIST-08 | P0 | **Rilis yang bisa diverifikasi.** Setiap binary dan image rilis ditandatangani (Sigstore atau GitHub artifact attestations) dengan provenance build (SLSA) dan disertai SBOM (SPDX atau CycloneDX). CI menjalankan `cargo audit` dan `cargo deny` (advisori keamanan dan lisensi dependensi). `omnirail-core` memakai `#![forbid(unsafe_code)]`. Repo memasang OpenSSF Scorecard. README menjelaskan cara memverifikasi tanda tangan |
 
 ### 7.13 Tampilan uji (playground)
 
@@ -657,6 +667,8 @@ Pesan error menyebut jenis temuan, tidak pernah nilainya.
 
 Angka di bawah adalah **target awal (hipotesis)**. Angka ini memberi kriteria lulus yang bisa diperiksa per tahap, lalu direvisi tertulis setelah baseline Tahap 1 dan benchmark Tahap 5. Revisi dicatat di bagian 14.
 
+**Cara membaca target (EVAL-09).** Setiap angka dilaporkan dengan interval Wilson 95%. Target dianggap tercapai bila angka titiknya memenuhi target **dan** batas bawah interval (untuk recall dan precision) atau batas atasnya (untuk false positive) tidak meleset lebih dari 5 poin dari target. Target false positive ≤ 0,02 dinilai pada **gabungan** baris negatif, karena dengan ± 110 baris negatif per entitas, nol false positive pun hanya memberi batas atas 3,4%. Angka per entitas tetap dilaporkan beserta intervalnya. Lihat [Landasan metode](LANDASAN_METODE.md) bagian 1.
+
 **Indikator awal (diukur per rilis, dari `omnirail eval` dan benchmark)**
 
 | Metrik | Target awal | Sumber |
@@ -709,6 +721,10 @@ Ringkasan threat model blueprint bagian 9, dengan tambahan dari PRD ini:
 
 **Wajib tertulis di README:** lampiran dan gambar ditolak (tidak diperiksa), tokenisasi berlaku per request, OmniRail tidak mengklaim kepatuhan hukum apa pun (termasuk UU PDP dan panduan OJK), dan kalimat publik memakai "mengurangi risiko", bukan "melindungi sepenuhnya".
 
+**Istilah.** Tokenisasi OmniRail adalah **pseudonimisasi reversibel** (ISO/IEC 20889, NIST SP 800-188), bukan anonimisasi: teks bertoken tetap bisa dikaitkan kembali selama tabel token ada. Materi publik tidak boleh menyebut data yang dikirim ke provider sebagai "anonim".
+
+Pemetaan ancaman ke OWASP Top 10 for LLM Applications dan model ancaman privasi LINDDUN ada di [Landasan metode](LANDASAN_METODE.md) bagian 7, dan dirinci di T-342.
+
 Pemetaan ke regulasi (UU 27/2022, panduan OJK) tetap di blueprint bagian 6 dan 7. Pemetaan itu perlu dicocokkan dengan naskah resmi oleh penanggung jawab kepatuhan sebelum dipakai di materi publik (Q6).
 
 ## 11. Tahapan dan kriteria selesai
@@ -718,13 +734,13 @@ Belum ada tanggal. Kecepatan kerja ditetapkan setelah Tahap 1. Satu-satunya tang
 | Tahap | Isi | Selesai bila |
 | --- | --- | --- |
 | **0. Validasi** (maks. 2 minggu) | Susun `uji_pii_id.csv` (dev + holdout). Jalankan terhadap LiteLLM + Presidio dengan recognizer Indonesia sederhana. Konfirmasi fitur pemulihan token LiteLLM | Catatan keputusan tertulis: **lanjut** (celah recall/precision atau ergonomi cukup besar), **pivot** ke plugin untuk LiteLLM atau Presidio (blueprint lapis 3), atau **berhenti** |
-| **1. Inti deteksi** (rilis α) | `omnirail-core` tanpa I/O dan bisa dikompilasi ke WASM: normalisasi, validator, PII-01 s.d. 07, PII-10, CRED-01 s.d. 03, POL-01 dan POL-02, CFG-03 s.d. 05, pack `id-general`, EVAL-01 s.d. 04, EVAL-06 (`inspect`), EVAL-07 dan EVAL-08 (`scan`) | Baseline per entitas tercatat; ambang CI ditetapkan; target bagian 9 direvisi tertulis |
-| **2. Rilis α** | DIST-06 (demo WASM, dengan PG-03, PG-06, PG-07), binary CLI (bagian dari DIST-01), README "coba sekarang", wawancara pertama memakai demo | Rilis α bertag; demo publik bisa dibuka; ≥ 3 wawancara tercatat |
+| **1. Inti deteksi** (rilis α) | `omnirail-core` tanpa I/O dan bisa dikompilasi ke WASM: normalisasi, validator, PII-01 s.d. 07, PII-10, CRED-01 s.d. 03, POL-01 dan POL-02, CFG-03 s.d. 05, pack `id-general`, EVAL-01 s.d. 04, EVAL-06 (`inspect`), EVAL-07 dan EVAL-08 (`scan`), EVAL-09 s.d. 12, POL-06, PII-05 | Baseline per entitas tercatat; ambang CI ditetapkan; target bagian 9 direvisi tertulis |
+| **2. Rilis α** | DIST-06 (demo WASM, dengan PG-03, PG-06, PG-07), binary CLI (bagian dari DIST-01) dengan DIST-08, README "coba sekarang", wawancara pertama memakai demo | Rilis α bertag; demo publik bisa dibuka; ≥ 3 wawancara tercatat |
 | **3. Kerangka proxy** (rilis β) | API-01, API-02, API-04, API-07, API-08, UP-01 (Ollama + satu provider cloud), UP-02 s.d. UP-07, CFG-01/02/06/07, kontrak error | SDK OpenAI (dengan dan tanpa `stream=True`) mendapat jawaban lewat proxy dari Ollama dan provider cloud yang dipilih; konfigurasi salah menghentikan start dengan pesan yang jelas |
 | **4. Alur proxy lengkap** (rilis β) | API-03, POL-03 s.d. 05, AUD-01 s.d. 03, REP-01, REP-02, PG-01, PG-02, CFG-10 | Test integrasi membuktikan request yang diblokir tidak pernah memanggil upstream; laporan paparan bisa dibuat dari audit log |
-| **5. Rilis β** (rilis publik pertama) | DIST-01 s.d. 03, DIST-05, EVAL-05, README dengan batas klaim, holdout, wawancara lanjutan | Rilis bertag; benchmark terbit; ringkasan wawancara tertulis menentukan prioritas berikutnya |
+| **5. Rilis β** (rilis publik pertama) | DIST-01 s.d. 03, DIST-05, DIST-08, EVAL-05, EVAL-13, README dengan batas klaim, holdout, wawancara lanjutan | Rilis bertag; benchmark terbit; ringkasan wawancara tertulis menentukan prioritas berikutnya |
 
-Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: validasi JSON (JSON-01 s.d. 06), adapter provider lain (UP-08), rute sensitivitas (7.16), angka terucap (PII-11), credentials lokal tambahan (CRED-05), metrik OpenTelemetry (AUD-04), benchmark terbuka (DIST-07), tampilan uji dari binary dan fiturnya (PG-04, PG-05, PG-08 s.d. PG-12), entitas kustom (PII-08), streaming sejati, NER, laporan untuk auditor (REP-03), dan marketplace pack (blueprint bagian 13).
+Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: audit log tahan ubah (AUD-06), *skeleton* UTS #39 (POL-07), validasi JSON (JSON-01 s.d. 06), adapter provider lain (UP-08), rute sensitivitas (7.16), angka terucap (PII-11), credentials lokal tambahan (CRED-05), metrik OpenTelemetry (AUD-04), benchmark terbuka (DIST-07), tampilan uji dari binary dan fiturnya (PG-04, PG-05, PG-08 s.d. PG-12), entitas kustom (PII-08), streaming sejati, NER, laporan untuk auditor (REP-03), dan marketplace pack (blueprint bagian 13).
 
 ## 12. Risiko
 
@@ -770,6 +786,7 @@ Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: validasi JSON (JSO
 | 1.4 | 9 November 2026 | Tampilan uji dirinci (bagian 7.13, PG-01 s.d. PG-13), EVAL-06 menjadi CLI `omnirail inspect` (P0), user stories 15 s.d. 18, kode error `omnirail_admin_required`, metrik dan ancaman terkait |
 | 1.5 | 9 November 2026 | Crosscheck kesiapan: API-07 (field yang didukung), CFG-10 (`omnirail validate` dan kontrol perubahan kebijakan), DIST-05 (`SECURITY.md`), referensi konfigurasi 7.14, Q1 terjawab |
 | 1.6 | 11 November 2026 | MVP dipecah menjadi rilis α (periksa) dan β (proxy); JSON-01 s.d. 04, AUD-04, PG-04, PG-05 turun ke P1; UP-01 cukup satu provider cloud (UP-08 untuk sisanya); baru: API-08 (pseudo-streaming), PII-10 (konteks lintas pesan), PII-11 (angka terucap, P1), CRED-05 (P1), EVAL-07 dan EVAL-08 (`scan`), DIST-06 (demo WASM), DIST-07 (P1), laporan paparan 7.15 (REP-01 s.d. 03), rute sensitivitas 7.16 (P1), PII-03 diperjelas (normalisasi kunci token), PII-12 dan PII-13 (P1), Q2 terjawab, Q14, Q15; dataset v0.6 |
+| 1.7 | 11 November 2026 | Landasan metode dan rujukan ([LANDASAN_METODE.md](LANDASAN_METODE.md)). Baru: EVAL-09 s.d. 13 (interval Wilson dan McNemar, uji perilaku, *property-based testing*, uji silang, catatan holdout), POL-06 (regex tanpa backtracking), POL-07 (P1, UTS #39), AUD-06 (P1, audit log tahan ubah), DIST-08 (rilis bertanda tangan, SBOM, audit dependensi). Diperjelas: PII-05 (`zeroize`), AUD-02 (RFC 8785), EVAL-05 (*coordinated omission*), cara membaca target di bagian 9, istilah pseudonimisasi di bagian 10 |
 
 ## Lampiran A. Hasil verifikasi format (9 November 2026)
 

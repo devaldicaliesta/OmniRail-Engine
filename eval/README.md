@@ -70,6 +70,8 @@ Aturan kolom `diharapkan`:
 
 ## Cara menghitung metrik
 
+Asal-usul, batas, dan cara pakai dataset ini dijelaskan di [DATASHEET.md](DATASHEET.md). Setiap metrik dilaporkan dengan interval Wilson 95%, dan perbandingan dua sistem memakai uji McNemar eksak per baris (PRD EVAL-09, `eval/tools/statistik.py`). Dengan ukuran dataset sekarang, interval per entitas masih sekitar ±5 poin, jadi target false positive dinilai pada gabungan entitas.
+
 - **Baris yang dihitung:** hanya baris dengan `cakupan_mvp = ya` yang masuk recall, precision, dan ambang CI. Baris `tidak` dilaporkan terpisah sebagai "di luar cakupan" agar celah MVP tetap terlihat.
 - **Kecocokan PII:** temuan dihitung benar bila jenisnya sama dan nilainya sama setelah normalisasi (hapus spasi, titik, dan tanda hubung). Temuan dengan jenis berbeda dihitung sebagai satu false negative dan satu false positive.
 - **False positive rate:** dihitung dari baris `negatif` yang menghasilkan temuan apa pun.
