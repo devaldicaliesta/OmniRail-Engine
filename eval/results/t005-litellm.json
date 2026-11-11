@@ -1,0 +1,204 @@
+{
+ "versi": {
+  "litellm": "1.109.0",
+  "presidio-analyzer": "2.2.366",
+  "presidio-anonymizer": "2.2.366"
+ },
+ "waktu": "2026-11-11T07:14:44Z",
+ "default": {
+  "skenario": [
+   {
+    "skenario": "openai, non-streaming",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya <EMAIL_ADDRESS> dan <EMAIL_ADDRESS>, NIK <ID_NIK>",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": false
+   },
+   {
+    "skenario": "anthropic lewat /v1/chat/completions",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya <EMAIL_ADDRESS> dan <EMAIL_ADDRESS>, NIK <ID_NIK>",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": false
+   },
+   {
+    "skenario": "anthropic native /v1/messages",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya <EMAIL_ADDRESS> dan <EMAIL_ADDRESS>, NIK <ID_NIK>",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": false
+   },
+   {
+    "skenario": "openai, stream=true",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya <EMAIL_ADDRESS> dan <EMAIL_ADDRESS>, NIK <ID_NIK>",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": false
+   },
+   {
+    "skenario": "token buatan pengguna di input",
+    "status": 200,
+    "ke_provider": "Balas ke <EMAIL_ADDRESS_1> saja, jangan ke <EMAIL_ADDRESS_1>",
+    "jawaban": "Diterima: Balas ke <EMAIL_ADDRESS> saja, jangan ke <EMAIL_ADDRESS>",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": false
+   },
+   {
+    "skenario": "credentials midtrans",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=Mid-server-AbCdEf1234567890xYz",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials xendit",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=xnd_production_P8aZ3kL0qWe9RtYu2IoPaSdFgHjKl1Zx",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials telegram",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=1234567890:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsawE",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials postgres",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=postgres://app:s3cret@db:5432/x",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials aws",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=AKIAIOSFODNN7EXAMPLE",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   }
+  ]
+ },
+ "presidio_filter_scope_input": {
+  "skenario": [
+   {
+    "skenario": "openai, non-streaming",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya budi@example.com dan budi@example.com, NIK 3273011503900001",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": true
+   },
+   {
+    "skenario": "anthropic lewat /v1/chat/completions",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya budi@example.com dan budi@example.com, NIK 3273011503900001",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": true
+   },
+   {
+    "skenario": "anthropic native /v1/messages",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya budi@example.com dan budi@example.com, NIK 3273011503900001",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": true
+   },
+   {
+    "skenario": "openai, stream=true",
+    "status": 200,
+    "ke_provider": "Email saya <EMAIL_ADDRESS_1> dan <EMAIL_ADDRESS_2>, NIK <ID_NIK_3>",
+    "jawaban": "Diterima: Email saya budi@example.com dan budi@example.com, NIK 3273011503900001",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": true
+   },
+   {
+    "skenario": "token buatan pengguna di input",
+    "status": 200,
+    "ke_provider": "Balas ke <EMAIL_ADDRESS_1> saja, jangan ke <EMAIL_ADDRESS_1>",
+    "jawaban": "Diterima: Balas ke budi@example.com saja, jangan ke budi@example.com",
+    "nilai_asli_sampai_provider": false,
+    "nilai_dipulihkan": false
+   },
+   {
+    "skenario": "credentials midtrans",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=Mid-server-AbCdEf1234567890xYz",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials xendit",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=xnd_production_P8aZ3kL0qWe9RtYu2IoPaSdFgHjKl1Zx",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials telegram",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=1234567890:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsawE",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials postgres",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=postgres://app:s3cret@db:5432/x",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   },
+   {
+    "skenario": "credentials aws",
+    "status": 200,
+    "ke_provider": "Kenapa error ini muncul? key=AKIAIOSFODNN7EXAMPLE",
+    "diblokir": false,
+    "nilai_asli_sampai_provider": true
+   }
+  ],
+  "latensi": {
+   "input_karakter": 946,
+   "laju_rps": 10,
+   "durasi_detik": 20,
+   "jeda_mock_ms": 50.0,
+   "langsung_ke_mock": {
+    "n": 200,
+    "p50_ms": 54.9,
+    "p99_ms": 59.6
+   },
+   "lewat_proxy": {
+    "n": 200,
+    "p50_ms": 78.1,
+    "p99_ms": 86.6
+   },
+   "overhead_p50_ms": 23.2,
+   "overhead_p99_ms": 27.0
+  }
+ },
+ "tanpa_guardrail": {
+  "latensi": {
+   "input_karakter": 946,
+   "laju_rps": 10,
+   "durasi_detik": 20,
+   "jeda_mock_ms": 50.0,
+   "langsung_ke_mock": {
+    "n": 200,
+    "p50_ms": 54.9,
+    "p99_ms": 57.0
+   },
+   "lewat_proxy": {
+    "n": 200,
+    "p50_ms": 69.3,
+    "p99_ms": 85.1
+   },
+   "overhead_p50_ms": 14.4,
+   "overhead_p99_ms": 28.1
+  }
+ }
+}

@@ -1,11 +1,7 @@
 #!/usr/bin/env python3
-"""Pembangkit baris dataset v0.6: konteks lintas pesan (PRD PII-10) dan angka terucap (PII-11).
+"""Pembangkit baris dataset v0.6.
 
-Baris v0.1 s.d. v0.5 belum punya pembangkit di repo (T-008). Skrip ini hanya
-mencakup baris yang ditambahkan di v0.6 (D2362-D2506, H1010-H1072).
-
-    python3 eval/tools/bangkitkan_v06.py          # cek: baris di repo identik dengan hasil pembangkit
-    python3 eval/tools/bangkitkan_v06.py --tulis  # tambahkan baris bila belum ada
+    python3 eval/tools/bangkitkan_v06.py [--tulis]
 """
 import csv
 import random
@@ -45,7 +41,6 @@ def kk():
 
 
 def angka(n):
-    # Digit pertama 1, 7, atau 9: tidak diawali 0/62 (nomor HP) dan bukan prefix kartu.
     return rng.choice("179") + "".join(str(rng.randint(0, 9)) for _ in range(n - 1))
 
 
@@ -89,9 +84,7 @@ def eja(digits, campur=False, kosong=False):
     return " ".join(kata)
 
 
-# ---------------------------------------------------------------- lintas pesan
 DEV_LP = [
-    # (entitas, pertanyaan asisten, pembangkit, bentuk jawaban)
     ("bank_account", "Baik Kak, untuk proses refund boleh dibantu nomor rekeningnya?", rekening),
     ("bank_account", "Silakan kirim no rek tujuan transfer ya.", rekening),
     ("bank_account", "Pengembalian dana dikirim ke rekening. Nomornya berapa Kak?", rekening),
@@ -148,7 +141,6 @@ def baris_lp(templat, jawab, n_pos, n_neg, neg_templat):
     return out
 
 
-# ---------------------------------------------------------------- angka terucap
 DEV_UCAP = [
     ("phone_id", "[transkrip panggilan] pelanggan: iya mbak nomor hp saya {v} bisa dihubungi kapan saja", lambda: hp(), "eja"),
     ("phone_id", "agen: baik nomornya pelanggan: {v} itu wa juga", lambda: hp(), "kosong"),

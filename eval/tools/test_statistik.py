@@ -1,5 +1,3 @@
-"""Test unit untuk `statistik.py`. Jalankan: python3 -m unittest discover -s eval/tools"""
-
 import unittest
 
 import statistik as s
@@ -7,7 +5,6 @@ import statistik as s
 
 class TestWilson(unittest.TestCase):
     def test_nilai_rujukan(self):
-        # Nilai rujukan interval skor Wilson 95% untuk 90/100.
         lo, hi = s.wilson(90, 100)
         self.assertAlmostEqual(lo, 0.8256, places=4)
         self.assertAlmostEqual(hi, 0.9448, places=4)
@@ -29,7 +26,6 @@ class TestWilson(unittest.TestCase):
 
 class TestMcNemar(unittest.TestCase):
     def test_nilai_rujukan(self):
-        # 2 * P(X <= 3), X ~ Binomial(15, 0,5) = 2 * 576 / 32768
         self.assertAlmostEqual(s.mcnemar_eksak(12, 3), 0.03515625)
         self.assertAlmostEqual(s.mcnemar_eksak(3, 12), 0.03515625)
 
@@ -40,7 +36,6 @@ class TestMcNemar(unittest.TestCase):
 
 class TestKappa(unittest.TestCase):
     def test_nilai_rujukan(self):
-        # teramati 5/6, harapan 0,5 -> kappa 2/3
         self.assertAlmostEqual(s.cohen_kappa("aabbab", "aabbbb"), 2 / 3)
 
     def test_sepakat_penuh(self):

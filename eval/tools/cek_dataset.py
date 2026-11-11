@@ -1,31 +1,7 @@
 #!/usr/bin/env python3
-"""Pemeriksa konsistensi dataset uji PII (`eval/{dev,holdout}/uji_pii_id.csv`).
+"""Pemeriksa konsistensi dataset uji.
 
-Memeriksa aturan format di `eval/README.md` dan spesifikasi entitas di PRD
-bagian 7.10, tanpa dependensi di luar pustaka standar Python (>= 3.9).
-
-Pemeriksaan:
-
-- header, format dan keunikan `id`, nilai `kategori` dan `cakupan_mvp`;
-- tata bahasa kolom `diharapkan` per kategori;
-- setiap nilai di `diharapkan` benar-benar muncul di `teks` (sebanyak yang ditulis);
-- nilai berlabel lolos validator struktur PRD 7.10 (Luhn, struktur NIK/KK/NIP, dst.);
-- nilai angka terucap ("nol delapan satu ...") diubah ke digit dulu, lalu divalidasi;
-- penanda peran percakapan multi-pesan (`<<user>>`, `<<assistant>>`, `<<system>>`) benar;
-- baris `negatif` diawali entitas yang dijebak (`[nik]`, ...) di `catatan`;
-- entitas `nama`/`alamat` dan entitas P1 hanya di baris `cakupan_mvp = tidak`;
-- teks yang sama tidak muncul di dev dan holdout (kebocoran holdout);
-- target jumlah (>= 50 positif dan >= 50 negatif per entitas, holdout >= 30%);
-- tabel jumlah di `eval/README.md` sama dengan hitungan sebenarnya.
-
-Pemeriksa ini tidak membuka isi holdout untuk menyetel aturan; ia hanya
-memvalidasi bentuk label, sehingga aman dijalankan di CI.
-
-Pemakaian:
-
-    python3 eval/tools/cek_dataset.py              # periksa, kode keluar 1 bila ada error
-    python3 eval/tools/cek_dataset.py --ringkasan  # cetak juga tabel jumlah per entitas
-    python3 eval/tools/cek_dataset.py --ketat      # peringatan juga dianggap error
+    python3 eval/tools/cek_dataset.py [--ringkasan] [--ketat]
 """
 
 from __future__ import annotations
@@ -66,8 +42,6 @@ JENIS_INJEKSI = {"deny", "-"}
 TARGET_MIN_PER_ENTITAS = 50
 TARGET_RASIO_HOLDOUT = 0.30
 
-# Kode provinsi Dukcapil. 93 s.d. 96 (provinsi Papua hasil pemekaran) masih
-# asumsi sementara, lihat PRD Lampiran A, K2 (T-322).
 KODE_PROVINSI = {
     11, 12, 13, 14, 15, 16, 17, 18, 19, 21,
     31, 32, 33, 34, 35, 36,
@@ -86,19 +60,16 @@ BULAN_ID = {
 }
 
 
-# Angka terucap (PRD PII-11): satu kata per digit.
 KATA_DIGIT = {
     "nol": "0", "kosong": "0", "satu": "1", "dua": "2", "tiga": "3", "empat": "4",
     "lima": "5", "enam": "6", "tujuh": "7", "delapan": "8", "sembilan": "9",
 }
 
-# Penanda peran untuk baris percakapan multi-pesan (PRD PII-10, eval/README.md).
 PENANDA_PERAN = re.compile(r"^<<(\w+)>> ", re.M)
 PERAN = {"system", "user", "assistant"}
 
 
 def kata_ke_digit(nilai: str) -> str | None:
-    """Ubah angka terucap menjadi digit. None bila nilai bukan angka terucap."""
     token = re.findall(r"[A-Za-z]+|\d+|\+", nilai)
     if not any(t.lower() in KATA_DIGIT for t in token):
         return None
@@ -115,12 +86,7 @@ def kata_ke_digit(nilai: str) -> str | None:
     return "".join(hasil)
 
 
-# --------------------------------------------------------------------------
-# Validator struktur (PRD 7.10). Mengembalikan None bila valid, atau alasan.
-# --------------------------------------------------------------------------
-
 def digit(nilai: str) -> str:
-    """Normalisasi PRD: hapus spasi, titik, dan tanda hubung."""
     return re.sub(r"[\s.\-]", "", nilai)
 
 
@@ -325,10 +291,6 @@ VALIDATOR = {
 }
 
 
-# --------------------------------------------------------------------------
-# Pemeriksaan baris
-# --------------------------------------------------------------------------
-
 @dataclass
 class Laporan:
     error: list[str] = field(default_factory=list)
@@ -343,10 +305,10 @@ class Laporan:
 
 @dataclass
 class Hitungan:
-    baris: Counter = field(default_factory=Counter)  # per split
-    positif: Counter = field(default_factory=Counter)  # kemunculan dalam cakupan (P1: semua)
-    positif_luar: Counter = field(default_factory=Counter)  # kemunculan di baris cakupan tidak
-    negatif: Counter = field(default_factory=Counter)  # baris negatif per entitas yang dijebak
+    baris: Counter = field(default_factory=Counter)
+    positif: Counter = field(default_factory=Counter)
+    positif_luar: Counter = field(default_factory=Counter)
+    negatif: Counter = field(default_factory=Counter)
     kredensial: int = 0
     injeksi: int = 0
     ner: int = 0
@@ -439,7 +401,6 @@ def periksa_baris(split: str, nomor: int, r: dict, lap: Laporan, hit: Hitungan) 
                 alasan = f"{alasan} (angka terucap dibaca sebagai {terucap})"
         if alasan:
             pesan = f"{jenis}:{isi!r} gagal validator: {alasan}"
-            # Baris di luar cakupan memang boleh mendokumentasikan bentuk yang tidak lazim.
             (lap.err if cak == "ya" else lap.warn)(lok, pesan)
 
         if jenis in ENTITAS_NER:
@@ -505,7 +466,6 @@ def angka_id(teks: str) -> int:
 
 
 def periksa_readme(hit: Hitungan, lap: Laporan) -> None:
-    """Cocokkan tabel di eval/README.md dengan hitungan sebenarnya."""
     if not README_EVAL.exists():
         lap.warn("README", f"{README_EVAL} tidak ditemukan")
         return

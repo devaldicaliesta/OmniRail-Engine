@@ -34,3 +34,50 @@ jobs:
             echo '### Dataset uji PII'
             sed -n '/^## Ringkasan dataset/,$p' ringkasan.txt | tail -n +2
           } >> "$GITHUB_STEP_SUMMARY"
+
+  rust:
+    name: Rust
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pasang toolchain dari rust-toolchain.toml
+        run: rustup toolchain install
+
+      - uses: Swatinem/rust-cache@v2
+
+      - name: Format
+        run: cargo fmt --all --check
+
+      - name: Clippy
+        run: cargo clippy --workspace --all-targets --locked -- -D warnings
+
+      - name: Test
+        run: cargo test --workspace --locked
+
+      - name: Build omnirail-core untuk WASM
+        run: cargo build -p omnirail-core --target wasm32-unknown-unknown --locked
+
+      - name: omnirail-core tanpa axum dan tokio
+        run: |
+          if cargo tree -p omnirail-core -e normal --prefix none | grep -E '^(axum|tokio|hyper|reqwest) '; then
+            exit 1
+          fi
+
+  rust-audit:
+    name: Audit dependensi Rust
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: taiki-e/install-action@v2
+        with:
+          tool: cargo-deny,cargo-audit
+
+      - name: cargo deny
+        run: cargo deny check
+
+      - name: cargo audit
+        run: cargo audit

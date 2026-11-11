@@ -1,0 +1,4497 @@
+{
+ "per_entitas": {
+  "email": {
+   "recall": {
+    "nilai": 0.725,
+    "k": 87,
+    "n": 120,
+    "ci95": [
+     0.6391,
+     0.797
+    ]
+   },
+   "precision": {
+    "nilai": 0.9158,
+    "k": 87,
+    "n": 95,
+    "ci95": [
+     0.8425,
+     0.9567
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.0519,
+    "k": 4,
+    "n": 77,
+    "ci95": [
+     0.0204,
+     0.1261
+    ]
+   },
+   "tp": 87,
+   "fn": 33,
+   "fp": 8
+  },
+  "phone_id": {
+   "recall": {
+    "nilai": 0.9259,
+    "k": 100,
+    "n": 108,
+    "ci95": [
+     0.8606,
+     0.962
+    ]
+   },
+   "precision": {
+    "nilai": 0.885,
+    "k": 100,
+    "n": 113,
+    "ci95": [
+     0.8131,
+     0.9315
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.1548,
+    "k": 13,
+    "n": 84,
+    "ci95": [
+     0.0927,
+     0.247
+    ]
+   },
+   "tp": 100,
+   "fn": 8,
+   "fp": 13
+  },
+  "credit_card": {
+   "recall": {
+    "nilai": 0.8542,
+    "k": 82,
+    "n": 96,
+    "ci95": [
+     0.77,
+     0.9111
+    ]
+   },
+   "precision": {
+    "nilai": 0.6406,
+    "k": 82,
+    "n": 128,
+    "ci95": [
+     0.5545,
+     0.7185
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.5789,
+    "k": 44,
+    "n": 76,
+    "ci95": [
+     0.4668,
+     0.6835
+    ]
+   },
+   "tp": 82,
+   "fn": 14,
+   "fp": 46
+  },
+  "nik": {
+   "recall": {
+    "nilai": 0.9746,
+    "k": 115,
+    "n": 118,
+    "ci95": [
+     0.9279,
+     0.9913
+    ]
+   },
+   "precision": {
+    "nilai": 0.5111,
+    "k": 115,
+    "n": 225,
+    "ci95": [
+     0.4462,
+     0.5757
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.6667,
+    "k": 54,
+    "n": 81,
+    "ci95": [
+     0.5585,
+     0.7597
+    ]
+   },
+   "tp": 115,
+   "fn": 3,
+   "fp": 110
+  },
+  "npwp": {
+   "recall": {
+    "nilai": 0.9889,
+    "k": 89,
+    "n": 90,
+    "ci95": [
+     0.9397,
+     0.998
+    ]
+   },
+   "precision": {
+    "nilai": 1.0,
+    "k": 89,
+    "n": 89,
+    "ci95": [
+     0.9586,
+     1.0
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.0,
+    "k": 0,
+    "n": 75,
+    "ci95": [
+     0.0,
+     0.0487
+    ]
+   },
+   "tp": 89,
+   "fn": 1,
+   "fp": 0
+  },
+  "bank_account": {
+   "recall": {
+    "nilai": 0.7257,
+    "k": 82,
+    "n": 113,
+    "ci95": [
+     0.637,
+     0.7995
+    ]
+   },
+   "precision": {
+    "nilai": 1.0,
+    "k": 82,
+    "n": 82,
+    "ci95": [
+     0.9552,
+     1.0
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.0778,
+    "k": 7,
+    "n": 90,
+    "ci95": [
+     0.0382,
+     0.1519
+    ]
+   },
+   "tp": 82,
+   "fn": 31,
+   "fp": 0
+  },
+  "nip": {
+   "recall": {
+    "nilai": 0.9277,
+    "k": 77,
+    "n": 83,
+    "ci95": [
+     0.8511,
+     0.9664
+    ]
+   },
+   "precision": {
+    "nilai": 0.77,
+    "k": 77,
+    "n": 100,
+    "ci95": [
+     0.6785,
+     0.8416
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.3014,
+    "k": 22,
+    "n": 73,
+    "ci95": [
+     0.2082,
+     0.4144
+    ]
+   },
+   "tp": 77,
+   "fn": 6,
+   "fp": 23
+  },
+  "kk": {
+   "recall": {
+    "nilai": 0.7895,
+    "k": 75,
+    "n": 95,
+    "ci95": [
+     0.6971,
+     0.8594
+    ]
+   },
+   "precision": {
+    "nilai": 1.0,
+    "k": 75,
+    "n": 75,
+    "ci95": [
+     0.9513,
+     1.0
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.1216,
+    "k": 9,
+    "n": 74,
+    "ci95": [
+     0.0653,
+     0.2153
+    ]
+   },
+   "tp": 75,
+   "fn": 20,
+   "fp": 0
+  },
+  "passport_id": {
+   "recall": {
+    "nilai": 0.8763,
+    "k": 85,
+    "n": 97,
+    "ci95": [
+     0.7961,
+     0.9278
+    ]
+   },
+   "precision": {
+    "nilai": 1.0,
+    "k": 85,
+    "n": 85,
+    "ci95": [
+     0.9568,
+     1.0
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.0,
+    "k": 0,
+    "n": 78,
+    "ci95": [
+     0.0,
+     0.0469
+    ]
+   },
+   "tp": 85,
+   "fn": 12,
+   "fp": 0
+  },
+  "bpjs": {
+   "recall": {
+    "nilai": 0.8763,
+    "k": 85,
+    "n": 97,
+    "ci95": [
+     0.7961,
+     0.9278
+    ]
+   },
+   "precision": {
+    "nilai": 1.0,
+    "k": 85,
+    "n": 85,
+    "ci95": [
+     0.9568,
+     1.0
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.0,
+    "k": 0,
+    "n": 78,
+    "ci95": [
+     0.0,
+     0.0469
+    ]
+   },
+   "tp": 85,
+   "fn": 12,
+   "fp": 0
+  },
+  "birth_date": {
+   "recall": {
+    "nilai": 0.88,
+    "k": 88,
+    "n": 100,
+    "ci95": [
+     0.8019,
+     0.93
+    ]
+   },
+   "precision": {
+    "nilai": 0.8,
+    "k": 88,
+    "n": 110,
+    "ci95": [
+     0.7157,
+     0.864
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.2821,
+    "k": 22,
+    "n": 78,
+    "ci95": [
+     0.1943,
+     0.3903
+    ]
+   },
+   "tp": 88,
+   "fn": 12,
+   "fp": 22
+  }
+ },
+ "gabungan": {
+  "semua_p0": {
+   "recall": {
+    "nilai": 0.8639,
+    "k": 965,
+    "n": 1117,
+    "ci95": [
+     0.8426,
+     0.8828
+    ]
+   },
+   "precision": {
+    "nilai": 0.813,
+    "k": 965,
+    "n": 1187,
+    "ci95": [
+     0.7898,
+     0.8341
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.1733,
+    "k": 175,
+    "n": 1010,
+    "ci95": [
+     0.1512,
+     0.1978
+    ]
+   },
+   "tp": 965,
+   "fn": 152,
+   "fp": 222
+  },
+  "t003": {
+   "recall": {
+    "nilai": 0.8459,
+    "k": 439,
+    "n": 519,
+    "ci95": [
+     0.8123,
+     0.8744
+    ]
+   },
+   "precision": {
+    "nilai": 0.7378,
+    "k": 439,
+    "n": 595,
+    "ci95": [
+     0.701,
+     0.7715
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.2857,
+    "k": 114,
+    "n": 399,
+    "ci95": [
+     0.2436,
+     0.3319
+    ]
+   },
+   "tp": 439,
+   "fn": 80,
+   "fp": 156
+  },
+  "identifier_langsung": {
+   "recall": {
+    "nilai": 0.8623,
+    "k": 877,
+    "n": 1017,
+    "ci95": [
+     0.8398,
+     0.8822
+    ]
+   },
+   "precision": {
+    "nilai": 0.8143,
+    "k": 877,
+    "n": 1077,
+    "ci95": [
+     0.79,
+     0.8364
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.1947,
+    "k": 153,
+    "n": 786,
+    "ci95": [
+     0.1685,
+     0.2238
+    ]
+   },
+   "tp": 877,
+   "fn": 140,
+   "fp": 200
+  },
+  "identifier_kuasi": {
+   "recall": {
+    "nilai": 0.88,
+    "k": 88,
+    "n": 100,
+    "ci95": [
+     0.8019,
+     0.93
+    ]
+   },
+   "precision": {
+    "nilai": 0.8,
+    "k": 88,
+    "n": 110,
+    "ci95": [
+     0.7157,
+     0.864
+    ]
+   },
+   "false_positive": {
+    "nilai": 0.2821,
+    "k": 22,
+    "n": 78,
+    "ci95": [
+     0.1943,
+     0.3903
+    ]
+   },
+   "tp": 88,
+   "fn": 12,
+   "fp": 22
+  }
+ },
+ "butir": {
+  "pos:D001:0:email": 1,
+  "pos:D002:0:email": 1,
+  "pos:D003:0:email": 0,
+  "pos:D004:0:email": 1,
+  "pos:D005:0:email": 1,
+  "pos:D006:0:email": 1,
+  "pos:D006:1:email": 1,
+  "pos:D007:0:email": 1,
+  "pos:D008:0:email": 0,
+  "neg:D009": 1,
+  "neg:D010": 1,
+  "neg:D011": 1,
+  "neg:D012": 1,
+  "pos:D013:0:phone_id": 1,
+  "pos:D014:0:phone_id": 1,
+  "pos:D015:0:phone_id": 0,
+  "pos:D016:0:phone_id": 1,
+  "pos:D017:0:phone_id": 1,
+  "pos:D018:0:phone_id": 1,
+  "pos:D019:0:phone_id": 1,
+  "neg:D021": 1,
+  "neg:D022": 0,
+  "neg:D023": 1,
+  "neg:D024": 1,
+  "neg:D025": 0,
+  "pos:D026:0:credit_card": 1,
+  "pos:D027:0:credit_card": 1,
+  "pos:D028:0:credit_card": 1,
+  "pos:D029:0:credit_card": 1,
+  "pos:D030:0:credit_card": 0,
+  "pos:D031:0:credit_card": 1,
+  "neg:D032": 0,
+  "neg:D033": 0,
+  "neg:D034": 0,
+  "pos:D035:0:nik": 1,
+  "pos:D036:0:nik": 1,
+  "pos:D037:0:nik": 1,
+  "pos:D038:0:nik": 1,
+  "pos:D039:0:nik": 1,
+  "pos:D040:0:nik": 0,
+  "pos:D041:0:nik": 1,
+  "pos:D042:0:nik": 1,
+  "neg:D044": 0,
+  "neg:D045": 0,
+  "neg:D046": 0,
+  "neg:D047": 0,
+  "neg:D048": 0,
+  "neg:D049": 0,
+  "pos:D050:0:nik": 0,
+  "pos:D051:0:credit_card": 1,
+  "pos:D052:0:npwp": 1,
+  "pos:D053:0:npwp": 1,
+  "pos:D054:0:npwp": 1,
+  "pos:D055:0:npwp": 1,
+  "pos:D056:0:npwp": 1,
+  "neg:D057": 1,
+  "neg:D058": 1,
+  "pos:D059:0:bank_account": 1,
+  "pos:D060:0:bank_account": 1,
+  "pos:D061:0:bank_account": 1,
+  "pos:D062:0:bank_account": 1,
+  "pos:D063:0:bank_account": 1,
+  "pos:D064:0:bank_account": 0,
+  "neg:D066": 1,
+  "neg:D067": 1,
+  "neg:D068": 1,
+  "neg:D069": 1,
+  "pos:D070:0:nik": 1,
+  "pos:D070:1:phone_id": 1,
+  "pos:D070:2:email": 1,
+  "pos:D071:0:email": 1,
+  "pos:D071:1:credit_card": 1,
+  "pos:D072:0:email": 1,
+  "pos:D072:1:email": 1,
+  "pos:D073:0:email": 1,
+  "pos:D107:0:email": 0,
+  "pos:D108:0:email": 1,
+  "pos:D109:0:email": 0,
+  "pos:D110:0:email": 0,
+  "pos:D111:0:email": 0,
+  "pos:D112:0:email": 1,
+  "pos:D113:0:email": 1,
+  "pos:D114:0:email": 1,
+  "pos:D115:0:email": 0,
+  "pos:D116:0:email": 1,
+  "pos:D117:0:email": 1,
+  "pos:D118:0:email": 1,
+  "pos:D119:0:email": 1,
+  "pos:D120:0:email": 0,
+  "pos:D121:0:email": 0,
+  "pos:D122:0:email": 1,
+  "pos:D123:0:email": 0,
+  "pos:D124:0:email": 0,
+  "pos:D125:0:email": 0,
+  "pos:D126:0:email": 1,
+  "pos:D127:0:email": 0,
+  "pos:D128:0:email": 0,
+  "pos:D129:0:email": 1,
+  "pos:D130:0:email": 1,
+  "pos:D131:0:email": 1,
+  "pos:D132:0:email": 1,
+  "pos:D133:0:email": 1,
+  "pos:D134:0:email": 1,
+  "pos:D135:0:email": 1,
+  "pos:D136:0:email": 0,
+  "pos:D137:0:email": 1,
+  "pos:D138:0:email": 1,
+  "pos:D139:0:email": 1,
+  "pos:D140:0:email": 1,
+  "pos:D141:0:email": 1,
+  "pos:D142:0:email": 0,
+  "pos:D143:0:email": 1,
+  "pos:D144:0:email": 1,
+  "pos:D145:0:email": 1,
+  "pos:D146:0:email": 1,
+  "neg:D147": 1,
+  "neg:D148": 1,
+  "neg:D149": 1,
+  "neg:D150": 1,
+  "neg:D151": 1,
+  "neg:D152": 1,
+  "neg:D153": 1,
+  "neg:D154": 1,
+  "neg:D155": 1,
+  "neg:D156": 1,
+  "neg:D157": 1,
+  "neg:D158": 1,
+  "neg:D159": 1,
+  "neg:D160": 1,
+  "neg:D161": 1,
+  "neg:D162": 1,
+  "neg:D163": 1,
+  "neg:D164": 1,
+  "neg:D165": 1,
+  "neg:D166": 1,
+  "neg:D167": 1,
+  "neg:D168": 1,
+  "neg:D169": 0,
+  "neg:D170": 1,
+  "neg:D171": 1,
+  "neg:D172": 1,
+  "neg:D173": 1,
+  "neg:D174": 1,
+  "neg:D175": 1,
+  "neg:D176": 1,
+  "neg:D177": 1,
+  "neg:D178": 1,
+  "neg:D179": 1,
+  "neg:D180": 1,
+  "neg:D181": 0,
+  "neg:D182": 1,
+  "neg:D183": 1,
+  "neg:D184": 1,
+  "pos:D185:0:phone_id": 1,
+  "pos:D186:0:phone_id": 1,
+  "pos:D187:0:phone_id": 1,
+  "pos:D188:0:phone_id": 1,
+  "pos:D189:0:phone_id": 1,
+  "pos:D190:0:phone_id": 1,
+  "pos:D191:0:phone_id": 1,
+  "pos:D192:0:phone_id": 1,
+  "pos:D193:0:phone_id": 1,
+  "pos:D194:0:phone_id": 1,
+  "pos:D195:0:phone_id": 1,
+  "pos:D196:0:phone_id": 1,
+  "pos:D197:0:phone_id": 1,
+  "pos:D198:0:phone_id": 0,
+  "pos:D199:0:phone_id": 1,
+  "pos:D200:0:phone_id": 1,
+  "pos:D201:0:phone_id": 1,
+  "pos:D202:0:phone_id": 1,
+  "pos:D203:0:phone_id": 1,
+  "pos:D204:0:phone_id": 1,
+  "pos:D205:0:phone_id": 0,
+  "pos:D206:0:phone_id": 1,
+  "pos:D207:0:phone_id": 1,
+  "pos:D208:0:phone_id": 1,
+  "pos:D209:0:phone_id": 1,
+  "pos:D210:0:phone_id": 0,
+  "pos:D211:0:phone_id": 1,
+  "pos:D212:0:phone_id": 1,
+  "pos:D213:0:phone_id": 1,
+  "pos:D214:0:phone_id": 1,
+  "pos:D215:0:phone_id": 1,
+  "pos:D216:0:phone_id": 1,
+  "pos:D217:0:phone_id": 1,
+  "pos:D218:0:phone_id": 1,
+  "pos:D219:0:phone_id": 1,
+  "pos:D220:0:phone_id": 1,
+  "pos:D221:0:phone_id": 0,
+  "pos:D222:0:phone_id": 1,
+  "pos:D223:0:phone_id": 1,
+  "pos:D224:0:phone_id": 1,
+  "neg:D228": 1,
+  "neg:D229": 1,
+  "neg:D230": 1,
+  "neg:D231": 1,
+  "neg:D232": 1,
+  "neg:D233": 1,
+  "neg:D234": 0,
+  "neg:D235": 1,
+  "neg:D236": 1,
+  "neg:D237": 0,
+  "neg:D238": 1,
+  "neg:D239": 1,
+  "neg:D240": 1,
+  "neg:D241": 1,
+  "neg:D242": 1,
+  "neg:D243": 1,
+  "neg:D244": 1,
+  "neg:D245": 0,
+  "neg:D246": 1,
+  "neg:D247": 1,
+  "neg:D248": 1,
+  "neg:D249": 1,
+  "neg:D250": 1,
+  "neg:D251": 1,
+  "neg:D252": 1,
+  "neg:D253": 1,
+  "neg:D254": 0,
+  "neg:D255": 1,
+  "neg:D256": 1,
+  "neg:D257": 1,
+  "neg:D258": 1,
+  "neg:D259": 1,
+  "neg:D260": 1,
+  "neg:D261": 1,
+  "neg:D262": 1,
+  "neg:D263": 1,
+  "neg:D264": 1,
+  "neg:D265": 1,
+  "pos:D266:0:credit_card": 1,
+  "pos:D267:0:credit_card": 1,
+  "pos:D268:0:credit_card": 1,
+  "pos:D269:0:credit_card": 1,
+  "pos:D270:0:credit_card": 1,
+  "pos:D271:0:credit_card": 1,
+  "pos:D272:0:credit_card": 1,
+  "pos:D273:0:credit_card": 1,
+  "pos:D274:0:credit_card": 1,
+  "pos:D275:0:credit_card": 1,
+  "pos:D276:0:credit_card": 1,
+  "pos:D277:0:credit_card": 1,
+  "pos:D278:0:credit_card": 1,
+  "pos:D279:0:credit_card": 1,
+  "pos:D280:0:credit_card": 1,
+  "pos:D281:0:credit_card": 1,
+  "pos:D282:0:credit_card": 1,
+  "pos:D283:0:credit_card": 1,
+  "pos:D284:0:credit_card": 1,
+  "pos:D285:0:credit_card": 1,
+  "pos:D286:0:credit_card": 1,
+  "pos:D287:0:credit_card": 1,
+  "pos:D288:0:credit_card": 1,
+  "pos:D289:0:credit_card": 1,
+  "pos:D290:0:credit_card": 1,
+  "pos:D291:0:credit_card": 0,
+  "pos:D292:0:credit_card": 1,
+  "pos:D293:0:credit_card": 1,
+  "pos:D294:0:credit_card": 1,
+  "pos:D295:0:credit_card": 1,
+  "pos:D296:0:credit_card": 1,
+  "pos:D297:0:credit_card": 1,
+  "pos:D298:0:credit_card": 1,
+  "pos:D299:0:credit_card": 1,
+  "pos:D300:0:credit_card": 1,
+  "pos:D301:0:credit_card": 1,
+  "pos:D302:0:credit_card": 0,
+  "pos:D303:0:credit_card": 1,
+  "pos:D304:0:credit_card": 1,
+  "pos:D305:0:credit_card": 1,
+  "neg:D306": 0,
+  "neg:D307": 0,
+  "neg:D308": 1,
+  "neg:D309": 1,
+  "neg:D310": 0,
+  "neg:D311": 0,
+  "neg:D312": 1,
+  "neg:D313": 1,
+  "neg:D314": 0,
+  "neg:D315": 1,
+  "neg:D316": 1,
+  "neg:D317": 0,
+  "neg:D318": 0,
+  "neg:D319": 1,
+  "neg:D320": 1,
+  "neg:D321": 0,
+  "neg:D322": 0,
+  "neg:D323": 0,
+  "neg:D324": 0,
+  "neg:D325": 1,
+  "neg:D326": 1,
+  "neg:D327": 1,
+  "neg:D328": 0,
+  "neg:D329": 0,
+  "neg:D330": 0,
+  "neg:D331": 1,
+  "neg:D332": 0,
+  "neg:D333": 1,
+  "neg:D334": 0,
+  "neg:D335": 1,
+  "neg:D336": 1,
+  "neg:D337": 0,
+  "neg:D338": 1,
+  "neg:D339": 1,
+  "neg:D340": 1,
+  "neg:D341": 1,
+  "neg:D342": 0,
+  "neg:D343": 0,
+  "pos:D344:0:nik": 1,
+  "pos:D345:0:nik": 1,
+  "pos:D346:0:nik": 1,
+  "pos:D347:0:nik": 1,
+  "pos:D348:0:nik": 1,
+  "pos:D349:0:nik": 1,
+  "pos:D350:0:nik": 1,
+  "pos:D351:0:nik": 1,
+  "pos:D352:0:nik": 1,
+  "pos:D353:0:nik": 1,
+  "pos:D354:0:nik": 1,
+  "pos:D355:0:nik": 1,
+  "pos:D356:0:nik": 1,
+  "pos:D357:0:nik": 1,
+  "pos:D358:0:nik": 0,
+  "pos:D359:0:nik": 1,
+  "pos:D360:0:nik": 1,
+  "pos:D361:0:nik": 1,
+  "pos:D362:0:nik": 1,
+  "pos:D363:0:nik": 1,
+  "pos:D364:0:nik": 1,
+  "pos:D365:0:nik": 1,
+  "pos:D366:0:nik": 1,
+  "pos:D367:0:nik": 1,
+  "pos:D368:0:nik": 1,
+  "pos:D369:0:nik": 1,
+  "pos:D370:0:nik": 1,
+  "pos:D371:0:nik": 1,
+  "pos:D372:0:nik": 1,
+  "pos:D373:0:nik": 1,
+  "pos:D374:0:nik": 1,
+  "pos:D375:0:nik": 1,
+  "pos:D376:0:nik": 1,
+  "pos:D377:0:nik": 1,
+  "pos:D378:0:nik": 1,
+  "pos:D379:0:nik": 1,
+  "pos:D380:0:nik": 1,
+  "pos:D381:0:nik": 1,
+  "pos:D382:0:nik": 1,
+  "pos:D383:0:nik": 1,
+  "neg:D387": 1,
+  "neg:D388": 0,
+  "neg:D389": 0,
+  "neg:D390": 0,
+  "neg:D391": 0,
+  "neg:D392": 0,
+  "neg:D393": 1,
+  "neg:D394": 1,
+  "neg:D395": 0,
+  "neg:D396": 1,
+  "neg:D397": 0,
+  "neg:D398": 0,
+  "neg:D399": 0,
+  "neg:D400": 0,
+  "neg:D401": 0,
+  "neg:D402": 1,
+  "neg:D403": 0,
+  "neg:D404": 1,
+  "neg:D405": 1,
+  "neg:D406": 0,
+  "neg:D407": 0,
+  "neg:D408": 1,
+  "neg:D409": 1,
+  "neg:D410": 0,
+  "neg:D411": 0,
+  "neg:D412": 0,
+  "neg:D413": 0,
+  "neg:D414": 0,
+  "neg:D415": 0,
+  "neg:D416": 0,
+  "neg:D417": 0,
+  "neg:D418": 1,
+  "neg:D419": 1,
+  "neg:D420": 0,
+  "neg:D421": 0,
+  "neg:D422": 0,
+  "neg:D423": 1,
+  "neg:D424": 1,
+  "pos:D425:0:npwp": 1,
+  "pos:D426:0:npwp": 1,
+  "pos:D427:0:npwp": 1,
+  "pos:D428:0:npwp": 1,
+  "pos:D429:0:npwp": 1,
+  "pos:D430:0:npwp": 1,
+  "pos:D431:0:npwp": 1,
+  "pos:D432:0:npwp": 1,
+  "pos:D433:0:npwp": 1,
+  "pos:D434:0:npwp": 1,
+  "pos:D435:0:npwp": 1,
+  "pos:D436:0:npwp": 1,
+  "pos:D437:0:npwp": 1,
+  "pos:D438:0:npwp": 1,
+  "pos:D439:0:npwp": 1,
+  "pos:D440:0:npwp": 1,
+  "pos:D441:0:npwp": 1,
+  "pos:D442:0:npwp": 1,
+  "pos:D443:0:npwp": 1,
+  "pos:D444:0:npwp": 1,
+  "pos:D445:0:npwp": 1,
+  "pos:D446:0:npwp": 1,
+  "pos:D447:0:npwp": 1,
+  "pos:D448:0:npwp": 1,
+  "pos:D449:0:npwp": 1,
+  "pos:D450:0:npwp": 1,
+  "pos:D451:0:npwp": 1,
+  "pos:D452:0:npwp": 1,
+  "pos:D453:0:npwp": 1,
+  "pos:D454:0:npwp": 0,
+  "pos:D455:0:npwp": 1,
+  "pos:D456:0:npwp": 1,
+  "pos:D457:0:npwp": 1,
+  "pos:D458:0:npwp": 1,
+  "pos:D459:0:npwp": 1,
+  "pos:D460:0:npwp": 1,
+  "pos:D461:0:npwp": 1,
+  "pos:D462:0:npwp": 1,
+  "pos:D463:0:npwp": 1,
+  "pos:D464:0:npwp": 1,
+  "neg:D465": 1,
+  "neg:D466": 1,
+  "neg:D467": 1,
+  "neg:D468": 1,
+  "neg:D469": 1,
+  "neg:D470": 1,
+  "neg:D471": 1,
+  "neg:D472": 1,
+  "neg:D473": 1,
+  "neg:D474": 1,
+  "neg:D475": 1,
+  "neg:D476": 1,
+  "neg:D477": 1,
+  "neg:D478": 1,
+  "neg:D479": 1,
+  "neg:D480": 1,
+  "neg:D481": 1,
+  "neg:D482": 1,
+  "neg:D483": 1,
+  "neg:D484": 1,
+  "neg:D485": 1,
+  "neg:D486": 1,
+  "neg:D487": 1,
+  "neg:D488": 1,
+  "neg:D489": 1,
+  "neg:D490": 1,
+  "neg:D491": 1,
+  "neg:D492": 1,
+  "neg:D493": 1,
+  "neg:D494": 1,
+  "neg:D495": 1,
+  "neg:D496": 1,
+  "neg:D497": 1,
+  "neg:D498": 1,
+  "neg:D499": 1,
+  "neg:D500": 1,
+  "neg:D501": 1,
+  "neg:D502": 1,
+  "pos:D503:0:bank_account": 1,
+  "pos:D504:0:bank_account": 1,
+  "pos:D505:0:bank_account": 1,
+  "pos:D506:0:bank_account": 1,
+  "pos:D507:0:bank_account": 1,
+  "pos:D508:0:bank_account": 1,
+  "pos:D509:0:bank_account": 0,
+  "pos:D510:0:bank_account": 1,
+  "pos:D511:0:bank_account": 1,
+  "pos:D512:0:bank_account": 1,
+  "pos:D513:0:bank_account": 1,
+  "pos:D514:0:bank_account": 1,
+  "pos:D515:0:bank_account": 1,
+  "pos:D516:0:bank_account": 1,
+  "pos:D517:0:bank_account": 1,
+  "pos:D518:0:bank_account": 0,
+  "pos:D519:0:bank_account": 1,
+  "pos:D520:0:bank_account": 1,
+  "pos:D521:0:bank_account": 0,
+  "pos:D522:0:bank_account": 1,
+  "pos:D523:0:bank_account": 1,
+  "pos:D524:0:bank_account": 1,
+  "pos:D525:0:bank_account": 1,
+  "pos:D526:0:bank_account": 0,
+  "pos:D527:0:bank_account": 1,
+  "pos:D528:0:bank_account": 1,
+  "pos:D529:0:bank_account": 1,
+  "pos:D530:0:bank_account": 0,
+  "pos:D531:0:bank_account": 1,
+  "pos:D532:0:bank_account": 1,
+  "pos:D533:0:bank_account": 1,
+  "pos:D534:0:bank_account": 1,
+  "pos:D535:0:bank_account": 1,
+  "pos:D536:0:bank_account": 1,
+  "pos:D537:0:bank_account": 0,
+  "pos:D538:0:bank_account": 1,
+  "pos:D539:0:bank_account": 1,
+  "pos:D540:0:bank_account": 0,
+  "pos:D541:0:bank_account": 1,
+  "pos:D542:0:bank_account": 1,
+  "neg:D546": 1,
+  "neg:D547": 0,
+  "neg:D548": 1,
+  "neg:D549": 1,
+  "neg:D550": 1,
+  "neg:D551": 1,
+  "neg:D552": 1,
+  "neg:D553": 1,
+  "neg:D554": 1,
+  "neg:D555": 1,
+  "neg:D556": 1,
+  "neg:D557": 1,
+  "neg:D558": 1,
+  "neg:D559": 1,
+  "neg:D560": 1,
+  "neg:D561": 1,
+  "neg:D562": 1,
+  "neg:D563": 1,
+  "neg:D564": 0,
+  "neg:D565": 1,
+  "neg:D566": 1,
+  "neg:D567": 1,
+  "neg:D568": 1,
+  "neg:D569": 1,
+  "neg:D570": 1,
+  "neg:D571": 1,
+  "neg:D572": 1,
+  "neg:D573": 1,
+  "neg:D574": 1,
+  "neg:D575": 1,
+  "neg:D576": 1,
+  "neg:D577": 1,
+  "neg:D578": 1,
+  "neg:D579": 1,
+  "neg:D580": 1,
+  "neg:D581": 0,
+  "neg:D582": 1,
+  "neg:D583": 1,
+  "pos:D584:0:nik": 1,
+  "pos:D584:1:phone_id": 1,
+  "pos:D584:2:email": 1,
+  "pos:D585:0:nik": 1,
+  "pos:D585:1:phone_id": 1,
+  "pos:D585:2:email": 0,
+  "pos:D586:0:nik": 1,
+  "pos:D586:1:npwp": 1,
+  "pos:D586:2:email": 0,
+  "pos:D587:0:nik": 1,
+  "pos:D587:1:npwp": 1,
+  "pos:D587:2:email": 0,
+  "pos:D588:0:nik": 1,
+  "pos:D588:1:phone_id": 1,
+  "pos:D589:0:phone_id": 1,
+  "pos:D589:1:email": 1,
+  "pos:D589:2:nik": 1,
+  "pos:D590:0:nik": 1,
+  "pos:D590:1:npwp": 1,
+  "pos:D590:2:email": 0,
+  "pos:D591:0:nik": 1,
+  "pos:D591:1:phone_id": 1,
+  "pos:D591:2:email": 1,
+  "pos:D592:0:nik": 1,
+  "pos:D592:1:phone_id": 1,
+  "pos:D593:0:email": 1,
+  "pos:D593:1:phone_id": 0,
+  "pos:D594:0:bank_account": 1,
+  "pos:D594:1:phone_id": 1,
+  "pos:D595:0:phone_id": 1,
+  "pos:D595:1:email": 0,
+  "pos:D595:2:nik": 1,
+  "pos:D596:0:nik": 1,
+  "pos:D596:1:phone_id": 1,
+  "pos:D597:0:email": 1,
+  "pos:D597:1:credit_card": 0,
+  "pos:D597:2:bank_account": 1,
+  "pos:D598:0:nik": 1,
+  "pos:D598:1:phone_id": 1,
+  "pos:D598:2:email": 1,
+  "pos:D599:0:email": 1,
+  "pos:D599:1:credit_card": 1,
+  "pos:D599:2:bank_account": 1,
+  "pos:D600:0:nik": 1,
+  "pos:D600:1:credit_card": 1,
+  "pos:D600:2:email": 1,
+  "pos:D601:0:email": 1,
+  "pos:D601:1:credit_card": 1,
+  "pos:D601:2:bank_account": 1,
+  "pos:D602:0:nik": 1,
+  "pos:D602:1:phone_id": 1,
+  "pos:D602:2:email": 1,
+  "pos:D603:0:nik": 1,
+  "pos:D603:1:bank_account": 1,
+  "pos:D604:0:phone_id": 1,
+  "pos:D604:1:email": 0,
+  "pos:D604:2:nik": 1,
+  "pos:D605:0:bank_account": 1,
+  "pos:D605:1:phone_id": 1,
+  "pos:D606:0:email": 1,
+  "pos:D606:1:credit_card": 1,
+  "pos:D606:2:bank_account": 1,
+  "pos:D607:0:phone_id": 1,
+  "pos:D607:1:email": 1,
+  "pos:D607:2:nik": 1,
+  "pos:D608:0:nik": 1,
+  "pos:D608:1:credit_card": 1,
+  "pos:D608:2:email": 1,
+  "pos:D702:0:nip": 1,
+  "pos:D703:0:nip": 1,
+  "pos:D704:0:nip": 0,
+  "pos:D705:0:nip": 1,
+  "pos:D706:0:nip": 1,
+  "pos:D707:0:nip": 0,
+  "pos:D708:0:nip": 1,
+  "pos:D709:0:nip": 1,
+  "pos:D710:0:nip": 1,
+  "pos:D711:0:nip": 1,
+  "pos:D712:0:nip": 1,
+  "pos:D713:0:nip": 1,
+  "pos:D714:0:nip": 1,
+  "pos:D715:0:nip": 1,
+  "pos:D716:0:nip": 1,
+  "pos:D717:0:nip": 1,
+  "pos:D718:0:nip": 1,
+  "pos:D719:0:nip": 1,
+  "pos:D720:0:nip": 1,
+  "pos:D721:0:nip": 1,
+  "pos:D722:0:nip": 1,
+  "pos:D723:0:nip": 1,
+  "pos:D724:0:nip": 1,
+  "pos:D725:0:nip": 1,
+  "pos:D726:0:nip": 1,
+  "pos:D727:0:nip": 0,
+  "pos:D728:0:nip": 1,
+  "pos:D729:0:nip": 1,
+  "pos:D730:0:nip": 1,
+  "pos:D731:0:nip": 1,
+  "pos:D732:0:nip": 1,
+  "pos:D733:0:nip": 1,
+  "pos:D734:0:nip": 1,
+  "pos:D735:0:nip": 0,
+  "pos:D736:0:nip": 1,
+  "pos:D737:0:nip": 1,
+  "pos:D738:0:nip": 1,
+  "pos:D739:0:nip": 1,
+  "neg:D740": 1,
+  "neg:D741": 1,
+  "neg:D742": 1,
+  "neg:D743": 1,
+  "neg:D744": 1,
+  "neg:D745": 0,
+  "neg:D746": 1,
+  "neg:D747": 1,
+  "neg:D748": 1,
+  "neg:D749": 1,
+  "neg:D750": 1,
+  "neg:D751": 1,
+  "neg:D752": 1,
+  "neg:D753": 1,
+  "neg:D754": 0,
+  "neg:D755": 0,
+  "neg:D756": 1,
+  "neg:D757": 1,
+  "neg:D758": 1,
+  "neg:D759": 1,
+  "neg:D760": 1,
+  "neg:D761": 1,
+  "neg:D762": 1,
+  "neg:D763": 0,
+  "neg:D764": 1,
+  "neg:D765": 1,
+  "neg:D766": 0,
+  "neg:D767": 1,
+  "neg:D768": 1,
+  "neg:D769": 0,
+  "neg:D770": 1,
+  "neg:D771": 1,
+  "neg:D772": 1,
+  "neg:D773": 0,
+  "neg:D774": 1,
+  "neg:D775": 1,
+  "neg:D776": 1,
+  "neg:D777": 1,
+  "pos:D778:0:kk": 1,
+  "pos:D779:0:kk": 1,
+  "pos:D780:0:kk": 1,
+  "pos:D781:0:kk": 1,
+  "pos:D782:0:kk": 1,
+  "pos:D783:0:kk": 1,
+  "pos:D784:0:kk": 1,
+  "pos:D785:0:kk": 1,
+  "pos:D786:0:kk": 1,
+  "pos:D787:0:kk": 1,
+  "pos:D788:0:kk": 1,
+  "pos:D789:0:kk": 1,
+  "pos:D790:0:kk": 1,
+  "pos:D791:0:kk": 0,
+  "pos:D792:0:kk": 1,
+  "pos:D793:0:kk": 1,
+  "pos:D794:0:kk": 1,
+  "pos:D795:0:kk": 1,
+  "pos:D796:0:kk": 1,
+  "pos:D797:0:kk": 1,
+  "pos:D798:0:kk": 1,
+  "pos:D799:0:kk": 1,
+  "pos:D800:0:kk": 1,
+  "pos:D801:0:kk": 1,
+  "pos:D802:0:kk": 1,
+  "pos:D803:0:kk": 1,
+  "pos:D804:0:kk": 0,
+  "pos:D805:0:kk": 1,
+  "pos:D806:0:kk": 1,
+  "pos:D807:0:kk": 1,
+  "pos:D808:0:kk": 1,
+  "pos:D809:0:kk": 1,
+  "pos:D810:0:kk": 1,
+  "pos:D811:0:kk": 1,
+  "pos:D812:0:kk": 1,
+  "pos:D813:0:kk": 1,
+  "pos:D814:0:kk": 1,
+  "pos:D815:0:kk": 1,
+  "neg:D816": 1,
+  "neg:D817": 0,
+  "neg:D818": 1,
+  "neg:D819": 1,
+  "neg:D820": 1,
+  "neg:D821": 1,
+  "neg:D822": 1,
+  "neg:D823": 1,
+  "neg:D824": 1,
+  "neg:D825": 1,
+  "neg:D826": 1,
+  "neg:D827": 1,
+  "neg:D828": 1,
+  "neg:D829": 1,
+  "neg:D830": 1,
+  "neg:D831": 1,
+  "neg:D832": 1,
+  "neg:D833": 1,
+  "neg:D834": 1,
+  "neg:D835": 1,
+  "neg:D836": 1,
+  "neg:D837": 1,
+  "neg:D838": 1,
+  "neg:D839": 1,
+  "neg:D840": 1,
+  "neg:D841": 1,
+  "neg:D842": 1,
+  "neg:D843": 0,
+  "neg:D844": 0,
+  "neg:D845": 1,
+  "neg:D846": 0,
+  "neg:D847": 1,
+  "neg:D848": 1,
+  "neg:D849": 1,
+  "neg:D850": 1,
+  "neg:D851": 1,
+  "neg:D852": 1,
+  "neg:D853": 1,
+  "pos:D854:0:passport_id": 1,
+  "pos:D855:0:passport_id": 1,
+  "pos:D856:0:passport_id": 1,
+  "pos:D857:0:passport_id": 1,
+  "pos:D858:0:passport_id": 1,
+  "pos:D859:0:passport_id": 1,
+  "pos:D860:0:passport_id": 1,
+  "pos:D861:0:passport_id": 1,
+  "pos:D862:0:passport_id": 1,
+  "pos:D863:0:passport_id": 1,
+  "pos:D864:0:passport_id": 1,
+  "pos:D865:0:passport_id": 1,
+  "pos:D866:0:passport_id": 1,
+  "pos:D867:0:passport_id": 1,
+  "pos:D868:0:passport_id": 1,
+  "pos:D869:0:passport_id": 1,
+  "pos:D870:0:passport_id": 1,
+  "pos:D871:0:passport_id": 1,
+  "pos:D872:0:passport_id": 1,
+  "pos:D873:0:passport_id": 1,
+  "pos:D874:0:passport_id": 1,
+  "pos:D875:0:passport_id": 1,
+  "pos:D876:0:passport_id": 1,
+  "pos:D877:0:passport_id": 1,
+  "pos:D878:0:passport_id": 1,
+  "pos:D879:0:passport_id": 1,
+  "pos:D880:0:passport_id": 1,
+  "pos:D881:0:passport_id": 1,
+  "pos:D882:0:passport_id": 1,
+  "pos:D883:0:passport_id": 1,
+  "pos:D884:0:passport_id": 1,
+  "pos:D885:0:passport_id": 1,
+  "pos:D886:0:passport_id": 1,
+  "pos:D887:0:passport_id": 1,
+  "pos:D888:0:passport_id": 1,
+  "pos:D889:0:passport_id": 1,
+  "pos:D890:0:passport_id": 1,
+  "pos:D891:0:passport_id": 1,
+  "neg:D892": 1,
+  "neg:D893": 1,
+  "neg:D894": 1,
+  "neg:D895": 1,
+  "neg:D896": 1,
+  "neg:D897": 1,
+  "neg:D898": 1,
+  "neg:D899": 1,
+  "neg:D900": 1,
+  "neg:D901": 1,
+  "neg:D902": 1,
+  "neg:D903": 1,
+  "neg:D904": 1,
+  "neg:D905": 1,
+  "neg:D906": 1,
+  "neg:D907": 1,
+  "neg:D908": 1,
+  "neg:D909": 1,
+  "neg:D910": 1,
+  "neg:D911": 1,
+  "neg:D912": 1,
+  "neg:D913": 1,
+  "neg:D914": 1,
+  "neg:D915": 1,
+  "neg:D916": 1,
+  "neg:D917": 1,
+  "neg:D918": 1,
+  "neg:D919": 1,
+  "neg:D920": 1,
+  "neg:D921": 1,
+  "neg:D922": 1,
+  "neg:D923": 1,
+  "neg:D924": 1,
+  "neg:D925": 1,
+  "neg:D926": 1,
+  "neg:D927": 1,
+  "neg:D928": 1,
+  "neg:D929": 1,
+  "pos:D930:0:bpjs": 1,
+  "pos:D931:0:bpjs": 1,
+  "pos:D932:0:bpjs": 1,
+  "pos:D933:0:bpjs": 1,
+  "pos:D934:0:bpjs": 1,
+  "pos:D935:0:bpjs": 1,
+  "pos:D936:0:bpjs": 1,
+  "pos:D937:0:bpjs": 1,
+  "pos:D938:0:bpjs": 1,
+  "pos:D939:0:bpjs": 1,
+  "pos:D940:0:bpjs": 1,
+  "pos:D941:0:bpjs": 1,
+  "pos:D942:0:bpjs": 1,
+  "pos:D943:0:bpjs": 1,
+  "pos:D944:0:bpjs": 1,
+  "pos:D945:0:bpjs": 1,
+  "pos:D946:0:bpjs": 1,
+  "pos:D947:0:bpjs": 1,
+  "pos:D948:0:bpjs": 1,
+  "pos:D949:0:bpjs": 1,
+  "pos:D950:0:bpjs": 1,
+  "pos:D951:0:bpjs": 1,
+  "pos:D952:0:bpjs": 1,
+  "pos:D953:0:bpjs": 1,
+  "pos:D954:0:bpjs": 1,
+  "pos:D955:0:bpjs": 1,
+  "pos:D956:0:bpjs": 1,
+  "pos:D957:0:bpjs": 1,
+  "pos:D958:0:bpjs": 1,
+  "pos:D959:0:bpjs": 1,
+  "pos:D960:0:bpjs": 1,
+  "pos:D961:0:bpjs": 1,
+  "pos:D962:0:bpjs": 1,
+  "pos:D963:0:bpjs": 1,
+  "pos:D964:0:bpjs": 1,
+  "pos:D965:0:bpjs": 1,
+  "pos:D966:0:bpjs": 1,
+  "pos:D967:0:bpjs": 1,
+  "neg:D968": 1,
+  "neg:D969": 1,
+  "neg:D970": 1,
+  "neg:D971": 1,
+  "neg:D972": 1,
+  "neg:D973": 1,
+  "neg:D974": 1,
+  "neg:D975": 1,
+  "neg:D976": 1,
+  "neg:D977": 1,
+  "neg:D978": 1,
+  "neg:D979": 1,
+  "neg:D980": 1,
+  "neg:D981": 1,
+  "neg:D982": 1,
+  "neg:D983": 1,
+  "neg:D984": 1,
+  "neg:D985": 1,
+  "neg:D986": 1,
+  "neg:D987": 1,
+  "neg:D988": 1,
+  "neg:D989": 1,
+  "neg:D990": 1,
+  "neg:D991": 1,
+  "neg:D992": 1,
+  "neg:D993": 1,
+  "neg:D994": 1,
+  "neg:D995": 1,
+  "neg:D996": 1,
+  "neg:D997": 1,
+  "neg:D998": 1,
+  "neg:D999": 1,
+  "neg:D1000": 1,
+  "neg:D1001": 1,
+  "neg:D1002": 1,
+  "neg:D1003": 1,
+  "neg:D1004": 1,
+  "neg:D1005": 1,
+  "pos:D1006:0:birth_date": 1,
+  "pos:D1007:0:birth_date": 1,
+  "pos:D1008:0:birth_date": 1,
+  "pos:D1009:0:birth_date": 1,
+  "pos:D1010:0:birth_date": 1,
+  "pos:D1011:0:birth_date": 1,
+  "pos:D1012:0:birth_date": 1,
+  "pos:D1013:0:birth_date": 1,
+  "pos:D1014:0:birth_date": 1,
+  "pos:D1015:0:birth_date": 1,
+  "pos:D1016:0:birth_date": 1,
+  "pos:D1017:0:birth_date": 1,
+  "pos:D1018:0:birth_date": 1,
+  "pos:D1019:0:birth_date": 1,
+  "pos:D1020:0:birth_date": 1,
+  "pos:D1021:0:birth_date": 1,
+  "pos:D1022:0:birth_date": 1,
+  "pos:D1023:0:birth_date": 1,
+  "pos:D1024:0:birth_date": 1,
+  "pos:D1025:0:birth_date": 1,
+  "pos:D1026:0:birth_date": 1,
+  "pos:D1027:0:birth_date": 1,
+  "pos:D1028:0:birth_date": 1,
+  "pos:D1029:0:birth_date": 1,
+  "pos:D1030:0:birth_date": 1,
+  "pos:D1031:0:birth_date": 1,
+  "pos:D1032:0:birth_date": 1,
+  "pos:D1033:0:birth_date": 1,
+  "pos:D1034:0:birth_date": 1,
+  "pos:D1035:0:birth_date": 1,
+  "pos:D1036:0:birth_date": 1,
+  "pos:D1037:0:birth_date": 1,
+  "pos:D1038:0:birth_date": 1,
+  "pos:D1039:0:birth_date": 1,
+  "pos:D1040:0:birth_date": 1,
+  "pos:D1041:0:birth_date": 1,
+  "pos:D1042:0:birth_date": 1,
+  "pos:D1043:0:birth_date": 1,
+  "neg:D1044": 1,
+  "neg:D1045": 1,
+  "neg:D1046": 1,
+  "neg:D1047": 1,
+  "neg:D1048": 1,
+  "neg:D1049": 1,
+  "neg:D1050": 1,
+  "neg:D1051": 1,
+  "neg:D1052": 1,
+  "neg:D1053": 1,
+  "neg:D1054": 0,
+  "neg:D1055": 1,
+  "neg:D1056": 0,
+  "neg:D1057": 1,
+  "neg:D1058": 0,
+  "neg:D1059": 1,
+  "neg:D1060": 0,
+  "neg:D1061": 0,
+  "neg:D1062": 1,
+  "neg:D1063": 1,
+  "neg:D1064": 1,
+  "neg:D1065": 1,
+  "neg:D1066": 1,
+  "neg:D1067": 1,
+  "neg:D1068": 1,
+  "neg:D1069": 1,
+  "neg:D1070": 1,
+  "neg:D1071": 0,
+  "neg:D1072": 1,
+  "neg:D1073": 0,
+  "neg:D1074": 1,
+  "neg:D1075": 1,
+  "neg:D1076": 1,
+  "neg:D1077": 1,
+  "neg:D1078": 1,
+  "neg:D1079": 0,
+  "neg:D1080": 0,
+  "neg:D1081": 1,
+  "neg:D1120": 1,
+  "neg:D1121": 1,
+  "neg:D1122": 1,
+  "neg:D1123": 1,
+  "neg:D1124": 1,
+  "neg:D1125": 1,
+  "neg:D1126": 1,
+  "neg:D1127": 1,
+  "neg:D1128": 1,
+  "neg:D1129": 1,
+  "neg:D1130": 1,
+  "neg:D1131": 1,
+  "neg:D1132": 1,
+  "neg:D1133": 1,
+  "neg:D1134": 1,
+  "neg:D1135": 1,
+  "neg:D1136": 1,
+  "neg:D1137": 1,
+  "neg:D1138": 1,
+  "neg:D1139": 1,
+  "neg:D1140": 1,
+  "neg:D1141": 1,
+  "neg:D1142": 1,
+  "neg:D1143": 1,
+  "neg:D1144": 1,
+  "neg:D1145": 1,
+  "neg:D1146": 1,
+  "neg:D1147": 1,
+  "neg:D1148": 1,
+  "neg:D1149": 1,
+  "neg:D1150": 1,
+  "neg:D1151": 1,
+  "neg:D1152": 1,
+  "neg:D1153": 1,
+  "neg:D1154": 1,
+  "neg:D1155": 1,
+  "neg:D1156": 1,
+  "neg:D1157": 1,
+  "neg:D1196": 1,
+  "neg:D1197": 1,
+  "neg:D1198": 1,
+  "neg:D1199": 1,
+  "neg:D1200": 1,
+  "neg:D1201": 1,
+  "neg:D1202": 1,
+  "neg:D1203": 1,
+  "neg:D1204": 1,
+  "neg:D1205": 1,
+  "neg:D1206": 1,
+  "neg:D1207": 1,
+  "neg:D1208": 1,
+  "neg:D1209": 1,
+  "neg:D1210": 1,
+  "neg:D1211": 1,
+  "neg:D1212": 1,
+  "neg:D1213": 1,
+  "neg:D1214": 1,
+  "neg:D1215": 1,
+  "neg:D1216": 1,
+  "neg:D1217": 1,
+  "neg:D1218": 1,
+  "neg:D1219": 1,
+  "neg:D1220": 1,
+  "neg:D1221": 1,
+  "neg:D1222": 1,
+  "neg:D1223": 1,
+  "neg:D1224": 1,
+  "neg:D1225": 1,
+  "neg:D1226": 1,
+  "neg:D1227": 1,
+  "neg:D1228": 1,
+  "neg:D1229": 1,
+  "neg:D1230": 1,
+  "neg:D1231": 1,
+  "neg:D1232": 1,
+  "neg:D1233": 1,
+  "pos:D1242:0:kk": 1,
+  "pos:D1242:1:nik": 1,
+  "pos:D1243:0:passport_id": 1,
+  "pos:D1243:1:birth_date": 1,
+  "pos:D1244:0:bpjs": 1,
+  "pos:D1244:1:nik": 1,
+  "pos:D1244:2:email": 1,
+  "pos:D1245:0:passport_id": 1,
+  "pos:D1245:1:birth_date": 1,
+  "pos:D1246:0:bpjs": 1,
+  "pos:D1246:1:nik": 1,
+  "pos:D1246:2:email": 1,
+  "pos:D1247:0:nip": 1,
+  "pos:D1247:1:birth_date": 1,
+  "pos:D1247:2:phone_id": 1,
+  "pos:D1248:0:bpjs": 1,
+  "pos:D1248:1:nik": 1,
+  "pos:D1248:2:email": 0,
+  "pos:D1249:0:kk": 0,
+  "pos:D1249:1:nik": 1,
+  "pos:D1250:0:nip": 1,
+  "pos:D1250:1:birth_date": 1,
+  "pos:D1250:2:phone_id": 1,
+  "pos:D1251:0:passport_id": 1,
+  "pos:D1251:1:birth_date": 1,
+  "pos:D1252:0:bpjs": 1,
+  "pos:D1252:1:nik": 1,
+  "pos:D1252:2:email": 1,
+  "pos:D1253:0:passport_id": 1,
+  "pos:D1253:1:birth_date": 1,
+  "pos:D1254:0:nip": 1,
+  "pos:D1254:1:birth_date": 1,
+  "pos:D1254:2:phone_id": 1,
+  "pos:D1255:0:bpjs": 1,
+  "pos:D1255:1:nik": 1,
+  "pos:D1255:2:email": 1,
+  "pos:D1256:0:kk": 1,
+  "pos:D1256:1:nik": 1,
+  "pos:D1257:0:passport_id": 1,
+  "pos:D1257:1:birth_date": 1,
+  "pos:D1277:0:email": 1,
+  "pos:D1278:0:email": 1,
+  "pos:D1279:0:email": 1,
+  "pos:D1280:0:email": 1,
+  "pos:D1281:0:email": 1,
+  "pos:D1282:0:email": 0,
+  "pos:D1283:0:email": 0,
+  "pos:D1284:0:email": 1,
+  "pos:D1285:0:email": 1,
+  "pos:D1286:0:email": 1,
+  "pos:D1287:0:email": 0,
+  "pos:D1288:0:email": 1,
+  "pos:D1289:0:email": 1,
+  "pos:D1290:0:email": 0,
+  "pos:D1291:0:email": 1,
+  "pos:D1292:0:email": 1,
+  "pos:D1293:0:email": 0,
+  "pos:D1294:0:email": 1,
+  "pos:D1295:0:email": 1,
+  "pos:D1296:0:email": 1,
+  "pos:D1297:0:email": 1,
+  "pos:D1298:0:email": 0,
+  "pos:D1299:0:email": 1,
+  "pos:D1300:0:email": 0,
+  "pos:D1301:0:email": 1,
+  "pos:D1302:0:email": 1,
+  "pos:D1303:0:email": 1,
+  "pos:D1304:0:email": 1,
+  "pos:D1305:0:email": 1,
+  "pos:D1306:0:email": 1,
+  "pos:D1307:0:email": 0,
+  "pos:D1308:0:email": 1,
+  "pos:D1309:0:email": 0,
+  "pos:D1310:0:email": 1,
+  "pos:D1311:0:email": 1,
+  "pos:D1312:0:email": 1,
+  "pos:D1313:0:email": 1,
+  "pos:D1314:0:email": 0,
+  "pos:D1315:0:email": 1,
+  "pos:D1316:0:email": 1,
+  "pos:D1317:0:email": 1,
+  "pos:D1318:0:email": 1,
+  "neg:D1319": 1,
+  "neg:D1320": 1,
+  "neg:D1321": 1,
+  "neg:D1322": 1,
+  "neg:D1323": 1,
+  "neg:D1324": 1,
+  "neg:D1325": 1,
+  "neg:D1326": 1,
+  "neg:D1327": 1,
+  "neg:D1328": 1,
+  "neg:D1329": 1,
+  "neg:D1330": 1,
+  "neg:D1331": 1,
+  "neg:D1332": 1,
+  "neg:D1333": 1,
+  "neg:D1334": 0,
+  "neg:D1335": 1,
+  "neg:D1336": 1,
+  "neg:D1337": 1,
+  "neg:D1338": 1,
+  "neg:D1339": 1,
+  "neg:D1340": 1,
+  "neg:D1341": 1,
+  "neg:D1342": 1,
+  "neg:D1343": 1,
+  "neg:D1344": 1,
+  "neg:D1345": 1,
+  "neg:D1346": 1,
+  "neg:D1347": 1,
+  "neg:D1348": 0,
+  "neg:D1349": 1,
+  "neg:D1350": 1,
+  "neg:D1351": 1,
+  "neg:D1352": 1,
+  "neg:D1353": 1,
+  "pos:D1354:0:phone_id": 1,
+  "pos:D1355:0:phone_id": 1,
+  "pos:D1356:0:phone_id": 1,
+  "pos:D1357:0:phone_id": 1,
+  "pos:D1358:0:phone_id": 1,
+  "pos:D1359:0:phone_id": 0,
+  "pos:D1360:0:phone_id": 1,
+  "pos:D1361:0:phone_id": 1,
+  "pos:D1362:0:phone_id": 0,
+  "pos:D1363:0:phone_id": 1,
+  "pos:D1364:0:phone_id": 1,
+  "pos:D1365:0:phone_id": 1,
+  "pos:D1366:0:phone_id": 1,
+  "pos:D1367:0:phone_id": 1,
+  "pos:D1368:0:phone_id": 1,
+  "pos:D1369:0:phone_id": 1,
+  "pos:D1370:0:phone_id": 1,
+  "pos:D1371:0:phone_id": 1,
+  "pos:D1372:0:phone_id": 1,
+  "pos:D1373:0:phone_id": 1,
+  "pos:D1374:0:phone_id": 1,
+  "pos:D1375:0:phone_id": 1,
+  "pos:D1376:0:phone_id": 1,
+  "pos:D1377:0:phone_id": 1,
+  "pos:D1378:0:phone_id": 1,
+  "pos:D1379:0:phone_id": 1,
+  "pos:D1380:0:phone_id": 1,
+  "pos:D1381:0:phone_id": 1,
+  "pos:D1382:0:phone_id": 1,
+  "pos:D1383:0:phone_id": 1,
+  "pos:D1384:0:phone_id": 1,
+  "pos:D1385:0:phone_id": 1,
+  "pos:D1386:0:phone_id": 1,
+  "pos:D1387:0:phone_id": 1,
+  "pos:D1388:0:phone_id": 1,
+  "pos:D1389:0:phone_id": 1,
+  "pos:D1390:0:phone_id": 1,
+  "pos:D1391:0:phone_id": 1,
+  "pos:D1392:0:phone_id": 1,
+  "pos:D1393:0:phone_id": 1,
+  "pos:D1394:0:phone_id": 1,
+  "pos:D1395:0:phone_id": 1,
+  "neg:D1396": 1,
+  "neg:D1397": 1,
+  "neg:D1398": 1,
+  "neg:D1399": 0,
+  "neg:D1400": 1,
+  "neg:D1401": 1,
+  "neg:D1402": 1,
+  "neg:D1403": 1,
+  "neg:D1404": 1,
+  "neg:D1405": 1,
+  "neg:D1406": 1,
+  "neg:D1407": 1,
+  "neg:D1408": 1,
+  "neg:D1409": 1,
+  "neg:D1410": 1,
+  "neg:D1411": 0,
+  "neg:D1412": 1,
+  "neg:D1413": 1,
+  "neg:D1414": 1,
+  "neg:D1415": 1,
+  "neg:D1416": 0,
+  "neg:D1417": 1,
+  "neg:D1418": 1,
+  "neg:D1419": 0,
+  "neg:D1420": 1,
+  "neg:D1421": 1,
+  "neg:D1422": 1,
+  "neg:D1423": 1,
+  "neg:D1424": 1,
+  "neg:D1425": 0,
+  "neg:D1426": 1,
+  "neg:D1427": 1,
+  "neg:D1428": 0,
+  "neg:D1429": 0,
+  "neg:D1430": 1,
+  "pos:D1431:0:credit_card": 1,
+  "pos:D1432:0:credit_card": 1,
+  "pos:D1433:0:credit_card": 0,
+  "pos:D1434:0:credit_card": 1,
+  "pos:D1435:0:credit_card": 1,
+  "pos:D1436:0:credit_card": 0,
+  "pos:D1437:0:credit_card": 1,
+  "pos:D1438:0:credit_card": 0,
+  "pos:D1439:0:credit_card": 1,
+  "pos:D1440:0:credit_card": 1,
+  "pos:D1441:0:credit_card": 0,
+  "pos:D1442:0:credit_card": 1,
+  "pos:D1443:0:credit_card": 1,
+  "pos:D1444:0:credit_card": 1,
+  "pos:D1445:0:credit_card": 0,
+  "pos:D1446:0:credit_card": 1,
+  "pos:D1447:0:credit_card": 1,
+  "pos:D1448:0:credit_card": 0,
+  "pos:D1449:0:credit_card": 1,
+  "pos:D1450:0:credit_card": 0,
+  "pos:D1451:0:credit_card": 1,
+  "pos:D1452:0:credit_card": 1,
+  "pos:D1453:0:credit_card": 1,
+  "pos:D1454:0:credit_card": 1,
+  "pos:D1455:0:credit_card": 1,
+  "pos:D1456:0:credit_card": 1,
+  "pos:D1457:0:credit_card": 1,
+  "pos:D1458:0:credit_card": 1,
+  "pos:D1459:0:credit_card": 1,
+  "pos:D1460:0:credit_card": 1,
+  "pos:D1461:0:credit_card": 1,
+  "pos:D1462:0:credit_card": 1,
+  "pos:D1463:0:credit_card": 0,
+  "pos:D1464:0:credit_card": 1,
+  "pos:D1465:0:credit_card": 1,
+  "pos:D1466:0:credit_card": 1,
+  "pos:D1467:0:credit_card": 1,
+  "pos:D1468:0:credit_card": 1,
+  "pos:D1469:0:credit_card": 1,
+  "pos:D1470:0:credit_card": 0,
+  "pos:D1471:0:credit_card": 0,
+  "pos:D1472:0:credit_card": 1,
+  "neg:D1473": 0,
+  "neg:D1474": 1,
+  "neg:D1475": 0,
+  "neg:D1476": 0,
+  "neg:D1477": 1,
+  "neg:D1478": 1,
+  "neg:D1479": 1,
+  "neg:D1480": 0,
+  "neg:D1481": 0,
+  "neg:D1482": 0,
+  "neg:D1483": 1,
+  "neg:D1484": 0,
+  "neg:D1485": 1,
+  "neg:D1486": 0,
+  "neg:D1487": 0,
+  "neg:D1488": 0,
+  "neg:D1489": 1,
+  "neg:D1490": 0,
+  "neg:D1491": 0,
+  "neg:D1492": 0,
+  "neg:D1493": 0,
+  "neg:D1494": 0,
+  "neg:D1495": 0,
+  "neg:D1496": 0,
+  "neg:D1497": 1,
+  "neg:D1498": 0,
+  "neg:D1499": 1,
+  "neg:D1500": 1,
+  "neg:D1501": 0,
+  "neg:D1502": 0,
+  "neg:D1503": 1,
+  "neg:D1504": 0,
+  "neg:D1505": 0,
+  "neg:D1506": 1,
+  "neg:D1507": 1,
+  "pos:D1508:0:nik": 1,
+  "pos:D1509:0:nik": 1,
+  "pos:D1510:0:nik": 1,
+  "pos:D1511:0:nik": 1,
+  "pos:D1512:0:nik": 1,
+  "pos:D1513:0:nik": 1,
+  "pos:D1514:0:nik": 1,
+  "pos:D1515:0:nik": 1,
+  "pos:D1516:0:nik": 1,
+  "pos:D1517:0:nik": 1,
+  "pos:D1518:0:nik": 1,
+  "pos:D1519:0:nik": 1,
+  "pos:D1520:0:nik": 1,
+  "pos:D1521:0:nik": 1,
+  "pos:D1522:0:nik": 1,
+  "pos:D1523:0:nik": 1,
+  "pos:D1524:0:nik": 1,
+  "pos:D1525:0:nik": 1,
+  "pos:D1526:0:nik": 1,
+  "pos:D1527:0:nik": 1,
+  "pos:D1528:0:nik": 1,
+  "pos:D1529:0:nik": 1,
+  "pos:D1530:0:nik": 1,
+  "pos:D1531:0:nik": 1,
+  "pos:D1532:0:nik": 1,
+  "pos:D1533:0:nik": 1,
+  "pos:D1534:0:nik": 1,
+  "pos:D1535:0:nik": 1,
+  "pos:D1536:0:nik": 1,
+  "pos:D1537:0:nik": 1,
+  "pos:D1538:0:nik": 1,
+  "pos:D1539:0:nik": 1,
+  "pos:D1540:0:nik": 1,
+  "pos:D1541:0:nik": 1,
+  "pos:D1542:0:nik": 1,
+  "pos:D1543:0:nik": 1,
+  "pos:D1544:0:nik": 1,
+  "pos:D1545:0:nik": 1,
+  "pos:D1546:0:nik": 1,
+  "pos:D1547:0:nik": 1,
+  "pos:D1548:0:nik": 1,
+  "pos:D1549:0:nik": 1,
+  "neg:D1550": 1,
+  "neg:D1551": 0,
+  "neg:D1552": 0,
+  "neg:D1553": 1,
+  "neg:D1554": 0,
+  "neg:D1555": 0,
+  "neg:D1556": 0,
+  "neg:D1557": 1,
+  "neg:D1558": 0,
+  "neg:D1559": 0,
+  "neg:D1560": 1,
+  "neg:D1561": 0,
+  "neg:D1562": 0,
+  "neg:D1563": 0,
+  "neg:D1564": 1,
+  "neg:D1565": 0,
+  "neg:D1566": 0,
+  "neg:D1567": 0,
+  "neg:D1568": 0,
+  "neg:D1569": 0,
+  "neg:D1570": 0,
+  "neg:D1571": 0,
+  "neg:D1572": 0,
+  "neg:D1573": 1,
+  "neg:D1574": 0,
+  "neg:D1575": 0,
+  "neg:D1576": 0,
+  "neg:D1577": 1,
+  "neg:D1578": 1,
+  "neg:D1579": 1,
+  "neg:D1580": 1,
+  "neg:D1581": 1,
+  "neg:D1582": 0,
+  "neg:D1583": 0,
+  "neg:D1584": 1,
+  "pos:D1585:0:npwp": 1,
+  "pos:D1586:0:npwp": 1,
+  "pos:D1587:0:npwp": 1,
+  "pos:D1588:0:npwp": 1,
+  "pos:D1589:0:npwp": 1,
+  "pos:D1590:0:npwp": 1,
+  "pos:D1591:0:npwp": 1,
+  "pos:D1592:0:npwp": 1,
+  "pos:D1593:0:npwp": 1,
+  "pos:D1594:0:npwp": 1,
+  "pos:D1595:0:npwp": 1,
+  "pos:D1596:0:npwp": 1,
+  "pos:D1597:0:npwp": 1,
+  "pos:D1598:0:npwp": 1,
+  "pos:D1599:0:npwp": 1,
+  "pos:D1600:0:npwp": 1,
+  "pos:D1601:0:npwp": 1,
+  "pos:D1602:0:npwp": 1,
+  "pos:D1603:0:npwp": 1,
+  "pos:D1604:0:npwp": 1,
+  "pos:D1605:0:npwp": 1,
+  "pos:D1606:0:npwp": 1,
+  "pos:D1607:0:npwp": 1,
+  "pos:D1608:0:npwp": 1,
+  "pos:D1609:0:npwp": 1,
+  "pos:D1610:0:npwp": 1,
+  "pos:D1611:0:npwp": 1,
+  "pos:D1612:0:npwp": 1,
+  "pos:D1613:0:npwp": 1,
+  "pos:D1614:0:npwp": 1,
+  "pos:D1615:0:npwp": 1,
+  "pos:D1616:0:npwp": 1,
+  "pos:D1617:0:npwp": 1,
+  "pos:D1618:0:npwp": 1,
+  "pos:D1619:0:npwp": 1,
+  "pos:D1620:0:npwp": 1,
+  "pos:D1621:0:npwp": 1,
+  "pos:D1622:0:npwp": 1,
+  "pos:D1623:0:npwp": 1,
+  "pos:D1624:0:npwp": 1,
+  "pos:D1625:0:npwp": 1,
+  "pos:D1626:0:npwp": 1,
+  "neg:D1627": 1,
+  "neg:D1628": 1,
+  "neg:D1629": 1,
+  "neg:D1630": 1,
+  "neg:D1631": 1,
+  "neg:D1632": 1,
+  "neg:D1633": 1,
+  "neg:D1634": 1,
+  "neg:D1635": 1,
+  "neg:D1636": 1,
+  "neg:D1637": 1,
+  "neg:D1638": 1,
+  "neg:D1639": 1,
+  "neg:D1640": 1,
+  "neg:D1641": 1,
+  "neg:D1642": 1,
+  "neg:D1643": 1,
+  "neg:D1644": 1,
+  "neg:D1645": 1,
+  "neg:D1646": 1,
+  "neg:D1647": 1,
+  "neg:D1648": 1,
+  "neg:D1649": 1,
+  "neg:D1650": 1,
+  "neg:D1651": 1,
+  "neg:D1652": 1,
+  "neg:D1653": 1,
+  "neg:D1654": 1,
+  "neg:D1655": 1,
+  "neg:D1656": 1,
+  "neg:D1657": 1,
+  "neg:D1658": 1,
+  "neg:D1659": 1,
+  "neg:D1660": 1,
+  "neg:D1661": 1,
+  "pos:D1662:0:bank_account": 0,
+  "pos:D1663:0:bank_account": 1,
+  "pos:D1664:0:bank_account": 1,
+  "pos:D1665:0:bank_account": 1,
+  "pos:D1666:0:bank_account": 1,
+  "pos:D1667:0:bank_account": 1,
+  "pos:D1668:0:bank_account": 1,
+  "pos:D1669:0:bank_account": 0,
+  "pos:D1670:0:bank_account": 1,
+  "pos:D1671:0:bank_account": 1,
+  "pos:D1672:0:bank_account": 0,
+  "pos:D1673:0:bank_account": 1,
+  "pos:D1674:0:bank_account": 1,
+  "pos:D1675:0:bank_account": 1,
+  "pos:D1676:0:bank_account": 0,
+  "pos:D1677:0:bank_account": 1,
+  "pos:D1678:0:bank_account": 1,
+  "pos:D1679:0:bank_account": 1,
+  "pos:D1680:0:bank_account": 1,
+  "pos:D1681:0:bank_account": 1,
+  "pos:D1682:0:bank_account": 1,
+  "pos:D1683:0:bank_account": 1,
+  "pos:D1684:0:bank_account": 0,
+  "pos:D1685:0:bank_account": 1,
+  "pos:D1686:0:bank_account": 1,
+  "pos:D1687:0:bank_account": 1,
+  "pos:D1688:0:bank_account": 1,
+  "pos:D1689:0:bank_account": 1,
+  "pos:D1690:0:bank_account": 1,
+  "pos:D1691:0:bank_account": 1,
+  "pos:D1692:0:bank_account": 1,
+  "pos:D1693:0:bank_account": 1,
+  "pos:D1694:0:bank_account": 1,
+  "pos:D1695:0:bank_account": 1,
+  "pos:D1696:0:bank_account": 1,
+  "pos:D1697:0:bank_account": 1,
+  "pos:D1698:0:bank_account": 1,
+  "pos:D1699:0:bank_account": 1,
+  "pos:D1700:0:bank_account": 1,
+  "pos:D1701:0:bank_account": 1,
+  "pos:D1702:0:bank_account": 1,
+  "pos:D1703:0:bank_account": 1,
+  "neg:D1704": 0,
+  "neg:D1705": 1,
+  "neg:D1706": 1,
+  "neg:D1707": 1,
+  "neg:D1708": 1,
+  "neg:D1709": 1,
+  "neg:D1710": 1,
+  "neg:D1711": 1,
+  "neg:D1712": 1,
+  "neg:D1713": 1,
+  "neg:D1714": 1,
+  "neg:D1715": 1,
+  "neg:D1716": 1,
+  "neg:D1717": 1,
+  "neg:D1718": 1,
+  "neg:D1719": 1,
+  "neg:D1720": 1,
+  "neg:D1721": 1,
+  "neg:D1722": 1,
+  "neg:D1723": 1,
+  "neg:D1724": 1,
+  "neg:D1725": 1,
+  "neg:D1726": 0,
+  "neg:D1727": 1,
+  "neg:D1728": 1,
+  "neg:D1729": 1,
+  "neg:D1730": 1,
+  "neg:D1731": 1,
+  "neg:D1732": 0,
+  "neg:D1733": 0,
+  "neg:D1734": 1,
+  "neg:D1735": 1,
+  "neg:D1736": 1,
+  "neg:D1737": 1,
+  "neg:D1738": 1,
+  "pos:D1739:0:nip": 1,
+  "pos:D1740:0:nip": 1,
+  "pos:D1741:0:nip": 1,
+  "pos:D1742:0:nip": 1,
+  "pos:D1743:0:nip": 1,
+  "pos:D1744:0:nip": 1,
+  "pos:D1745:0:nip": 1,
+  "pos:D1746:0:nip": 1,
+  "pos:D1747:0:nip": 1,
+  "pos:D1748:0:nip": 1,
+  "pos:D1749:0:nip": 1,
+  "pos:D1750:0:nip": 1,
+  "pos:D1751:0:nip": 1,
+  "pos:D1752:0:nip": 1,
+  "pos:D1753:0:nip": 1,
+  "pos:D1754:0:nip": 1,
+  "pos:D1755:0:nip": 1,
+  "pos:D1756:0:nip": 1,
+  "pos:D1757:0:nip": 1,
+  "pos:D1758:0:nip": 1,
+  "pos:D1759:0:nip": 1,
+  "pos:D1760:0:nip": 1,
+  "pos:D1761:0:nip": 1,
+  "pos:D1762:0:nip": 1,
+  "pos:D1763:0:nip": 1,
+  "pos:D1764:0:nip": 1,
+  "pos:D1765:0:nip": 1,
+  "pos:D1766:0:nip": 1,
+  "pos:D1767:0:nip": 1,
+  "pos:D1768:0:nip": 1,
+  "pos:D1769:0:nip": 0,
+  "pos:D1770:0:nip": 1,
+  "pos:D1771:0:nip": 1,
+  "pos:D1772:0:nip": 1,
+  "pos:D1773:0:nip": 1,
+  "pos:D1774:0:nip": 1,
+  "pos:D1775:0:nip": 1,
+  "pos:D1776:0:nip": 0,
+  "pos:D1777:0:nip": 1,
+  "pos:D1778:0:nip": 1,
+  "pos:D1779:0:nip": 1,
+  "pos:D1780:0:nip": 1,
+  "neg:D1781": 0,
+  "neg:D1782": 0,
+  "neg:D1783": 1,
+  "neg:D1784": 0,
+  "neg:D1785": 0,
+  "neg:D1786": 0,
+  "neg:D1787": 1,
+  "neg:D1788": 1,
+  "neg:D1789": 1,
+  "neg:D1790": 0,
+  "neg:D1791": 0,
+  "neg:D1792": 0,
+  "neg:D1793": 1,
+  "neg:D1794": 0,
+  "neg:D1795": 1,
+  "neg:D1796": 1,
+  "neg:D1797": 0,
+  "neg:D1798": 1,
+  "neg:D1799": 1,
+  "neg:D1800": 1,
+  "neg:D1801": 1,
+  "neg:D1802": 0,
+  "neg:D1803": 1,
+  "neg:D1804": 0,
+  "neg:D1805": 0,
+  "neg:D1806": 0,
+  "neg:D1807": 1,
+  "neg:D1808": 1,
+  "neg:D1809": 0,
+  "neg:D1810": 1,
+  "neg:D1811": 1,
+  "neg:D1812": 1,
+  "neg:D1813": 1,
+  "neg:D1814": 1,
+  "neg:D1815": 1,
+  "pos:D1816:0:kk": 1,
+  "pos:D1817:0:kk": 1,
+  "pos:D1818:0:kk": 1,
+  "pos:D1819:0:kk": 0,
+  "pos:D1820:0:kk": 1,
+  "pos:D1821:0:kk": 1,
+  "pos:D1822:0:kk": 0,
+  "pos:D1823:0:kk": 1,
+  "pos:D1824:0:kk": 1,
+  "pos:D1825:0:kk": 1,
+  "pos:D1826:0:kk": 1,
+  "pos:D1827:0:kk": 1,
+  "pos:D1828:0:kk": 1,
+  "pos:D1829:0:kk": 1,
+  "pos:D1830:0:kk": 1,
+  "pos:D1831:0:kk": 1,
+  "pos:D1832:0:kk": 1,
+  "pos:D1833:0:kk": 1,
+  "pos:D1834:0:kk": 1,
+  "pos:D1835:0:kk": 1,
+  "pos:D1836:0:kk": 0,
+  "pos:D1837:0:kk": 1,
+  "pos:D1838:0:kk": 1,
+  "pos:D1839:0:kk": 1,
+  "pos:D1840:0:kk": 1,
+  "pos:D1841:0:kk": 1,
+  "pos:D1842:0:kk": 1,
+  "pos:D1843:0:kk": 1,
+  "pos:D1844:0:kk": 1,
+  "pos:D1845:0:kk": 0,
+  "pos:D1846:0:kk": 1,
+  "pos:D1847:0:kk": 1,
+  "pos:D1848:0:kk": 0,
+  "pos:D1849:0:kk": 1,
+  "pos:D1850:0:kk": 1,
+  "pos:D1851:0:kk": 1,
+  "pos:D1852:0:kk": 1,
+  "pos:D1853:0:kk": 1,
+  "pos:D1854:0:kk": 1,
+  "pos:D1855:0:kk": 1,
+  "pos:D1856:0:kk": 1,
+  "pos:D1857:0:kk": 1,
+  "neg:D1858": 1,
+  "neg:D1859": 1,
+  "neg:D1860": 1,
+  "neg:D1861": 1,
+  "neg:D1862": 1,
+  "neg:D1863": 1,
+  "neg:D1864": 1,
+  "neg:D1865": 1,
+  "neg:D1866": 1,
+  "neg:D1867": 1,
+  "neg:D1868": 0,
+  "neg:D1869": 1,
+  "neg:D1870": 1,
+  "neg:D1871": 1,
+  "neg:D1872": 1,
+  "neg:D1873": 1,
+  "neg:D1874": 1,
+  "neg:D1875": 1,
+  "neg:D1876": 0,
+  "neg:D1877": 1,
+  "neg:D1878": 1,
+  "neg:D1879": 1,
+  "neg:D1880": 0,
+  "neg:D1881": 1,
+  "neg:D1882": 1,
+  "neg:D1883": 0,
+  "neg:D1884": 1,
+  "neg:D1885": 1,
+  "neg:D1886": 0,
+  "neg:D1887": 1,
+  "neg:D1888": 1,
+  "neg:D1889": 1,
+  "neg:D1890": 1,
+  "neg:D1891": 1,
+  "neg:D1892": 1,
+  "pos:D1893:0:passport_id": 1,
+  "pos:D1894:0:passport_id": 1,
+  "pos:D1895:0:passport_id": 1,
+  "pos:D1896:0:passport_id": 1,
+  "pos:D1897:0:passport_id": 1,
+  "pos:D1898:0:passport_id": 1,
+  "pos:D1899:0:passport_id": 1,
+  "pos:D1900:0:passport_id": 1,
+  "pos:D1901:0:passport_id": 1,
+  "pos:D1902:0:passport_id": 1,
+  "pos:D1903:0:passport_id": 1,
+  "pos:D1904:0:passport_id": 1,
+  "pos:D1905:0:passport_id": 1,
+  "pos:D1906:0:passport_id": 1,
+  "pos:D1907:0:passport_id": 1,
+  "pos:D1908:0:passport_id": 1,
+  "pos:D1909:0:passport_id": 1,
+  "pos:D1910:0:passport_id": 1,
+  "pos:D1911:0:passport_id": 1,
+  "pos:D1912:0:passport_id": 1,
+  "pos:D1913:0:passport_id": 1,
+  "pos:D1914:0:passport_id": 1,
+  "pos:D1915:0:passport_id": 1,
+  "pos:D1916:0:passport_id": 1,
+  "pos:D1917:0:passport_id": 1,
+  "pos:D1918:0:passport_id": 1,
+  "pos:D1919:0:passport_id": 1,
+  "pos:D1920:0:passport_id": 1,
+  "pos:D1921:0:passport_id": 1,
+  "pos:D1922:0:passport_id": 1,
+  "pos:D1923:0:passport_id": 1,
+  "pos:D1924:0:passport_id": 1,
+  "pos:D1925:0:passport_id": 1,
+  "pos:D1926:0:passport_id": 1,
+  "pos:D1927:0:passport_id": 1,
+  "pos:D1928:0:passport_id": 1,
+  "pos:D1929:0:passport_id": 1,
+  "pos:D1930:0:passport_id": 1,
+  "pos:D1931:0:passport_id": 1,
+  "pos:D1932:0:passport_id": 1,
+  "pos:D1933:0:passport_id": 1,
+  "pos:D1934:0:passport_id": 1,
+  "neg:D1935": 1,
+  "neg:D1936": 1,
+  "neg:D1937": 1,
+  "neg:D1938": 1,
+  "neg:D1939": 1,
+  "neg:D1940": 1,
+  "neg:D1941": 1,
+  "neg:D1942": 1,
+  "neg:D1943": 1,
+  "neg:D1944": 1,
+  "neg:D1945": 1,
+  "neg:D1946": 1,
+  "neg:D1947": 1,
+  "neg:D1948": 1,
+  "neg:D1949": 1,
+  "neg:D1950": 1,
+  "neg:D1951": 1,
+  "neg:D1952": 1,
+  "neg:D1953": 1,
+  "neg:D1954": 1,
+  "neg:D1955": 1,
+  "neg:D1956": 1,
+  "neg:D1957": 1,
+  "neg:D1958": 1,
+  "neg:D1959": 1,
+  "neg:D1960": 1,
+  "neg:D1961": 1,
+  "neg:D1962": 1,
+  "neg:D1963": 1,
+  "neg:D1964": 1,
+  "neg:D1965": 1,
+  "neg:D1966": 1,
+  "neg:D1967": 1,
+  "neg:D1968": 1,
+  "neg:D1969": 1,
+  "pos:D1970:0:bpjs": 1,
+  "pos:D1971:0:bpjs": 1,
+  "pos:D1972:0:bpjs": 1,
+  "pos:D1973:0:bpjs": 1,
+  "pos:D1974:0:bpjs": 1,
+  "pos:D1975:0:bpjs": 1,
+  "pos:D1976:0:bpjs": 1,
+  "pos:D1977:0:bpjs": 1,
+  "pos:D1978:0:bpjs": 1,
+  "pos:D1979:0:bpjs": 1,
+  "pos:D1980:0:bpjs": 1,
+  "pos:D1981:0:bpjs": 1,
+  "pos:D1982:0:bpjs": 1,
+  "pos:D1983:0:bpjs": 1,
+  "pos:D1984:0:bpjs": 1,
+  "pos:D1985:0:bpjs": 1,
+  "pos:D1986:0:bpjs": 1,
+  "pos:D1987:0:bpjs": 1,
+  "pos:D1988:0:bpjs": 1,
+  "pos:D1989:0:bpjs": 1,
+  "pos:D1990:0:bpjs": 1,
+  "pos:D1991:0:bpjs": 1,
+  "pos:D1992:0:bpjs": 1,
+  "pos:D1993:0:bpjs": 1,
+  "pos:D1994:0:bpjs": 1,
+  "pos:D1995:0:bpjs": 1,
+  "pos:D1996:0:bpjs": 1,
+  "pos:D1997:0:bpjs": 1,
+  "pos:D1998:0:bpjs": 1,
+  "pos:D1999:0:bpjs": 1,
+  "pos:D2000:0:bpjs": 1,
+  "pos:D2001:0:bpjs": 1,
+  "pos:D2002:0:bpjs": 1,
+  "pos:D2003:0:bpjs": 1,
+  "pos:D2004:0:bpjs": 1,
+  "pos:D2005:0:bpjs": 1,
+  "pos:D2006:0:bpjs": 1,
+  "pos:D2007:0:bpjs": 1,
+  "pos:D2008:0:bpjs": 1,
+  "pos:D2009:0:bpjs": 1,
+  "pos:D2010:0:bpjs": 1,
+  "pos:D2011:0:bpjs": 1,
+  "neg:D2012": 1,
+  "neg:D2013": 1,
+  "neg:D2014": 1,
+  "neg:D2015": 1,
+  "neg:D2016": 1,
+  "neg:D2017": 1,
+  "neg:D2018": 1,
+  "neg:D2019": 1,
+  "neg:D2020": 1,
+  "neg:D2021": 1,
+  "neg:D2022": 1,
+  "neg:D2023": 1,
+  "neg:D2024": 1,
+  "neg:D2025": 1,
+  "neg:D2026": 1,
+  "neg:D2027": 1,
+  "neg:D2028": 1,
+  "neg:D2029": 1,
+  "neg:D2030": 1,
+  "neg:D2031": 1,
+  "neg:D2032": 1,
+  "neg:D2033": 1,
+  "neg:D2034": 1,
+  "neg:D2035": 1,
+  "neg:D2036": 1,
+  "neg:D2037": 1,
+  "neg:D2038": 1,
+  "neg:D2039": 1,
+  "neg:D2040": 1,
+  "neg:D2041": 1,
+  "neg:D2042": 1,
+  "neg:D2043": 1,
+  "neg:D2044": 1,
+  "neg:D2045": 1,
+  "neg:D2046": 1,
+  "pos:D2047:0:birth_date": 1,
+  "pos:D2048:0:birth_date": 1,
+  "pos:D2049:0:birth_date": 1,
+  "pos:D2050:0:birth_date": 1,
+  "pos:D2051:0:birth_date": 1,
+  "pos:D2052:0:birth_date": 1,
+  "pos:D2053:0:birth_date": 1,
+  "pos:D2054:0:birth_date": 1,
+  "pos:D2055:0:birth_date": 1,
+  "pos:D2056:0:birth_date": 1,
+  "pos:D2057:0:birth_date": 1,
+  "pos:D2058:0:birth_date": 1,
+  "pos:D2059:0:birth_date": 1,
+  "pos:D2060:0:birth_date": 1,
+  "pos:D2061:0:birth_date": 1,
+  "pos:D2062:0:birth_date": 1,
+  "pos:D2063:0:birth_date": 1,
+  "pos:D2064:0:birth_date": 1,
+  "pos:D2065:0:birth_date": 1,
+  "pos:D2066:0:birth_date": 1,
+  "pos:D2067:0:birth_date": 1,
+  "pos:D2068:0:birth_date": 1,
+  "pos:D2069:0:birth_date": 1,
+  "pos:D2070:0:birth_date": 1,
+  "pos:D2071:0:birth_date": 1,
+  "pos:D2072:0:birth_date": 1,
+  "pos:D2073:0:birth_date": 1,
+  "pos:D2074:0:birth_date": 1,
+  "pos:D2075:0:birth_date": 1,
+  "pos:D2076:0:birth_date": 1,
+  "pos:D2077:0:birth_date": 1,
+  "pos:D2078:0:birth_date": 1,
+  "pos:D2079:0:birth_date": 1,
+  "pos:D2080:0:birth_date": 1,
+  "pos:D2081:0:birth_date": 1,
+  "pos:D2082:0:birth_date": 1,
+  "pos:D2083:0:birth_date": 1,
+  "pos:D2084:0:birth_date": 1,
+  "pos:D2085:0:birth_date": 1,
+  "pos:D2086:0:birth_date": 1,
+  "pos:D2087:0:birth_date": 1,
+  "pos:D2088:0:birth_date": 1,
+  "neg:D2089": 1,
+  "neg:D2090": 1,
+  "neg:D2091": 0,
+  "neg:D2092": 1,
+  "neg:D2093": 0,
+  "neg:D2094": 1,
+  "neg:D2095": 0,
+  "neg:D2096": 1,
+  "neg:D2097": 1,
+  "neg:D2098": 1,
+  "neg:D2099": 0,
+  "neg:D2100": 0,
+  "neg:D2101": 1,
+  "neg:D2102": 0,
+  "neg:D2103": 1,
+  "neg:D2104": 1,
+  "neg:D2105": 0,
+  "neg:D2106": 0,
+  "neg:D2107": 0,
+  "neg:D2108": 1,
+  "neg:D2109": 1,
+  "neg:D2110": 1,
+  "neg:D2111": 1,
+  "neg:D2112": 0,
+  "neg:D2113": 1,
+  "neg:D2114": 1,
+  "neg:D2115": 0,
+  "neg:D2116": 0,
+  "neg:D2117": 1,
+  "neg:D2118": 1,
+  "neg:D2119": 1,
+  "neg:D2120": 1,
+  "neg:D2121": 0,
+  "neg:D2122": 1,
+  "neg:D2123": 1,
+  "neg:D2166": 1,
+  "neg:D2167": 1,
+  "neg:D2168": 1,
+  "neg:D2169": 1,
+  "neg:D2170": 1,
+  "neg:D2171": 1,
+  "neg:D2172": 1,
+  "neg:D2173": 1,
+  "neg:D2174": 1,
+  "neg:D2175": 1,
+  "neg:D2176": 1,
+  "neg:D2177": 1,
+  "neg:D2178": 1,
+  "neg:D2179": 1,
+  "neg:D2180": 1,
+  "neg:D2181": 1,
+  "neg:D2182": 1,
+  "neg:D2183": 1,
+  "neg:D2184": 1,
+  "neg:D2185": 1,
+  "neg:D2186": 1,
+  "neg:D2187": 1,
+  "neg:D2188": 1,
+  "neg:D2189": 1,
+  "neg:D2190": 1,
+  "neg:D2191": 1,
+  "neg:D2192": 1,
+  "neg:D2193": 1,
+  "neg:D2194": 1,
+  "neg:D2195": 1,
+  "neg:D2196": 1,
+  "neg:D2197": 1,
+  "neg:D2198": 1,
+  "neg:D2199": 1,
+  "neg:D2200": 1,
+  "neg:D2243": 1,
+  "neg:D2244": 1,
+  "neg:D2245": 1,
+  "neg:D2246": 1,
+  "neg:D2247": 1,
+  "neg:D2248": 1,
+  "neg:D2249": 1,
+  "neg:D2250": 1,
+  "neg:D2251": 1,
+  "neg:D2252": 1,
+  "neg:D2253": 1,
+  "neg:D2254": 1,
+  "neg:D2255": 1,
+  "neg:D2256": 1,
+  "neg:D2257": 1,
+  "neg:D2258": 1,
+  "neg:D2259": 1,
+  "neg:D2260": 1,
+  "neg:D2261": 1,
+  "neg:D2262": 1,
+  "neg:D2263": 1,
+  "neg:D2264": 1,
+  "neg:D2265": 1,
+  "neg:D2266": 1,
+  "neg:D2267": 1,
+  "neg:D2268": 1,
+  "neg:D2269": 1,
+  "neg:D2270": 1,
+  "neg:D2271": 1,
+  "neg:D2272": 1,
+  "neg:D2273": 1,
+  "neg:D2274": 1,
+  "neg:D2275": 1,
+  "neg:D2276": 1,
+  "neg:D2277": 1,
+  "pos:D2362:0:bank_account": 0,
+  "pos:D2363:0:bank_account": 0,
+  "pos:D2364:0:bank_account": 0,
+  "pos:D2365:0:passport_id": 0,
+  "pos:D2366:0:passport_id": 0,
+  "pos:D2367:0:bpjs": 0,
+  "pos:D2368:0:bpjs": 0,
+  "pos:D2369:0:birth_date": 0,
+  "pos:D2370:0:birth_date": 0,
+  "pos:D2371:0:kk": 0,
+  "pos:D2372:0:kk": 0,
+  "pos:D2373:0:bank_account": 0,
+  "pos:D2374:0:bank_account": 0,
+  "pos:D2375:0:bank_account": 0,
+  "pos:D2376:0:passport_id": 0,
+  "pos:D2377:0:passport_id": 0,
+  "pos:D2378:0:bpjs": 0,
+  "pos:D2379:0:bpjs": 0,
+  "pos:D2380:0:birth_date": 0,
+  "pos:D2381:0:birth_date": 0,
+  "pos:D2382:0:kk": 0,
+  "pos:D2383:0:kk": 0,
+  "pos:D2384:0:bank_account": 0,
+  "pos:D2385:0:bank_account": 0,
+  "pos:D2386:0:bank_account": 0,
+  "pos:D2387:0:passport_id": 0,
+  "pos:D2388:0:passport_id": 0,
+  "pos:D2389:0:bpjs": 0,
+  "pos:D2390:0:bpjs": 0,
+  "pos:D2391:0:birth_date": 0,
+  "pos:D2392:0:birth_date": 0,
+  "pos:D2393:0:kk": 0,
+  "pos:D2394:0:kk": 0,
+  "pos:D2395:0:bank_account": 0,
+  "pos:D2396:0:bank_account": 0,
+  "pos:D2397:0:bank_account": 0,
+  "pos:D2398:0:passport_id": 0,
+  "pos:D2399:0:passport_id": 0,
+  "pos:D2400:0:bpjs": 0,
+  "pos:D2401:0:bpjs": 0,
+  "pos:D2402:0:birth_date": 0,
+  "pos:D2403:0:birth_date": 0,
+  "pos:D2404:0:kk": 0,
+  "pos:D2405:0:kk": 0,
+  "pos:D2406:0:bank_account": 0,
+  "pos:D2407:0:bank_account": 0,
+  "pos:D2408:0:bank_account": 0,
+  "pos:D2409:0:passport_id": 0,
+  "pos:D2410:0:passport_id": 0,
+  "pos:D2411:0:bpjs": 0,
+  "pos:D2412:0:bpjs": 0,
+  "pos:D2413:0:birth_date": 0,
+  "pos:D2414:0:birth_date": 0,
+  "pos:D2415:0:kk": 0,
+  "pos:D2416:0:kk": 0,
+  "pos:D2417:0:bank_account": 0,
+  "pos:D2418:0:bank_account": 0,
+  "pos:D2419:0:bank_account": 0,
+  "pos:D2420:0:passport_id": 0,
+  "pos:D2421:0:passport_id": 0,
+  "pos:D2422:0:bpjs": 0,
+  "pos:D2423:0:bpjs": 0,
+  "pos:D2424:0:birth_date": 0,
+  "pos:D2425:0:birth_date": 0,
+  "pos:D2426:0:kk": 0,
+  "pos:D2427:0:kk": 0,
+  "neg:D2428": 1,
+  "neg:D2429": 1,
+  "neg:D2430": 1,
+  "neg:D2431": 1,
+  "neg:D2432": 1,
+  "neg:D2433": 1,
+  "neg:D2434": 1,
+  "neg:D2435": 1,
+  "neg:D2436": 1,
+  "neg:D2437": 1,
+  "neg:D2438": 1,
+  "neg:D2439": 1,
+  "neg:D2440": 1,
+  "neg:D2441": 1,
+  "neg:D2442": 1,
+  "neg:D2443": 1,
+  "neg:D2444": 1,
+  "neg:D2445": 1,
+  "neg:D2446": 1,
+  "neg:D2447": 1,
+  "neg:D2448": 1,
+  "neg:D2449": 1,
+  "neg:D2450": 1,
+  "neg:D2451": 1,
+  "neg:D2452": 1,
+  "neg:D2495": 1,
+  "neg:D2496": 1,
+  "neg:D2497": 1,
+  "neg:D2498": 1,
+  "neg:D2499": 1,
+  "neg:D2500": 1,
+  "neg:D2501": 1,
+  "neg:D2502": 1,
+  "neg:D2503": 1,
+  "neg:D2504": 1,
+  "neg:D2505": 1,
+  "neg:D2506": 1
+ },
+ "kasus_gagal": [
+  {
+   "id": "D003",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D008",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D008",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D015",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D015",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D022",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D025",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D030",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D032",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D033",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D034",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D040",
+   "jenis": "terlewat",
+   "entitas": "nik"
+  },
+  {
+   "id": "D040",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D044",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D045",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D046",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D047",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D048",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D049",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D050",
+   "jenis": "terlewat",
+   "entitas": "nik"
+  },
+  {
+   "id": "D050",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D064",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D107",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D109",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D110",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D111",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D115",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D120",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D121",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D123",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D124",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D125",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D127",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D128",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D136",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D142",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D169",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D181",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D198",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D198",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D205",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D205",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D210",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D210",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D221",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D234",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D237",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D245",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D254",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D291",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D302",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D306",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D307",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D310",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D311",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D314",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D317",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D318",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D321",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D322",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D323",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D324",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D328",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D329",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D330",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D332",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D334",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D337",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D342",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D343",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D358",
+   "jenis": "terlewat",
+   "entitas": "nik"
+  },
+  {
+   "id": "D358",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D388",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D389",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D390",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D391",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D392",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D395",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D397",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D398",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D399",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D400",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D401",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D403",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D406",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D407",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D410",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D411",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D412",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D413",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D414",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D415",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D416",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D417",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D420",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D421",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D422",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D454",
+   "jenis": "terlewat",
+   "entitas": "npwp"
+  },
+  {
+   "id": "D454",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D509",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D509",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D518",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D521",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D526",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D530",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D537",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D540",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D547",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D564",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D581",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D585",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D586",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D586",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D587",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D587",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D590",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D590",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D593",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D595",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D597",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D604",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D704",
+   "jenis": "terlewat",
+   "entitas": "nip"
+  },
+  {
+   "id": "D704",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D707",
+   "jenis": "terlewat",
+   "entitas": "nip"
+  },
+  {
+   "id": "D707",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D727",
+   "jenis": "terlewat",
+   "entitas": "nip"
+  },
+  {
+   "id": "D727",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D735",
+   "jenis": "terlewat",
+   "entitas": "nip"
+  },
+  {
+   "id": "D735",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D745",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D754",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D755",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D763",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D766",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D769",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D773",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D791",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D791",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D804",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D804",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D817",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D843",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D844",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D846",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1054",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1056",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1058",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1060",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1061",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1071",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1073",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1079",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1080",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D1248",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1249",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D1249",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1282",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1283",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1287",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1290",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1293",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1298",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1300",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1307",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1309",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1314",
+   "jenis": "terlewat",
+   "entitas": "email"
+  },
+  {
+   "id": "D1334",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D1348",
+   "jenis": "salah tandai",
+   "entitas": "email"
+  },
+  {
+   "id": "D1359",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1362",
+   "jenis": "terlewat",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1399",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1411",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1416",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1419",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1425",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1428",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1429",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D1433",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1433",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1436",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1438",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1438",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1441",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1445",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1448",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1450",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1450",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1463",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1470",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1471",
+   "jenis": "terlewat",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1473",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1475",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1476",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1480",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1481",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1482",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1484",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1486",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1487",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1488",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1490",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1491",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1492",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1493",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1494",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1495",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1496",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1498",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1501",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1502",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1504",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1505",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1551",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1552",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1554",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1555",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1556",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1558",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1559",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1561",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1562",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1563",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1565",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1566",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1567",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1568",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1569",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1570",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1571",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1572",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1574",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1575",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1576",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1582",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1583",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1662",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D1662",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1669",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D1672",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D1676",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D1684",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D1704",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1726",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1732",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1733",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1769",
+   "jenis": "terlewat",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1769",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1776",
+   "jenis": "terlewat",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1776",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1781",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1782",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1784",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1785",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1786",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1790",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1791",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1792",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1794",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1797",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1802",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1804",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1805",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1806",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1809",
+   "jenis": "salah tandai",
+   "entitas": "nip"
+  },
+  {
+   "id": "D1819",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D1819",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1822",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D1822",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1836",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D1836",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1845",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D1845",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1848",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D1848",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D1868",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1876",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1880",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1883",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D1886",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2091",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2093",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2095",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2099",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2100",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2102",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2105",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2106",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2107",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2112",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2115",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2116",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2121",
+   "jenis": "salah tandai",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2362",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2363",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2364",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2365",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2366",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2367",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2368",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2369",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2370",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2371",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2371",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2372",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2372",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2373",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2374",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2375",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2376",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2377",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2378",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2379",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2380",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2381",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2382",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2382",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2383",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2383",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2384",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2385",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2386",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2387",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2388",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2389",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2390",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2391",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2392",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2393",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2393",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2394",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2394",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2395",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2396",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2397",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2398",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2399",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2400",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2400",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2401",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2401",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2402",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2403",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2404",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2404",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2405",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2405",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2406",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2407",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2408",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2409",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2410",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2411",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2412",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2413",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2414",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2414",
+   "jenis": "salah tandai",
+   "entitas": "phone_id"
+  },
+  {
+   "id": "D2415",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2415",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2416",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2416",
+   "jenis": "salah tandai",
+   "entitas": "credit_card"
+  },
+  {
+   "id": "D2417",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2418",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2419",
+   "jenis": "terlewat",
+   "entitas": "bank_account"
+  },
+  {
+   "id": "D2420",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2421",
+   "jenis": "terlewat",
+   "entitas": "passport_id"
+  },
+  {
+   "id": "D2422",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2422",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2423",
+   "jenis": "terlewat",
+   "entitas": "bpjs"
+  },
+  {
+   "id": "D2424",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2425",
+   "jenis": "terlewat",
+   "entitas": "birth_date"
+  },
+  {
+   "id": "D2426",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2426",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  },
+  {
+   "id": "D2427",
+   "jenis": "terlewat",
+   "entitas": "kk"
+  },
+  {
+   "id": "D2427",
+   "jenis": "salah tandai",
+   "entitas": "nik"
+  }
+ ],
+ "meta": {
+  "sistem": "presidio",
+  "commit": "e4125b0",
+  "dataset": "eval/dev/uji_pii_id.csv v0.6",
+  "waktu": "2026-11-11T07:14:37Z",
+  "konfigurasi": {
+   "keterangan": "Presidio Analyzer + recognizer bawaan (email, kartu dengan Luhn, telepon region ID) + regex Indonesia sederhana tanpa validator dengan kata konteks; ambang 0,4",
+   "ambang": 0.4
+  }
+ }
+}

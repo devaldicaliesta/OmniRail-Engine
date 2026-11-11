@@ -1,19 +1,15 @@
-# Rust
 /target/
 **/*.rs.bk
 
-# Python (alat eval)
 __pycache__/
 *.py[cod]
-.venv/
+.venv*/
 
-# Rahasia dan konfigurasi lokal. Jangan commit kunci provider.
 .env
 .env.*
 !.env.example
 omnirail.local.yaml
 
-# Editor dan OS
 .idea/
 .vscode/
 *.swp

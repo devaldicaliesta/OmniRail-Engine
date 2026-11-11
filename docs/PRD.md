@@ -1,9 +1,9 @@
-# OmniRail Engine — PRD MVP v1.7.1
+# OmniRail Engine — PRD MVP v1.7.2
 
 | | |
 | --- | --- |
 | **Status** | Draf, menunggu tinjauan pemilik produk |
-| **Tanggal** | 11 November 2026 (v1.7.1) |
+| **Tanggal** | 11 November 2026 (v1.7.2) |
 | **Pemilik** | devaldi caliesta |
 | **Sumber** | [Blueprint v1.1](OmniRail_Engine_Blueprint_v1.1.md) |
 | **Lingkup** | MVP sampai rilis publik pertama, dalam dua rilis: α (periksa, tanpa proxy) dan β (proxy). Tahap 0 s.d. 5 |
@@ -218,7 +218,7 @@ Kriteria terima:
 | PII-04 | P0 | Format token `<JENIS_n>`. Bila input sudah memuat teks berbentuk token (misalnya pengguna menulis `<EMAIL_1>`), penomoran melompati nomor itu, dan hanya token yang diterbitkan OmniRail yang dipulihkan |
 | PII-05 | P0 | Tabel token hanya hidup di memori selama satu request dan tidak pernah ditulis ke log, disk, atau metrik. Isinya dihapus eksplisit dari memori (misalnya dengan crate `zeroize`) begitu request selesai |
 | PII-06 | P0 | Pemulihan hanya untuk kecocokan persis. Token tak dikenal dibiarkan apa adanya. Token yang diterbitkan tetapi tidak kembali dihitung sebagai metrik, bukan error |
-| PII-07 | P0 | Bila satu rentang teks lolos validator lebih dari satu entitas, kata konteks yang paling dekat menentukan jenisnya (misalnya `NIK` atau `kartu`). Tanpa kata konteks, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nip` > `nik` (struktur valid) > `npwp` > `bpjs` > `bank_account` > `phone_id` > `passport_id` > `birth_date` > `email` > `ip_address` > `vehicle_plate`. Entitas yang mewajibkan kata konteks (`kk`, `passport_id`, `bpjs`, `birth_date`, `bank_account`) tidak pernah menang tanpa konteks; nilai 16 digit tanpa kata `KK` diperlakukan sebagai `nik`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang |
+| PII-07 | P0 | Bila satu rentang teks lolos validator lebih dari satu entitas, kata konteks yang paling dekat menentukan jenisnya (misalnya `NIK` atau `kartu`). Tanpa kata konteks, dipakai urutan prioritas: credentials > `credit_card` (Luhn valid) > `nip` > `nik` (struktur valid) > `npwp` > `bpjs` > `bank_account` > `phone_id` > `passport_id` > `birth_date` > `email` > `ip_address` > `vehicle_plate`. Entitas yang mewajibkan kata konteks (`kk`, `passport_id`, `bpjs`, `birth_date`, `bank_account`) tidak pernah menang tanpa konteks; nilai 16 digit tanpa kata `KK` diperlakukan sebagai `nik`. Rentang yang tumpang tindih diselesaikan dengan memilih yang terpanjang. Bila dua kata konteks sama dekatnya, kata konteks **sebelum** nilai menang atas yang sesudahnya ("No. KK 7250…, NIK kepala keluarga 5245…"). Kata konteks juga cocok dengan akhiran kepemilikan `-nya`, `-ku`, dan `-mu` ("rekeningnya") |
 | PII-08 | P1 | Entitas kustom di `omnirail.yaml` (customisasi tingkat 2) dengan validator bawaan yang bisa dipilih |
 | PII-09 | P2 | NER lokal (ONNX) untuk nama, alamat, dan nama instansi |
 | PII-10 | P0 | **Kata konteks lintas pesan.** Untuk entitas yang mewajibkan atau memakai kata konteks, bila nilai muncul dalam 10 kata pertama sebuah pesan, maka ≤ 15 kata terakhir pesan sebelumnya di `messages` (peran apa pun) ikut dihitung sebagai jendela konteks. Aturan PII-07 (kata konteks terdekat menentukan jenis) berlaku di jendela gabungan ini. Dataset: baris multi-pesan (`<<assistant>>`, `<<user>>`) di `eval/README.md` |
@@ -356,7 +356,7 @@ Kriteria terima:
 | Entitas | Pola | Validator | Kata konteks | Risiko false positive |
 | --- | --- | --- | --- | --- |
 | `email` | Bagian lokal + `@` + domain dengan TLD ≥ 2 huruf | Panjang total ≤ 254 | Tidak wajib | Rendah |
-| `phone_id` | `+62`, `62`, atau `0` diikuti `8`, lalu 7 sampai 11 digit, boleh dipisah spasi, titik, atau tanda hubung | Setelah dinormalisasi menjadi `08…`, panjangnya 10 sampai 13 digit | Tidak wajib | Sedang (bentrok dengan angka panjang lain) |
+| `phone_id` | `+62`, `62`, atau `0` diikuti `8`, lalu 7 sampai 11 digit, boleh dipisah spasi, titik, atau tanda hubung | Setelah dinormalisasi menjadi `08…`, panjangnya 10 sampai 13 digit | Tidak wajib. `hp`, `telp`, `telepon`, `wa`, `whatsapp`, `sms`, `ponsel` dipakai untuk menentukan jenis bila nilai juga lolos entitas lain (PII-07) | Sedang (bentrok dengan angka panjang lain) |
 | `credit_card` | 13 sampai 19 digit, boleh dipisah spasi atau tanda hubung | Luhn **dan** prefix jaringan dikenal (Visa, Mastercard, Amex, JCB; prefix GPN dicek di Q5) | Menaikkan keyakinan | Rendah bila validator lengkap |
 | `nik` | 16 digit | Struktur: 2 digit kode provinsi valid (termasuk 93 s.d. 96 untuk provinsi Papua hasil pemekaran, Q5), 4 digit kode kab/kota dan kecamatan, 6 digit tanggal lahir `DDMMYY` (tanggal 01 sampai 31, atau 41 sampai 71 untuk perempuan; bulan 01 sampai 12), lalu 4 digit nomor urut bukan `0000` | `nik`, `ktp`, `no. induk` menaikkan keyakinan | Sedang (bentrok dengan nomor kartu dan NPWP 16 digit) |
 | `npwp` | 15 digit berformat `99.999.999.9-999.999`, atau 15 dan 16 digit tanpa format | 15 digit tanpa format dan 16 digit wajib punya kata konteks. Sejak 1 Juli 2024 (PMK 136/2023), NPWP orang pribadi penduduk = NIK, sedangkan badan dan bukan penduduk memakai `0` + 15 digit lama | `npwp`, `nomor pokok wajib pajak` | Sedang. NPWP 15 digit masih muncul di dokumen lama |
@@ -788,6 +788,7 @@ Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: audit log tahan ub
 | 1.6 | 11 November 2026 | MVP dipecah menjadi rilis α (periksa) dan β (proxy); JSON-01 s.d. 04, AUD-04, PG-04, PG-05 turun ke P1; UP-01 cukup satu provider cloud (UP-08 untuk sisanya); baru: API-08 (pseudo-streaming), PII-10 (konteks lintas pesan), PII-11 (angka terucap, P1), CRED-05 (P1), EVAL-07 dan EVAL-08 (`scan`), DIST-06 (demo WASM), DIST-07 (P1), laporan paparan 7.15 (REP-01 s.d. 03), rute sensitivitas 7.16 (P1), PII-03 diperjelas (normalisasi kunci token), PII-12 dan PII-13 (P1), Q2 terjawab, Q14, Q15; dataset v0.6 |
 | 1.7 | 11 November 2026 | Landasan metode dan rujukan ([LANDASAN_METODE.md](LANDASAN_METODE.md)). Baru: EVAL-09 s.d. 13 (interval Wilson dan McNemar, uji perilaku, *property-based testing*, uji silang, catatan holdout), POL-06 (regex tanpa backtracking), POL-07 (P1, UTS #39), AUD-06 (P1, audit log tahan ubah), DIST-08 (rilis bertanda tangan, SBOM, audit dependensi). Diperjelas: PII-05 (`zeroize`), AUD-02 (RFC 8785), EVAL-05 (*coordinated omission*), cara membaca target di bagian 9, istilah pseudonimisasi di bagian 10 |
 | 1.7.1 | 11 November 2026 | Rujukan di [Landasan metode](LANDASAN_METODE.md) dibatasi pada terbitan lima tahun terakhir (akhir 2021 s.d. 2026); ISO/IEC 20889 diganti ISO/IEC 27559:2022; RFC 8785 dipertahankan sebagai spesifikasi teknis tanpa pengganti |
+| 1.7.2 | 11 November 2026 | Dari prototipe referensi (T-011): PII-07 menetapkan bahwa kata konteks sebelum nilai menang bila jaraknya sama, dan kata konteks cocok dengan akhiran `-nya`/`-ku`/`-mu`; `phone_id` mendapat kata konteks tidak wajib untuk menentukan jenis |
 
 ## Lampiran A. Hasil verifikasi format (9 November 2026)
 
