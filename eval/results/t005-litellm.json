@@ -4,7 +4,7 @@
   "presidio-analyzer": "2.2.366",
   "presidio-anonymizer": "2.2.366"
  },
- "waktu": "2026-11-11T07:11:26Z",
+ "waktu": "2026-11-11T07:14:44Z",
  "default": {
   "skenario": [
    {
@@ -169,16 +169,16 @@
    "jeda_mock_ms": 50.0,
    "langsung_ke_mock": {
     "n": 200,
-    "p50_ms": 55.1,
-    "p99_ms": 58.9
+    "p50_ms": 54.9,
+    "p99_ms": 59.6
    },
-   "lewat_litellm_presidio": {
+   "lewat_proxy": {
     "n": 200,
-    "p50_ms": 79.2,
-    "p99_ms": 88.5
+    "p50_ms": 78.1,
+    "p99_ms": 86.6
    },
-   "overhead_p50_ms": 24.1,
-   "overhead_p99_ms": 29.6
+   "overhead_p50_ms": 23.2,
+   "overhead_p99_ms": 27.0
   }
  },
  "tanpa_guardrail": {
@@ -190,15 +190,15 @@
    "langsung_ke_mock": {
     "n": 200,
     "p50_ms": 54.9,
-    "p99_ms": 62.3
+    "p99_ms": 57.0
    },
-   "lewat_litellm_presidio": {
+   "lewat_proxy": {
     "n": 200,
-    "p50_ms": 70.1,
-    "p99_ms": 87.6
+    "p50_ms": 69.3,
+    "p99_ms": 85.1
    },
-   "overhead_p50_ms": 15.2,
-   "overhead_p99_ms": 25.3
+   "overhead_p50_ms": 14.4,
+   "overhead_p99_ms": 28.1
   }
  }
 }

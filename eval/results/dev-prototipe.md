@@ -1,6 +1,6 @@
 # Hasil evaluasi dev: prototipe
 
-Dataset `eval/dev/uji_pii_id.csv v0.6`, commit `91e521c`, waktu 2026-11-11T06:46:51Z. Angka dalam kurung adalah interval Wilson 95%.
+Dataset `eval/dev/uji_pii_id.csv v0.6`, commit `e4125b0`, waktu 2026-11-11T07:14:29Z. Angka dalam kurung adalah interval Wilson 95%.
 
 Konfigurasi: prototipe referensi OmniRail (regex + validator + kata konteks, PRD 7.10)
 

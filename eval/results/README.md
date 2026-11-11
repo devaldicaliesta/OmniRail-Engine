@@ -7,6 +7,7 @@ Hasil `eval/tools/evaluasi.py` pada split **dev** (dataset v0.6). Holdout belum 
 | `dev-prototipe.{json,md}` | Prototipe referensi OmniRail (T-011): regex + validator + kata konteks sesuai PRD 7.10 |
 | `dev-presidio.{json,md}` | Baseline Presidio (T-004): recognizer bawaan + regex Indonesia sederhana tanpa validator |
 | `banding-prototipe-presidio.md` | Uji McNemar eksak per butir antara keduanya |
+| `t005-litellm.{json,md}` | LiteLLM + guardrail Presidio sebagai proxy (T-005): pemulihan token, credentials, dan overhead latensi |
 
 Berkas JSON memuat metrik dengan interval Wilson 95%, hasil per butir (untuk uji berpasangan), dan daftar kasus gagal. Nilai entitas tidak disimpan di JSON; hanya ID baris dan jenisnya.
 
@@ -22,7 +23,7 @@ Gabungan lima entitas kriteria T-003 (`nik`, `kk`, `credit_card`, `bpjs`, `bank_
 
 Untuk semua entitas P0: recall 0,999 lawan 0,864, precision 0,995 lawan 0,813, false positive 0,005 lawan 0,173.
 
-**Terhadap kriteria (A) T-003, angka dev memenuhi syarat "unggul":** precision +26 poin, false positive jauh di bawah setengahnya, recall tidak turun, dan selisihnya bermakna menurut McNemar. Kriteria (B), yaitu celah LiteLLM sebagai proxy, menunggu T-005. **Keputusan T-006 belum bisa diambil.**
+**Terhadap kriteria (A) T-003, angka dev memenuhi syarat "unggul":** precision +26 poin, false positive jauh di bawah setengahnya, recall tidak turun, dan selisihnya bermakna menurut McNemar.
 
 ### Asal selisih, dari daftar kasus gagal Presidio
 
@@ -46,6 +47,12 @@ Untuk semua entitas P0: recall 0,999 lawan 0,864, precision 0,995 lawan 0,813, f
 
 - **Seri jarak konteks (PII-07):** bila dua kata konteks sama dekatnya, yang **sebelum** nilai menang ("No. KK 7250…, NIK kepala keluarga 5245…").
 - **Kata konteks `phone_id`** (`hp`, `telp`, `wa`, dan seterusnya) tidak wajib, tetapi dipakai untuk menentukan jenis. Tanpa ini, "telp 0811… a.n. Pak Joko" dilabeli rekening.
+
+## Ringkasan Tahap 0, bagian proxy (T-005)
+
+Rincian di [`t005-litellm.md`](t005-litellm.md). Kriteria (B) terpenuhi secara tertulis: tiga dari empat celah ada (tidak ada blokir credentials lokal, tidak ada hash kebijakan di audit log, tidak ada mode shadow untuk Presidio). Bug pemulihan di jalur Anthropic tidak muncul di LiteLLM 1.109.0, tetapi dengan konfigurasi default pemulihan gagal di semua jalur. Celah tambahan: nilai yang sama mendapat token berbeda, dan token yang ditulis pengguna ikut dipulihkan menjadi nilai asli. Overhead LiteLLM + Presidio sekitar 23 ms (p50), sedangkan target OmniRail ≤ 5 ms.
+
+**Kriteria (A) dan (B) sama-sama terpenuhi, jadi menurut kriteria T-003 yang tertulis hasilnya mengarah ke "lanjut".** Keputusan T-006 tetap di tangan pemilik produk, dengan mempertimbangkan batas kesimpulan di bawah, terutama bahwa baseline Presidio sengaja dibuat tanpa validator.
 
 ## Mengulang hasil
 

@@ -4486,9 +4486,9 @@
  ],
  "meta": {
   "sistem": "presidio",
-  "commit": "91e521c",
+  "commit": "e4125b0",
   "dataset": "eval/dev/uji_pii_id.csv v0.6",
-  "waktu": "2026-11-11T06:46:58Z",
+  "waktu": "2026-11-11T07:14:37Z",
   "konfigurasi": {
    "keterangan": "Presidio Analyzer + recognizer bawaan (email, kartu dengan Luhn, telepon region ID) + regex Indonesia sederhana tanpa validator dengan kata konteks; ambang 0,4",
    "ambang": 0.4

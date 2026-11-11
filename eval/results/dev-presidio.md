@@ -1,6 +1,6 @@
 # Hasil evaluasi dev: presidio
 
-Dataset `eval/dev/uji_pii_id.csv v0.6`, commit `91e521c`, waktu 2026-11-11T06:46:58Z. Angka dalam kurung adalah interval Wilson 95%.
+Dataset `eval/dev/uji_pii_id.csv v0.6`, commit `e4125b0`, waktu 2026-11-11T07:14:37Z. Angka dalam kurung adalah interval Wilson 95%.
 
 Konfigurasi: Presidio Analyzer + recognizer bawaan (email, kartu dengan Luhn, telepon region ID) + regex Indonesia sederhana tanpa validator dengan kata konteks; ambang 0,4
 
