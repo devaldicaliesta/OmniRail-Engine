@@ -56,6 +56,8 @@ Rincian di [`t005-litellm.md`](t005-litellm.md). Kriteria (B) terpenuhi secara t
 
 ## Mengulang hasil
 
+Cara termudah adalah notebook [`notebooks/OmniRail_Tahap0_Colab.ipynb`](../../notebooks/OmniRail_Tahap0_Colab.ipynb), yang bisa dibuka langsung di Google Colab: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/devaldicaliesta/OmniRail-Engine/blob/main/notebooks/OmniRail_Tahap0_Colab.ipynb). Lewat terminal:
+
 ```bash
 python3 eval/tools/evaluasi.py jalan prototipe
 ```

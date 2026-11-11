@@ -95,7 +95,7 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 
 - [PRD MVP](docs/PRD.md): acuan scope, requirements, kriteria terima, dan tahapan MVP. Bila berbeda dengan blueprint, PRD yang berlaku.
 - [Rincian task](docs/TASKS.md): task per tahap dengan kriteria selesai.
-- [Hasil evaluasi Tahap 0](eval/results/README.md): prototipe referensi OmniRail dibandingkan dengan Presidio pada split dev, beserta batas kesimpulannya.
+- [Hasil evaluasi Tahap 0](eval/results/README.md): prototipe referensi OmniRail dibandingkan dengan Presidio pada split dev, beserta batas kesimpulannya. Bisa diulang di Google Colab: [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/devaldicaliesta/OmniRail-Engine/blob/main/notebooks/OmniRail_Tahap0_Colab.ipynb)
 - [Landasan metode](docs/LANDASAN_METODE.md): paper dan standar yang mendasari evaluasi, deteksi, audit log, dan rilis, beserta status penerapannya.
 - [Dataset uji](eval/README.md): set uji PII dan credentials berbahasa Indonesia (draf, v0.6), diperiksa otomatis di CI oleh `eval/tools/cek_dataset.py`, dengan [datasheet](eval/DATASHEET.md) yang menjelaskan asal-usul dan batasnya.
 - [Panduan kontribusi](CONTRIBUTING.md) dan [kebijakan keamanan](SECURITY.md) (laporkan kerentanan secara privat, bukan lewat issue).
