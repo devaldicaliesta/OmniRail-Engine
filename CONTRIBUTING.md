@@ -33,6 +33,28 @@ Aturan lengkap ada di [eval/README.md](eval/README.md). Ringkasnya:
 
 Menemukan label yang keliru? Buka issue dengan template **Label dataset keliru**, atau langsung kirim pull request perbaikannya.
 
+## Pengembangan
+
+Toolchain Rust dipin di `rust-toolchain.toml` dan terpasang otomatis lewat `rustup`.
+
+```bash
+cargo fmt --all --check
+```
+
+```bash
+cargo clippy --workspace --all-targets -- -D warnings
+```
+
+```bash
+cargo test --workspace
+```
+
+```bash
+cargo build -p omnirail-core --target wasm32-unknown-unknown
+```
+
+`omnirail-core` harus tetap tanpa I/O dan tanpa `unsafe`, agar bisa dipakai CLI, proxy, dan demo WASM. Dependensi baru diperiksa `cargo deny check` dan `cargo audit` di CI.
+
 ## Pull request
 
 - Satu pull request untuk satu task di `docs/TASKS.md`. Sebut ID task-nya (misalnya `T-302`) dan kode requirement PRD yang terkait.

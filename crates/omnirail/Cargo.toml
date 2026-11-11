@@ -1,0 +1,15 @@
+[package]
+name = "omnirail"
+description = "Proxy dan CLI OmniRail"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+publish = false
+
+[dependencies]
+omnirail-core = { path = "../omnirail-core", version = "0.0.1" }
+
+[lints]
+workspace = true

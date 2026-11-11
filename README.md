@@ -4,7 +4,7 @@
 
 Proxy open-source yang berdiri di depan LLM. OmniRail menyamarkan data pribadi, menegakkan kebijakan, dan memvalidasi output, dalam satu binary tanpa GPU.
 
-> **Status: tahap desain.** Belum ada kode produk. Repo ini berisi [PRD MVP v1.7.2](docs/PRD.md), dataset uji, dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
+> **Status: Tahap 0 selesai, keputusan lanjut.** Kerangka workspace Rust sudah ada, tetapi belum ada fungsi produk. Repo ini berisi [PRD MVP v1.7.2](docs/PRD.md), dataset uji, dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
 
 ## Apa itu OmniRail
 
