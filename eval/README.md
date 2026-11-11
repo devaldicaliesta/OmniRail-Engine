@@ -94,6 +94,8 @@ Pemeriksa (Python 3.9+, tanpa dependensi) memastikan header dan `id` benar, kolo
 
 Pemeriksa hanya memvalidasi bentuk label, tidak menyetel aturan deteksi, sehingga aturan "jangan buka holdout" tidak dilanggar.
 
+Baris yang ditambahkan di v0.6 (D2362–D2506, H1010–H1072) dibangkitkan oleh `eval/tools/bangkitkan_v06.py`. Test unit memastikan baris itu identik dengan hasil pembangkit. Baris v0.1 s.d. v0.5 belum punya pembangkit di repo (T-008).
+
 ## Menambah baris
 
 1. Tambahkan baris di `dev`, kecuali Anda sedang menyusun holdout baru sebelum rilis.

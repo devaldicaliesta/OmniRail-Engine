@@ -42,6 +42,7 @@ Blueprint sudah kuat dari sisi posisi produk, batas klaim, dan konteks regulasi.
 | 22 | **Laporan paparan data** `omnirail report` (bagian 7.15, P0) | Mode shadow perlu menghasilkan sesuatu yang bisa dibaca penanggung jawab kepatuhan: data apa terkirim ke provider mana, dari aplikasi mana. Ini nilai yang terlihat sejak minggu pertama tanpa satu request pun diblokir |
 | 23 | **Rute berdasarkan sensitivitas** (bagian 7.16, P1) | Bukan sekadar menyamarkan, tetapi mengarahkan request berisi data pribadi spesifik ke model lokal. Ini menjawab kekhawatiran transfer data ke luar negeri dan berbeda dari fallback antar-provider (non-goal) |
 | 24 | **`omnirail scan`** untuk berkas, repo, dan CI (EVAL-07, EVAL-08), **benchmark terbuka** (DIST-07), **credentials ekosistem lokal tambahan** (CRED-05), dan **eksperimen format token** (Q14) | Jalur adopsi developer tanpa mengubah arsitektur aplikasi, dan bukti terukur yang memperkuat posisi "konteks Indonesia" |
+| 25 | **Kunci token dinormalisasi** (PII-03), aksi `mask` dan `block` per entitas (PII-12, P1), dan **pemulihan toleran** (PII-13, P1). Kriteria keputusan Tahap 0 ditetapkan (Q2) | Nomor yang sama dengan penulisan berbeda harus dikenali model sebagai orang yang sama. `mask` berguna untuk jawaban yang dibaca operator, `block` untuk kebutuhan PCI DSS. Model sering menulis ulang token, dan ini langsung menurunkan pemulihan token (G3) |
 
 ---
 
@@ -212,7 +213,7 @@ Kriteria terima:
 | PII-01 | P0 | Entitas `email`, `phone_id`, `credit_card`, `nik`, `npwp`, `bank_account`, `nip`, `kk`, `passport_id`, `bpjs`, `birth_date` dengan pola, validator, dan kata konteks sesuai bagian 7.10 |
 | PII-01b | P1 | Entitas `vehicle_plate` dan `ip_address` (bagian 7.10), mati secara default di pack `id-general` |
 | PII-02 | P0 | Aksi per entitas: `tokenize` (dipulihkan di jawaban) atau `redact` (diganti `[NIK]` dan tidak dipulihkan) |
-| PII-03 | P0 | Nilai yang sama dalam satu request selalu mendapat token yang sama; nilai berbeda mendapat token berbeda |
+| PII-03 | P0 | Nilai yang sama dalam satu request selalu mendapat token yang sama; nilai berbeda mendapat token berbeda. "Sama" dinilai **setelah normalisasi per jenis**: hapus spasi, titik, dan tanda hubung; `+62` dan `62` di depan `phone_id` menjadi `0`; `email` dibandingkan dalam huruf kecil. Pemulihan memakai bentuk yang pertama kali muncul di request |
 | PII-04 | P0 | Format token `<JENIS_n>`. Bila input sudah memuat teks berbentuk token (misalnya pengguna menulis `<EMAIL_1>`), penomoran melompati nomor itu, dan hanya token yang diterbitkan OmniRail yang dipulihkan |
 | PII-05 | P0 | Tabel token hanya hidup di memori selama satu request dan tidak pernah ditulis ke log, disk, atau metrik |
 | PII-06 | P0 | Pemulihan hanya untuk kecocokan persis. Token tak dikenal dibiarkan apa adanya. Token yang diterbitkan tetapi tidak kembali dihitung sebagai metrik, bukan error |
@@ -221,11 +222,14 @@ Kriteria terima:
 | PII-09 | P2 | NER lokal (ONNX) untuk nama, alamat, dan nama instansi |
 | PII-10 | P0 | **Kata konteks lintas pesan.** Untuk entitas yang mewajibkan atau memakai kata konteks, bila nilai muncul dalam 10 kata pertama sebuah pesan, maka ≤ 15 kata terakhir pesan sebelumnya di `messages` (peran apa pun) ikut dihitung sebagai jendela konteks. Aturan PII-07 (kata konteks terdekat menentukan jenis) berlaku di jendela gabungan ini. Dataset: baris multi-pesan (`<<assistant>>`, `<<user>>`) di `eval/README.md` |
 | PII-11 | P1 | **Angka terucap.** Urutan kata bilangan satu digit (`nol`/`kosong`, `satu` s.d. `sembilan`, serta `plus` untuk `+`), boleh bercampur digit, dinormalisasi menjadi digit sebelum validator dijalankan. Berlaku untuk `phone_id`, `nik`, `kk`, `bank_account`, `npwp`, dan `bpjs`, dengan kata konteks yang sama. Bilangan gabungan (`dua belas`, `delapan puluh`) tidak ditafsirkan. Temuan mencakup seluruh rentang kata asli, sehingga token menggantikan semua kata itu. Mati secara default (`ingress.pii.spoken_digits`) |
+| PII-12 | P1 | Aksi per entitas tambahan: `mask` (sebagian nilai tetap terlihat, misalnya 4 digit terakhir kartu dan rekening, `3273••••••••0001` untuk NIK; tidak dipulihkan) dan `block` (request ditolak 400 `omnirail_policy_violation`, misalnya nomor kartu lengkap untuk organisasi yang terikat PCI DSS). Dalam mode shadow, `block` diperlakukan seperti credentials: nilai diredaksi, request diteruskan, dan dicatat `would_block` |
+| PII-13 | P1 | **Pemulihan toleran**, opt-in per rute (`restore_variants`): variasi token yang lazim ditulis ulang model (`EMAIL_1`, `[EMAIL_1]`, `<email_1>`, `< EMAIL_1 >`) dipulihkan hanya bila token itu diterbitkan di request yang sama. Pemulihan variasi dihitung terpisah di audit log dan metrik. Default mati sampai eksperimen Q14 (T-207) memberi angka |
 
 Kriteria terima:
 
 - [ ] Untuk input "email saya a@b.co dan a@b.co", provider menerima dua kemunculan `<EMAIL_1>`, dan aplikasi menerima dua kemunculan `a@b.co`.
 - [ ] Input yang sudah memuat `<EMAIL_1>` tidak dipulihkan menjadi email orang lain.
+- [ ] `0812-3456-7801` dan `+62 812 3456 7801` dalam satu request mendapat token `<PHONE_ID_1>` yang sama.
 - [ ] Nomor 16 digit yang lolos Luhn dan memiliki prefix kartu, tanpa kata konteks NIK, dikenali sebagai `credit_card`, bukan `nik`. Nilai yang sama setelah kata `NIK` dikenali sebagai `nik` (dataset D050 dan D051).
 - [ ] Nomor pesanan 16 digit dengan tanggal tidak valid di posisi 7 sampai 12 tidak dikenali sebagai `nik`.
 - [ ] Nilai 16 digit setelah kata `No. KK` dikenali sebagai `kk`; nilai yang sama tanpa kata konteks dikenali sebagai `nik`.
@@ -266,6 +270,7 @@ Kriteria terima:
 | --- | --- | --- |
 | Blokir kebijakan (deny, kata kunci, panjang input) | Tolak request | Teruskan, catat `would_block` |
 | Credentials | Tolak request (`block`) | **Diredaksi**, diteruskan, catat `would_block` |
+| PII beraksi `block` (P1, PII-12) | Tolak request | Diredaksi, diteruskan, catat `would_block` |
 | Penyamaran PII | Diterapkan | Diterapkan bila `shadow.apply_transforms: true` (default); bila `false`, hanya dicatat |
 | `allowed_providers` | Tolak request | **Tetap ditolak** (bukan kontrol yang diuji, melainkan batas keras) |
 | Validasi schema JSON | Mengikuti `fail_mode.egress` | Selalu diteruskan, catat hasilnya |
@@ -494,12 +499,13 @@ routes:                          # rute = alias model (7.3)
     max_tokens: 1024             # dipakai bila klien tidak mengirim (UP-05)
     json_schema_file: null       # JSON-01 (P1)
     on_sensitive: null           # P1, 7.16
+    restore_variants: false      # P1, PII-13
     mode: null                   # null = ikut global
     fail_mode: null              # null = ikut global
 
 ingress:
   pii:
-    action: tokenize             # tokenize | redact, bisa per entitas
+    action: tokenize             # tokenize | redact | mask (P1) | block (P1), bisa per entitas
     restore_on_egress: true
     cross_message_context: true  # PII-10
     spoken_digits: false         # P1, PII-11
@@ -738,7 +744,7 @@ Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: validasi JSON (JSO
 | # | Pertanyaan | Penjawab | Menghalangi |
 | --- | --- | --- | --- |
 | Q1 | ~~Siapa yang menyusun dataset dan berapa baris minimum~~ **Terjawab:** dataset v0.6 (3.578 baris) punya ≥ 100 positif dan ≥ 100 negatif per entitas. Yang tersisa: tinjauan label oleh orang kedua (T-007) | Pembangun | Baseline Tahap 1 |
-| Q2 | Apa kriteria angka untuk keputusan "lanjut" di Tahap 0 (misalnya selisih recall ≥ 10 poin atau false positive setengahnya)? | Pembangun | Tahap 0 |
+| Q2 | ~~Apa kriteria angka untuk keputusan "lanjut" di Tahap 0?~~ **Terjawab** 11 Nov 2026: kriteria di catatan keputusan [TASKS.md](TASKS.md) (T-003) | Pembangun | Tahap 0 |
 | Q3 | Apakah default `shadow.apply_transforms: true` diterima calon pengguna, atau mereka ingin shadow murni mengamati? | Calon pengguna (wawancara) | Tidak |
 | Q4 | ~~Aturan NPWP 16 digit~~ **Terjawab sebagian** (Lampiran A): NIK untuk orang pribadi, `0` + 15 digit untuk badan. Yang tersisa: adakah checksum resmi NPWP? | Pembangun, dicek ke sumber DJP | Tidak |
 | Q5 | Daftar prefix kartu GPN (tidak ditemukan sumber publik), dan konfirmasi kode provinsi 93 s.d. 96 dari Kepmendagri 100.1.1-6117/2022 | Pembangun | Tahap 1 |
@@ -763,7 +769,7 @@ Setelah rilis β, urutan ditentukan umpan balik. Kandidatnya: validasi JSON (JSO
 | 1.3 | 9 November 2026 | Keterbatasan verifikasi K1 s.d. K5 dicatat di Lampiran A. Format diverifikasi ke sumber publik (Lampiran A): NI PPPK, paspor 1–2 huruf + 6–7 digit, BPJS TK 16 digit, kode plat Perpol 7/2021, NPWP 16 digit, prefix Xendit/Midtrans/Telegram, `output_parse_pii` LiteLLM |
 | 1.4 | 9 November 2026 | Tampilan uji dirinci (bagian 7.13, PG-01 s.d. PG-13), EVAL-06 menjadi CLI `omnirail inspect` (P0), user stories 15 s.d. 18, kode error `omnirail_admin_required`, metrik dan ancaman terkait |
 | 1.5 | 9 November 2026 | Crosscheck kesiapan: API-07 (field yang didukung), CFG-10 (`omnirail validate` dan kontrol perubahan kebijakan), DIST-05 (`SECURITY.md`), referensi konfigurasi 7.14, Q1 terjawab |
-| 1.6 | 11 November 2026 | MVP dipecah menjadi rilis α (periksa) dan β (proxy); JSON-01 s.d. 04, AUD-04, PG-04, PG-05 turun ke P1; UP-01 cukup satu provider cloud (UP-08 untuk sisanya); baru: API-08 (pseudo-streaming), PII-10 (konteks lintas pesan), PII-11 (angka terucap, P1), CRED-05 (P1), EVAL-07 dan EVAL-08 (`scan`), DIST-06 (demo WASM), DIST-07 (P1), laporan paparan 7.15 (REP-01 s.d. 03), rute sensitivitas 7.16 (P1), Q14, Q15; dataset v0.6 |
+| 1.6 | 11 November 2026 | MVP dipecah menjadi rilis α (periksa) dan β (proxy); JSON-01 s.d. 04, AUD-04, PG-04, PG-05 turun ke P1; UP-01 cukup satu provider cloud (UP-08 untuk sisanya); baru: API-08 (pseudo-streaming), PII-10 (konteks lintas pesan), PII-11 (angka terucap, P1), CRED-05 (P1), EVAL-07 dan EVAL-08 (`scan`), DIST-06 (demo WASM), DIST-07 (P1), laporan paparan 7.15 (REP-01 s.d. 03), rute sensitivitas 7.16 (P1), PII-03 diperjelas (normalisasi kunci token), PII-12 dan PII-13 (P1), Q2 terjawab, Q14, Q15; dataset v0.6 |
 
 ## Lampiran A. Hasil verifikasi format (9 November 2026)
 

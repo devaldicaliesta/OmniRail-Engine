@@ -153,5 +153,12 @@ class TestDatasetRepo(unittest.TestCase):
         self.assertEqual(c.main([]), 0)
 
 
+class TestPembangkitV06(unittest.TestCase):
+    def test_baris_v06_identik_dengan_pembangkit(self):
+        import bangkitkan_v06
+
+        self.assertEqual(bangkitkan_v06.main([]), 0)
+
+
 if __name__ == "__main__":
     unittest.main()
