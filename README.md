@@ -4,7 +4,7 @@
 
 Proxy open-source yang berdiri di depan LLM. OmniRail menyamarkan data pribadi, menegakkan kebijakan, dan memvalidasi output, dalam satu binary tanpa GPU.
 
-> **Status: tahap desain.** Belum ada kode. Repo ini berisi [PRD MVP](docs/PRD.md) dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
+> **Status: tahap desain.** Belum ada kode produk. Repo ini berisi [PRD MVP v1.6](docs/PRD.md), dataset uji, dan blueprint v1.1, yang belum divalidasi: perbandingan dengan LiteLLM dan Presidio belum dilakukan, policy pack belum ditinjau staf kepatuhan, dan beberapa pasal UU PDP belum dicek ke naskah resmi.
 
 ## Apa itu OmniRail
 
@@ -21,20 +21,23 @@ Aplikasi ──► OmniRail ──► Provider LLM (Anthropic, Gemini, OpenAI, O
 - **Tokenisasi reversibel.** Contohnya `<EMAIL_1>`, yang hanya hidup di memori selama satu request.
 - **Mode shadow.** Kebijakan dicatat tanpa memblokir, supaya bisa diuji sebelum diberlakukan.
 - **Policy pack.** Bundel aturan per sektor (`id-general`, `id-fintech`, `id-ecommerce`, `id-instansi`), dan setiap pack wajib punya tes.
+- **Laporan paparan data.** `omnirail report` merangkum audit log: jenis data pribadi apa yang terkirim ke provider mana, dari aplikasi mana, tanpa memuat nilainya.
+- **Paham percakapan.** Kata konteks dicari juga di pesan sebelumnya ("Boleh minta nomor rekeningnya?" → "1234567890"), dan angka yang diucapkan di transkrip panggilan ("nol delapan satu dua …") menyusul (P1).
+- **Pakai di luar proxy.** `omnirail scan` memeriksa log, fixture tes, dan dataset di repo atau CI, dan demo web memeriksa teks langsung di browser tanpa server.
 
 ## Scope MVP
 
-| Area | Masuk MVP |
-| --- | --- |
-| API klien | `POST /v1/chat/completions` (format OpenAI), non-streaming, teks saja |
-| Upstream | Anthropic Messages API, Gemini API, OpenAI (passthrough), dan Ollama untuk uji lokal |
-| PII | Regex + validasi, tokenisasi reversibel per request; credentials diblokir, tidak ditokenisasi |
-| Kebijakan | Deny-list pola, batas panjang input, blokir kata kunci, `allowed_providers` |
-| Output | Validasi JSON schema + perbaikan sintaks |
-| Operasional | Config YAML, API key proxy, log terstruktur, OpenTelemetry, `fail_mode` per rute, audit log berisi versi dan hash kebijakan |
-| Distribusi | Satu binary, `omnirail eval`, benchmark latensi, tampilan uji satu halaman |
+MVP dikirim dalam dua rilis (PRD bagian 11).
 
-Yang ditunda: streaming, tool call, gambar, NER untuk nama dan alamat, classifier injection, fallback antar-provider, dan dasbor.
+| Area | Rilis α (periksa) | Rilis β (proxy, rilis publik pertama) |
+| --- | --- | --- |
+| Deteksi | Regex + validator struktur, kata konteks lintas pesan, tokenisasi reversibel, credentials, deny-list | Sama, dijalankan di jalur proxy |
+| Antarmuka | CLI `omnirail inspect`, `eval`, `scan`; demo web WASM yang berjalan di browser | `POST /v1/chat/completions` (format OpenAI), teks saja, `stream: true` sebagai pseudo-streaming |
+| Upstream | — | Ollama dan satu provider cloud (Anthropic, kecuali wawancara menunjukkan lain) |
+| Kebijakan | Pack `id-general` bertes | Mode `enforce` dan `shadow`, `allowed_providers`, `fail_mode` per rute |
+| Operasional | Hook pre-commit dan langkah CI untuk `scan` | Config YAML, API key proxy, audit log dengan versi dan hash kebijakan, `omnirail report` |
+
+Yang ditunda setelah rilis β: validasi JSON, provider cloud lain, rute berdasarkan sensitivitas (request berisi data pribadi spesifik diarahkan ke model lokal), angka terucap, OpenTelemetry, tampilan uji dari binary, streaming sejati, tool call, gambar, NER untuk nama dan alamat, classifier injection, fallback antar-provider, dan dasbor.
 
 ## Contoh konfigurasi (rencana)
 
@@ -82,17 +85,17 @@ Rust (tokio, axum, reqwest), konfigurasi YAML, log terstruktur, dan OpenTelemetr
 ## Roadmap
 
 0. **Validasi.** Bandingkan dengan LiteLLM + Presidio pada set uji berbahasa Indonesia, lalu putuskan lanjut, pivot, atau berhenti.
-1. **Kerangka proxy.** Endpoint non-streaming, upstream Ollama, config YAML.
-2. **Jalur provider.** Adapter Anthropic, lalu Gemini, lalu OpenAI.
-3. **PII tokenisasi.** Entitas Indonesia, deteksi credentials, `omnirail eval`, dan baseline recall/precision.
-4. **Validasi JSON.** Schema check dan perbaikan sintaks.
-5. **Rilis awal.** README dengan batas klaim, benchmark latensi, tampilan uji, dan wawancara calon pengguna.
+1. **Inti deteksi (α).** `omnirail-core`, entitas Indonesia, credentials, pack bertes, `inspect`, `eval`, `scan`, dan baseline recall/precision.
+2. **Rilis α.** Demo web WASM, binary CLI, dan wawancara pertama memakai demo.
+3. **Kerangka proxy (β).** Endpoint format OpenAI dengan pseudo-streaming, adapter Ollama dan satu provider cloud.
+4. **Alur proxy lengkap (β).** Mode shadow, audit log, dan laporan paparan data.
+5. **Rilis β.** README dengan batas klaim, benchmark latensi, holdout, dan wawancara lanjutan.
 
 ## Dokumen
 
 - [PRD MVP](docs/PRD.md): acuan scope, requirements, kriteria terima, dan tahapan MVP. Bila berbeda dengan blueprint, PRD yang berlaku.
 - [Rincian task](docs/TASKS.md): task per tahap dengan kriteria selesai.
-- [Dataset uji](eval/README.md): set uji PII dan credentials berbahasa Indonesia (draf), diperiksa otomatis di CI oleh `eval/tools/cek_dataset.py`.
+- [Dataset uji](eval/README.md): set uji PII dan credentials berbahasa Indonesia (draf, v0.6), diperiksa otomatis di CI oleh `eval/tools/cek_dataset.py`.
 - [Panduan kontribusi](CONTRIBUTING.md) dan [kebijakan keamanan](SECURITY.md) (laporkan kerentanan secara privat, bukan lewat issue).
 
 Blueprint v1.1 (latar belakang, pemetaan regulasi, dan arah setelah MVP) tersedia dalam tiga format:
